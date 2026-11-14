@@ -1,6 +1,6 @@
 # Tasks
 
-30 tasks across 15 apps. Every task starts on the Home screen after its apps are reset to a verified root view. The model sees only the goal; there are no per-task hints or click recipes.
+35 tasks across 18 apps. Every task starts on the Home screen after its apps are reset to a verified root view. The model sees only the goal; there are no per-task hints or click recipes.
 
 **Typeable strings** are the text the user supplies. Decision models choose among options and cannot invent text, so any text a task needs is offered as an option. All other actions are generic and shared by every task.
 
@@ -9,8 +9,8 @@
 | Difficulty | Count |
 |---|---|
 | easy | 3 |
-| medium | 12 |
-| hard | 15 |
+| medium | 15 |
+| hard | 17 |
 
 ## navigate
 
@@ -27,6 +27,7 @@
 | `amazon_product` | hard | On Amazon, search for a USB-C cable and open a product page to see its price. Do not add anything to the cart or buy anything. | `USB-C cable` | final screen |  |
 | `appstore_ratings` | medium | In the App Store, open the Duolingo app's page and look at its ratings. Do not install it. | `Duolingo` | final screen |  |
 | `gmail_open_email` | medium | In Gmail, find and open an email from GitHub. | `GitHub`, `from:github` | final screen |  |
+| `sim_calendar_date` | hard | In Calendar, show the day view for December 25, 2026. |  | final screen |  |
 | `portal_assignment_score` | hard | In the school portal app, open <a named class>'s grade details and open one of its scored assignments so its score is shown. *(private config)* | – | final screen |  |
 | `portal_attendance` | easy | Open my attendance record in the school portal app. *(private config)* | – | final screen |  |
 
@@ -36,19 +37,22 @@
 |---|---|---|---|---|---|
 | `weather_city` | medium | Check the current weather in Tokyo, Japan using the Weather app. | `Tokyo` | final screen |  |
 | `stocks_detail` | easy | In the Stocks app, open the detail page for Apple (AAPL). | `AAPL` | final screen |  |
-| `stocks_market_cap` | hard | In the Stocks app, find Apple's (AAPL) market capitalization. | `AAPL` | final screen |  |
+| `stocks_market_cap` | hard | In the Stocks app, find Apple's (AAPL) market capitalization. | `AAPL` | final screen | multiple choice |
 | `settings_os_version` | medium | Find out which iOS version this iPhone is running, using Settings. | `About` | final screen |  |
 | `settings_battery_health` | hard | Find this iPhone's battery maximum capacity (battery health) in Settings. | `Battery Health` | final screen |  |
 | `settings_storage` | medium | Find out how much storage is used on this iPhone, using Settings. | `iPhone Storage` | final screen |  |
 | `safari_fact` | hard | Using Safari, find the height of Mount Everest in metres. | `Mount Everest height`, `en.wikipedia.org/wiki/Mount_Everest` | final screen | multiple choice |
 | `safari_compare` | hard | Using Safari, find out which mountain is taller: K2 or Kangchenjunga. | `K2 height`, `Kangchenjunga height`, `K2 vs Kangchenjunga height` | final screen | multiple choice |
 | `appstore_developer` | hard | In the App Store, find out which company develops the Duolingo app. Do not install it. | `Duolingo` | final screen | multiple choice |
+| `sim_contact_phone` | medium | In Contacts, open John Appleseed's contact card to see his phone number. | `John Appleseed` | final screen |  |
+| `sim_safari_capital` | medium | Using Safari, find the capital city of Australia. | `capital of Australia` | final screen | multiple choice |
 | `portal_grade_lookup` | medium | In the school portal app, find my current term grade in <a named class>. *(private config)* | – | final screen | multiple choice |
 
 ## reasoning
 
 | Task | Difficulty | Goal | Typeable strings | Pass check | Asks |
 |---|---|---|---|---|---|
+| `sim_contact_company` | hard | In Contacts, find which contact works at Creative Consulting and open their contact card. | `Creative Consulting` | final screen | multiple choice |
 | `portal_lowest_class` | hard | In the school portal app, figure out which of my classes has the lowest current term grade, and open that class. *(private config)* | – | final screen | multiple choice |
 
 ## multi-app
@@ -69,6 +73,7 @@
 | Task | Difficulty | Goal | Typeable strings | Pass check | Asks |
 |---|---|---|---|---|---|
 | `notes_create` | medium | Create a new note in Notes whose text is exactly: PhoneBench note. | `PhoneBench note` | final screen |  |
+| `sim_reminder_create` | medium | Create a new reminder whose title is exactly: Buy oat milk. | `Buy oat milk` | final screen |  |
 
 ## infeasible
 

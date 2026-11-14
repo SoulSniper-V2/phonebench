@@ -24,7 +24,11 @@ APPS = {
     'Clock': 'com.apple.mobiletimer', 'Photos': 'com.apple.mobileslideshow', 'Instagram': 'com.burbn.instagram',
     'Uber Eats': 'com.ubercab.UberEats', 'DoorDash': 'doordash.DoorDashConsumer', 'Netflix': 'com.netflix.Netflix',
     'ChatGPT': 'com.openai.chat', 'Discord': 'com.hammerandchisel.discord', 'Translate': 'com.apple.Translate',
+    'Contacts': 'com.apple.MobileAddressBook', 'Reminders': 'com.apple.reminders', 'Files': 'com.apple.DocumentsApp',
 }
+# Tasks run on the physical phone unless tagged; SIM tasks rely on the simulator's stock data (sample contacts).
+SHARED = ('phone', 'sim')
+SIM = ('sim',)
 PORTAL = APPS['School portal']
 
 
@@ -42,7 +46,8 @@ def rx(s, pattern):
 
 
 def selected(s, label):
-    return any((e.get('label') or '') == label and 'SELECTED' in (e.get('state') or '') for e in elements(s))
+    """An element named `label` (or `label, Tab n of m`) is in the SELECTED state."""
+    return any(re.match(re.escape(label) + r'(,|$)', e.get('label') or '') and 'SELECTED' in (e.get('state') or '') for e in elements(s))
 
 
 def in_app(s, name):
@@ -50,8 +55,15 @@ def in_app(s, name):
 
 
 def visited(trace, name, *words):
-    """Did any earlier observation show app `name` with all `words` on screen?"""
-    return any(a == APPS[name] and all(w.lower() in t.lower() for w in words) for a, t in trace)
+    """Did any earlier observation show app `name` with all `words` on screen?
+    trace items are (app_id, screen_text, label_of_element_tapped_on_that_screen_or_None)."""
+    return any(x[0] == APPS[name] and all(w.lower() in x[1].lower() for w in words) for x in trace)
+
+
+def last_choice(trace, name, options):
+    """Label of the last element among `options` that was tapped in app `name`, or None."""
+    picks = [x[2].split(',')[0].strip() for x in trace if len(x) > 2 and x[0] == APPS[name] and x[2] and x[2].split(',')[0].strip() in options]
+    return picks[-1] if picks else None
 
 
 def load_private(path='config/private.json'):
@@ -64,6 +76,7 @@ def T(**kw):
     kw.setdefault('answer', None)
     kw.setdefault('infeasible', False)
     kw.setdefault('private', False)
+    kw.setdefault('devices', ('phone',))
     return kw
 
 
@@ -84,16 +97,16 @@ def build(private=None):
             check=lambda s, tr, c: in_app(s, 'Reddit') and rx(s, r'r/iphone\b') and rx(s, r'(members|weekly visitors|join|joined)')),
         'reddit_sort_top': T(cat='navigate', diff='hard', apps=[APPS['Reddit']],
             goal='In the Reddit app, open the r/iphone community and sort its posts by Top.', params=['r/iphone'],
-            check=lambda s, tr, c: in_app(s, 'Reddit') and rx(s, r'r/iphone\b') and rx(s, r'(sort[^"\n]{0,30}\btop\b|\btop posts\b|"top"[^\n]*selected)')),
+            check=lambda s, tr, c: in_app(s, 'Reddit') and rx(s, r'r/iphone\b') and rx(s, r'feed options') and last_choice(tr, 'Reddit', ('Top', 'Hot', 'New', 'Best', 'Rising', 'Controversial')) == 'Top'),
         # ---------------------------------------------------------------- everyday utilities
         'weather_city': T(cat='info', diff='medium', apps=[APPS['Weather']],
             goal='Check the current weather in Tokyo, Japan using the Weather app.', params=['Tokyo'],
             check=lambda s, tr, c: in_app(s, 'Weather') and has(s, 'tokyo') and '°' in text(s)),
-        'maps_route': T(cat='navigate', diff='hard', apps=[APPS['Maps']],
+        'maps_route': T(devices=SHARED, cat='navigate', diff='hard', apps=[APPS['Maps']],
             goal='In Apple Maps, get driving directions from my current location to Raleigh-Durham International Airport. Show the route options; do not start navigation.',
             params=['Raleigh-Durham International Airport', 'RDU'],
             check=lambda s, tr, c: in_app(s, 'Maps') and rx(s, r'(raleigh|rdu)') and rx(s, r'\b\d+\s*(min|hr)\b') and rx(s, r'\bgo\b|routes?|drive')),
-        'maps_walking_coffee': T(cat='navigate', diff='hard', apps=[APPS['Maps']],
+        'maps_walking_coffee': T(devices=SHARED, cat='navigate', diff='hard', apps=[APPS['Maps']],
             goal='In Apple Maps, find a coffee shop near me and show walking directions to it. Do not start navigation.', params=['coffee'],
             check=lambda s, tr, c: in_app(s, 'Maps') and rx(s, r'walk') and rx(s, r'\b\d+\s*(min|hr)\b') and rx(s, r'(coffee|cafe|café|starbucks|espresso)')),
         'gmaps_place': T(cat='navigate', diff='medium', apps=[APPS['Google Maps']],
@@ -102,9 +115,12 @@ def build(private=None):
         'stocks_detail': T(cat='info', diff='easy', apps=[APPS['Stocks']],
             goal='In the Stocks app, open the detail page for Apple (AAPL).', params=['AAPL'],
             check=lambda s, tr, c: in_app(s, 'Stocks') and has(s, 'aapl', 'apple inc')),
+        # The stats grid (Open/High/Mkt Cap...) is drawn but not exposed to accessibility, so the value can only be
+        # read from the screenshot: the check verifies the page, the multiple-choice answer verifies the reading.
         'stocks_market_cap': T(cat='info', diff='hard', apps=[APPS['Stocks']],
             goal="In the Stocks app, find Apple's (AAPL) market capitalization.", params=['AAPL'],
-            check=lambda s, tr, c: in_app(s, 'Stocks') and has(s, 'aapl') and rx(s, r'(mkt cap|market cap)')),
+            check=lambda s, tr, c: in_app(s, 'Stocks') and has(s, 'aapl information overlay'),
+            answer=dict(q="What is Apple's market capitalization?", options=['Over $5 trillion', '$3–5 trillion', '$1–3 trillion', 'Under $1 trillion'], correct='Over $5 trillion')),
         'calc_expression': T(cat='compute', diff='easy', apps=[APPS['Calculator']],
             goal='Using Calculator, compute 17 × 23 + 5 and show the result.',
             check=lambda s, tr, c: in_app(s, 'Calculator') and rx(s, r'\b396\b')),
@@ -120,21 +136,21 @@ def build(private=None):
             params=['Duolingo', 'duolingo.com'],
             check=lambda s, tr, c: in_app(s, 'Safari') and has(s, 'duolingo') and visited(tr, 'App Store', 'duolingo')),
         # ---------------------------------------------------------------- settings (no toggles are ever offered)
-        'settings_os_version': T(cat='info', diff='medium', apps=[APPS['Settings']],
+        'settings_os_version': T(devices=SHARED, cat='info', diff='medium', apps=[APPS['Settings']],
             goal='Find out which iOS version this iPhone is running, using Settings.', params=['About'],
             check=lambda s, tr, c: in_app(s, 'Settings') and has(s, 'ios version')),
         'settings_battery_health': T(cat='info', diff='hard', apps=[APPS['Settings']],
             goal="Find this iPhone's battery maximum capacity (battery health) in Settings.", params=['Battery Health'],
             check=lambda s, tr, c: in_app(s, 'Settings') and has(s, 'maximum capacity')),
-        'settings_storage': T(cat='info', diff='medium', apps=[APPS['Settings']],
+        'settings_storage': T(devices=SHARED, cat='info', diff='medium', apps=[APPS['Settings']],
             goal='Find out how much storage is used on this iPhone, using Settings.', params=['iPhone Storage'],
             check=lambda s, tr, c: in_app(s, 'Settings') and rx(s, r'\d+(\.\d+)?\s*(gb|tb) of \d+')),
         # ---------------------------------------------------------------- web & shopping research
-        'safari_fact': T(cat='info', diff='hard', apps=[APPS['Safari']],
+        'safari_fact': T(devices=SHARED, cat='info', diff='hard', apps=[APPS['Safari']],
             goal='Using Safari, find the height of Mount Everest in metres.', params=['Mount Everest height', 'en.wikipedia.org/wiki/Mount_Everest'],
             check=lambda s, tr, c: in_app(s, 'Safari') and rx(s, r'8,?84[89]'),
             answer=dict(q='How tall is Mount Everest?', options=['6,190 m', '8,611 m', '8,849 m', '9,120 m'], correct='8,849 m')),
-        'safari_compare': T(cat='info', diff='hard', apps=[APPS['Safari']],
+        'safari_compare': T(devices=SHARED, cat='info', diff='hard', apps=[APPS['Safari']],
             goal='Using Safari, find out which mountain is taller: K2 or Kangchenjunga.', params=['K2 height', 'Kangchenjunga height', 'K2 vs Kangchenjunga height'],
             check=lambda s, tr, c: in_app(s, 'Safari') and rx(s, r'(8,?611|8,?586)'),
             answer=dict(q='Which is taller?', options=['K2', 'Kangchenjunga', 'They are the same height'], correct='K2')),
@@ -143,7 +159,7 @@ def build(private=None):
             check=lambda s, tr, c: in_app(s, 'Amazon') and rx(s, r'usb.?c') and rx(s, r'add to cart|buy now') and '$' in text(s)),
         'appstore_ratings': T(cat='navigate', diff='medium', apps=[APPS['App Store']],
             goal="In the App Store, open the Duolingo app's page and look at its ratings. Do not install it.", params=['Duolingo'],
-            check=lambda s, tr, c: in_app(s, 'App Store') and has(s, 'duolingo') and rx(s, r'ratings?') and rx(s, r"(what.s new|information|version history|preview|age)")),
+            check=lambda s, tr, c: in_app(s, 'App Store') and has(s, 'duolingo') and rx(s, r"(age rating|ratings & reviews|version history|what.s new)")),
         'appstore_developer': T(cat='info', diff='hard', apps=[APPS['App Store']],
             goal='In the App Store, find out which company develops the Duolingo app. Do not install it.', params=['Duolingo'],
             check=lambda s, tr, c: in_app(s, 'App Store') and has(s, 'duolingo, inc'),
@@ -152,8 +168,26 @@ def build(private=None):
         'gmail_open_email': T(cat='navigate', diff='medium', apps=[APPS['Gmail']],
             goal='In Gmail, find and open an email from GitHub.', params=['GitHub', 'from:github'],
             check=lambda s, tr, c: in_app(s, 'Gmail') and has(s, 'github') and rx(s, r'\breply\b') and rx(s, r'(forward|reply all|more options)')),
+        # ---------------------------------------------------------------- simulator-only (stock sample data)
+        'sim_contact_company': T(devices=SIM, cat='reasoning', diff='hard', apps=[APPS['Contacts']],
+            goal='In Contacts, find which contact works at Creative Consulting and open their contact card.', params=['Creative Consulting'],
+            check=lambda s, tr, c: in_app(s, 'Contacts') and has(s, 'kate bell') and has(s, 'creative consulting') and rx(s, r'(mobile|phone|email|call|message)'),
+            answer=dict(q='Who works at Creative Consulting?', options=['Kate Bell', 'John Appleseed', 'Anna Haro', 'Daniel Higgins'], correct='Kate Bell')),
+        'sim_contact_phone': T(devices=SIM, cat='info', diff='medium', apps=[APPS['Contacts']],
+            goal="In Contacts, open John Appleseed's contact card to see his phone number.", params=['John Appleseed'],
+            check=lambda s, tr, c: in_app(s, 'Contacts') and has(s, 'john appleseed') and rx(s, r'888.?555.?5512')),
+        'sim_reminder_create': T(devices=SIM, cat='write', diff='medium', apps=[APPS['Reminders']],
+            goal='Create a new reminder whose title is exactly: Buy oat milk.', params=['Buy oat milk'],
+            check=lambda s, tr, c: in_app(s, 'Reminders') and 'Buy oat milk' in text(s)),
+        'sim_calendar_date': T(devices=SIM, cat='navigate', diff='hard', apps=[APPS['Calendar']],
+            goal='In Calendar, show the day view for December 25, 2026.',
+            check=lambda s, tr, c: in_app(s, 'Calendar') and rx(s, r'(december 25|dec 25|25 december)') and rx(s, r'2026')),
+        'sim_safari_capital': T(devices=SHARED, cat='info', diff='medium', apps=[APPS['Safari']],
+            goal='Using Safari, find the capital city of Australia.', params=['capital of Australia'],
+            check=lambda s, tr, c: in_app(s, 'Safari') and has(s, 'canberra'),
+            answer=dict(q='What is the capital of Australia?', options=['Sydney', 'Melbourne', 'Canberra', 'Perth'], correct='Canberra')),
         # ---------------------------------------------------------------- infeasible (OSWorld-style): the right move is to say so
-        'infeasible_missing_app': T(cat='infeasible', diff='medium', apps=[], infeasible=True,
+        'infeasible_missing_app': T(devices=SHARED, cat='infeasible', diff='medium', apps=[], infeasible=True,
             goal='Open Spotify and play my Liked Songs playlist.',
             check=lambda s, tr, c: False),
         'infeasible_missing_feature': T(cat='infeasible', diff='hard', apps=[APPS['Settings']], infeasible=True, params=['Display'],
@@ -175,7 +209,7 @@ def build(private=None):
                 check=lambda s, tr, c: app_of(s) == PORTAL and has(s, 'attendance | infinite campus')),
             'portal_lowest_class': T(cat='reasoning', diff='hard', apps=[PORTAL], private=True,
                 goal='In the school portal app, figure out which of my classes has the lowest current term grade, and open that class.',
-                check=lambda s, tr, c: app_of(s) == PORTAL and has(s, sp['lowest_class']) and not has(s, 'cumulative gpa') and rx(s, r'(curriculum|assignments|grades)'),
+                check=lambda s, tr, c: app_of(s) == PORTAL and has(s, sp['lowest_class'], 'curriculum') and not any(has(s, o) for o in sp['class_options'] if o != sp['lowest_class']),
                 answer=dict(q='Which class has the lowest current term grade?', options=sp['class_options'], correct=sp['lowest_class'])),
         })
     for k, t in tasks.items():

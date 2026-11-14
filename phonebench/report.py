@@ -37,7 +37,7 @@ def q(xs, f):
 
 def load(release):
     rows = [json.loads(l) for l in open(Path(release) / 'trials.jsonl')]
-    scored = [r for r in rows if r['status'] == 'finished' and 'excluded_reason' not in r and r.get('obs_mode', 'tree+image') == 'tree+image']
+    scored = [r for r in rows if r['status'] == 'finished' and 'excluded_reason' not in r and r.get('obs_mode', 'tree+image') == 'tree+image' and r.get('device_kind', 'phone') == 'phone']
     return rows, scored
 
 

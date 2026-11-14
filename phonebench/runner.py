@@ -52,7 +52,7 @@ def run_trial(task, provider, repeat, out, time_limit=240, stuck_n=6, obs_mode='
     folder.mkdir(parents=True, mode=0o700)
     os.environ['PHONEBENCH_AUDIT'] = str(folder / 'device-commands.jsonl')
     r = {'bench': 'phonebench', 'version': 7, 'task': task['id'], 'category': task['cat'], 'difficulty': task['diff'],
-         'infeasible': task['infeasible'], 'provider': provider, 'repeat': repeat, 'obs_mode': obs_mode,
+         'infeasible': task['infeasible'], 'device_kind': os.environ.get('PHONEBENCH_DEVICE_KIND', 'phone'), 'provider': provider, 'repeat': repeat, 'obs_mode': obs_mode,
          'time_limit_s': time_limit, 'stuck_n': stuck_n, 'steps': [], 'status': 'resetting'}
     d.save_json(folder / 'trial.json', r)
     t0 = time.time()
@@ -67,7 +67,7 @@ def run_trial(task, provider, repeat, out, time_limit=240, stuck_n=6, obs_mode='
         s, image, obs = d.observe(folder, 0)
         i = 0
         while True:
-            trace.append((d.app_of(s), s.get('text', '')))
+            trace.append((d.app_of(s), s.get('text', ''), None))
             if Path('STOP').exists():
                 r['stop_reason'] = 'operator_stop'; break
             if time.time() - start - RateLimited.waited_ms / 1000 > time_limit:
@@ -93,6 +93,7 @@ def run_trial(task, provider, repeat, out, time_limit=240, stuck_n=6, obs_mode='
                 r['stop_reason'] = 'invalid_choice'; break
             a = opts[key]
             step['action'] = a
+            trace[-1] = (trace[-1][0], trace[-1][1], a.get('label') if a['kind'] == 'tap' else None)
             sig = hashlib.sha256((env._canon(s) + a['description'].split(' at ')[0]).encode()).hexdigest()
             seen[sig] = seen.get(sig, 0) + 1
             step['repeat_count'] = seen[sig]
@@ -143,7 +144,7 @@ def run_trial(task, provider, repeat, out, time_limit=240, stuck_n=6, obs_mode='
         r['failed_actions'] = sum(1 for x in steps if x.get('action_ok') is False)
         d.save_json(folder / 'trial.json', r)
         # A video left playing becomes a picture-in-picture overlay on every later trial: stop it.
-        if any(a == env.APPS['YouTube'] for a, _ in trace):
+        if any(x[0] == env.APPS['YouTube'] for x in trace):
             try:
                 env.reset_app(env.APPS['YouTube'])
                 d.driver('press', 'home', timeout=30)
@@ -172,10 +173,12 @@ def main():
     ap.add_argument('--out', default='runs')
     ap.add_argument('--seed', type=int, default=7)
     ap.add_argument('--private', default='config/private.json')
+    ap.add_argument('--device-kind', choices=['phone', 'sim'], default='phone')
     a = ap.parse_args()
     private = load_private(a.private)
     suite = build(private)
-    ids = [t for t in (a.tasks or suite) if t in suite and t not in a.exclude]
+    ids = [t for t in (a.tasks or suite) if t in suite and t not in a.exclude and a.device_kind in suite[t]['devices']]
+    os.environ['PHONEBENCH_DEVICE_KIND'] = a.device_kind
     done = set()
     for f in Path(a.out).glob('*/trial.json'):
         o = json.loads(f.read_text())

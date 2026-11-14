@@ -47,15 +47,17 @@ def regrade(folder, suite, private):
     task = suite.get(tid)
     rec = {'trial': folder.name.split('-', 2)[0] + '-' + folder.name.split('-', 2)[1], 'task': tid, 'provider': prov,
            'repeat': raw.get('repeat', 0), 'version': raw.get('version', 6), 'obs_mode': raw.get('obs_mode', 'tree+image'),
-           'status': raw.get('status'), 'category': task['cat'] if task else raw.get('category'),
+           'device_kind': raw.get('device_kind', 'phone'), 'status': raw.get('status'), 'category': task['cat'] if task else raw.get('category'),
            'difficulty': task['diff'] if task else raw.get('difficulty'), 'infeasible': bool(task and task['infeasible'])}
     if raw.get('status') != 'finished' or task is None:
         rec['excluded_reason'] = 'not in suite' if task is None else (raw.get('error') or raw.get('status'))[:160]
         return rec
     snaps = load_trace(folder)
     trace, reached = [], None
+    acts = {x['index']: x.get('action') or {} for x in raw.get('steps', [])}
     for i, s in enumerate(snaps):
-        trace.append(((s.get('header') or {}).get('app', {}).get('id'), s.get('text', '')))
+        a = acts.get(i, {})
+        trace.append(((s.get('header') or {}).get('app', {}).get('id'), s.get('text', ''), a.get('label') if a.get('kind') == 'tap' else None))
         if reached is None and task['check'](s, list(trace), private):
             reached = i
     final_ok = bool(snaps and task['check'](snaps[-1], trace, private))
@@ -67,7 +69,7 @@ def regrade(folder, suite, private):
         'answer_correct': raw.get('answer_correct'),
         'n_actions': sum(1 for x in steps if (x.get('action') or {}).get('kind') not in (None, 'finish', 'infeasible')),
         'action_kinds': [(x.get('action') or {}).get('kind') for x in steps if x.get('action')],
-        'apps_visited': sorted({a for a, _ in trace if a}),
+        'apps_visited': sorted({x[0] for x in trace if x[0]}),
         'task_s': round(raw.get('task_ms', 0) / 1000, 2), 'reset_s': round(raw.get('reset_ms', 0) / 1000, 2),
         'model_s': round(raw.get('model_ms', 0) / 1000, 3), 'action_s': round(raw.get('action_ms', 0) / 1000, 2),
         'observe_s': round(sum((x.get('next_observation') or {}).get('observation_ms', 0) or x.get('observe_ms', 0) for x in steps) / 1000, 2),

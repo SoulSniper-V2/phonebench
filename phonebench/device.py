@@ -13,7 +13,7 @@ import time
 
 from .providers import redact
 
-SESSION = "phonebench"
+SESSION = os.environ.get("PHONEBENCH_SESSION", "phonebench")
 
 
 def binary():

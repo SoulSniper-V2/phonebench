@@ -46,7 +46,7 @@ ROOTS = {
                           steps=[('tap', ['Pause video', 'Pause']), ('tap', ['Collapse video']), ('tap', ['Close miniplayer', 'Close', 'Cancel', 'Back']), ('tab', ['Home'])]),
     APPS['X']: dict(marker=lambda s: _tab_selected(s, ('Home', 'Home tab')), steps=[('tap', ['Cancel', 'Back', 'Navigate up']), ('tab', ['Home', 'Home tab'])]),
     APPS['Reddit']: dict(marker=lambda s: _tab_selected(s, ('Home',)), steps=[('tap', ['Cancel', 'Back', 'Close']), ('tab', ['Home'])]),
-    APPS['App Store']: dict(marker=lambda s: any(label_of(e) == 'Today' and 'SELECTED' in (e.get('state') or '') for e in d.elements(s)), steps=[('tap', ['Cancel', 'Back']), ('tab', ['Today'])]),
+    APPS['App Store']: dict(marker=lambda s: any(label_of(e) == 'Today' and 'SELECTED' in (e.get('state') or '') for e in d.elements(s)), steps=[('tap', ['Cancel', 'Back']), ('tab', ['Search']), ('tap', ['Clear text', 'Cancel']), ('tab', ['Today'])]),
     APPS['Google Maps']: dict(marker=lambda s: any(label_of(e) in ('Explore', 'Explore tab') and 'SELECTED' in (e.get('state') or '') for e in d.elements(s)),
                               steps=[('tap', ['Close', 'Back', 'Cancel', 'Clear search']), ('tab', ['Explore', 'Explore tab'])]),
     APPS['Maps']: dict(marker=lambda s: not any(label_of(e) in ('Close', 'End', 'Clear') and visible(e) for e in d.elements(s)), steps=[('tap', ['Close', 'End', 'Clear', 'Cancel'])]),
