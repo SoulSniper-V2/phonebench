@@ -1,0 +1,177 @@
+{
+ "20261114-134258": {
+  "human_success": false,
+  "task": "amazon_product",
+  "provider": "gemini-decision-1",
+  "note": "Prime upsell interstitial; decline link below the fold; model swiped back repeatedly or stayed on the Amazon home sheet.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-134636": {
+  "human_success": false,
+  "task": "amazon_product",
+  "provider": "jev-1.14",
+  "note": "Prime upsell interstitial; decline link below the fold; model swiped back repeatedly or stayed on the Amazon home sheet.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-135612": {
+  "human_success": false,
+  "task": "portal_grade_lookup",
+  "provider": "jev-1.13",
+  "note": "Target class heading visible at the bottom edge but its grade rows are below the fold when FINISH was chosen.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-135736": {
+  "human_success": false,
+  "task": "gmail_open_email",
+  "provider": "jev-1.14",
+  "note": "Opened Apple Mail instead of Gmail (wrong app); a GitHub email is visible there.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-140105": {
+  "human_success": false,
+  "task": "gmail_open_email",
+  "provider": "jev-1.13",
+  "note": "Opened Apple Mail instead of Gmail (wrong app); a GitHub email is visible there.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-140130": {
+  "human_success": false,
+  "task": "portal_attendance",
+  "provider": "jev-1.14",
+  "note": "Tapped the home-page \"Attendance\" filter of the Recent Updates widget; the attendance page was never opened.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-140412": {
+  "human_success": false,
+  "task": "x_profile",
+  "provider": "jev-1.13",
+  "note": "Ended on the Timelines side panel; profile never reached.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-140733": {
+  "human_success": false,
+  "task": "amazon_product",
+  "provider": "jev-1.13",
+  "note": "Prime upsell interstitial; decline link below the fold; model swiped back repeatedly or stayed on the Amazon home sheet.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-141648": {
+  "human_success": false,
+  "task": "portal_attendance",
+  "provider": "jev-1.13",
+  "note": "Tapped the home-page \"Attendance\" filter of the Recent Updates widget; the attendance page was never opened.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-141714": {
+  "human_success": false,
+  "task": "gmaps_place",
+  "provider": "jev-1.14",
+  "note": "Opened Apple Maps instead of Google Maps (wrong app).",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-141906": {
+  "human_success": false,
+  "task": "settings_storage",
+  "provider": "jev-1.13",
+  "note": "Looped inside Battery settings; storage page never reached.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-141427": {
+  "human_success": true,
+  "task": "safari_fact",
+  "provider": "gemini-decision-1",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-134524": {
+  "human_success": true,
+  "task": "portal_assignment_score",
+  "provider": "gemini-decision-1",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-135133": {
+  "human_success": true,
+  "task": "maps_route",
+  "provider": "gemini-decision-1",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-134439": {
+  "human_success": true,
+  "task": "appstore_ratings",
+  "provider": "jev-1.13",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-142429": {
+  "human_success": true,
+  "task": "calc_expression",
+  "provider": "gemini-decision-1",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-142153": {
+  "human_success": true,
+  "task": "settings_battery_health",
+  "provider": "jev-1.14",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-134818": {
+  "human_success": true,
+  "task": "portal_grade_lookup",
+  "provider": "gemini-decision-1",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-135035": {
+  "human_success": true,
+  "task": "settings_os_version",
+  "provider": "jev-1.13",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-140350": {
+  "human_success": true,
+  "task": "stocks_detail",
+  "provider": "jev-1.14",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-142003": {
+  "human_success": true,
+  "task": "weather_city",
+  "provider": "jev-1.13",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-142243": {
+  "human_success": true,
+  "task": "portal_assignment_score",
+  "provider": "jev-1.13",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-141139": {
+  "human_success": true,
+  "task": "portal_attendance",
+  "provider": "gemini-decision-1",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-142535": {
+  "human_success": true,
+  "task": "stocks_detail",
+  "provider": "jev-1.13",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-141326": {
+  "human_success": true,
+  "task": "portal_assignment_score",
+  "provider": "jev-1.14",
+  "note": "Final screenshot shows the goal state.",
+  "auditor": "manual review of final screenshot and action log"
+ }
+}
