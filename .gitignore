@@ -1,0 +1,9 @@
+runs/
+config/private.json
+.env
+__pycache__/
+*.pyc
+.hill-climb/*/data/
+node_modules/
+site/.render/
+STOP

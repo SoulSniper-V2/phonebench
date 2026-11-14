@@ -1,0 +1,770 @@
+{
+ "release": "v0.6",
+ "n_trials": 58,
+ "n_scored": 51,
+ "n_tasks": 19,
+ "models": [
+  {
+   "id": "gemini-decision-1",
+   "label": "Gemini Decision 1",
+   "trials": 15,
+   "passes": 14,
+   "pass_rate": 0.9333333333333333,
+   "ci95": [
+    0.7018292244757601,
+    0.9881334113938051
+   ],
+   "task_macro_pass_rate": 0.9333333333333333,
+   "tasks_covered": 15,
+   "median_task_s_pass": 20.96,
+   "median_task_s": 20.99,
+   "median_actions_pass": 4.0,
+   "decision_ms_p50": 925.3,
+   "decision_ms_p90": 1299.42,
+   "decision_ms_p99": 1623.656,
+   "median_input_tokens": 14221.0,
+   "median_output_tokens": 0.0,
+   "time_split": {
+    "model": 0.25705799943961893,
+    "device": 0.7053516391145979
+   },
+   "false_finish_rate": 0.0,
+   "failure_modes": {
+    "pass": 14,
+    "stuck_loop": 1
+   },
+   "by_category": {
+    "compute": [
+     1,
+     1
+    ],
+    "info": [
+     6,
+     6
+    ],
+    "navigate": [
+     6,
+     7
+    ],
+    "write": [
+     1,
+     1
+    ]
+   },
+   "by_difficulty": {
+    "easy": [
+     3,
+     3
+    ],
+    "medium": [
+     7,
+     7
+    ],
+    "hard": [
+     4,
+     5
+    ]
+   }
+  },
+  {
+   "id": "jev-1.14",
+   "label": "Jev 1.14",
+   "trials": 18,
+   "passes": 14,
+   "pass_rate": 0.7777777777777778,
+   "ci95": [
+    0.5478497354769452,
+    0.90999218086618
+   ],
+   "task_macro_pass_rate": 0.7777777777777778,
+   "tasks_covered": 18,
+   "median_task_s_pass": 13.465,
+   "median_task_s": 15.545,
+   "median_actions_pass": 3.5,
+   "decision_ms_p50": 219.3,
+   "decision_ms_p90": 440.2,
+   "decision_ms_p99": 593.892,
+   "median_input_tokens": 17847.0,
+   "median_output_tokens": 3281.5,
+   "time_split": {
+    "model": 0.07427371368568428,
+    "device": 0.8807517298941869
+   },
+   "false_finish_rate": 0.16666666666666666,
+   "failure_modes": {
+    "pass": 14,
+    "false_finish": 3,
+    "stuck_loop": 1
+   },
+   "by_category": {
+    "compute": [
+     1,
+     1
+    ],
+    "info": [
+     7,
+     7
+    ],
+    "navigate": [
+     5,
+     9
+    ],
+    "write": [
+     1,
+     1
+    ]
+   },
+   "by_difficulty": {
+    "easy": [
+     2,
+     3
+    ],
+    "medium": [
+     8,
+     10
+    ],
+    "hard": [
+     4,
+     5
+    ]
+   }
+  },
+  {
+   "id": "jev-1.13",
+   "label": "Jev 1.13",
+   "trials": 18,
+   "passes": 12,
+   "pass_rate": 0.6666666666666666,
+   "ci95": [
+    0.4374906934425036,
+    0.8372144563633714
+   ],
+   "task_macro_pass_rate": 0.6666666666666666,
+   "tasks_covered": 18,
+   "median_task_s_pass": 17.14,
+   "median_task_s": 18.995,
+   "median_actions_pass": 4.0,
+   "decision_ms_p50": 210.8,
+   "decision_ms_p90": 435.66,
+   "decision_ms_p99": 885.146,
+   "median_input_tokens": 20279.0,
+   "median_output_tokens": 3285.0,
+   "time_split": {
+    "model": 0.06447884291141039,
+    "device": 0.8974952769821438
+   },
+   "false_finish_rate": 0.16666666666666666,
+   "failure_modes": {
+    "pass": 12,
+    "false_finish": 3,
+    "stuck_loop": 3
+   },
+   "by_category": {
+    "compute": [
+     1,
+     1
+    ],
+    "info": [
+     5,
+     7
+    ],
+    "navigate": [
+     5,
+     9
+    ],
+    "write": [
+     1,
+     1
+    ]
+   },
+   "by_difficulty": {
+    "easy": [
+     2,
+     3
+    ],
+    "medium": [
+     6,
+     10
+    ],
+    "hard": [
+     4,
+     5
+    ]
+   }
+  }
+ ],
+ "matrix": {
+  "amazon_product": {
+   "jev-1.14": [
+    [
+     false,
+     58.98,
+     15,
+     "stuck_loop"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     false,
+     68.7,
+     17,
+     "stuck_loop"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     false,
+     23.51,
+     7,
+     "stuck_loop"
+    ]
+   ]
+  },
+  "appstore_ratings": {
+   "jev-1.14": [
+    [
+     true,
+     23.31,
+     5,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     26.9,
+     6,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     22.13,
+     5,
+     "pass"
+    ]
+   ]
+  },
+  "calc_expression": {
+   "jev-1.14": [
+    [
+     true,
+     27.02,
+     9,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     24.49,
+     10,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     53.29,
+     16,
+     "pass"
+    ]
+   ]
+  },
+  "gmail_open_email": {
+   "jev-1.14": [
+    [
+     false,
+     22.43,
+     5,
+     "false_finish"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     false,
+     6.14,
+     1,
+     "false_finish"
+    ]
+   ],
+   "gemini-decision-1": []
+  },
+  "gmaps_place": {
+   "jev-1.14": [
+    [
+     false,
+     44.53,
+     7,
+     "false_finish"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     46.29,
+     9,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     27.33,
+     4,
+     "pass"
+    ]
+   ]
+  },
+  "maps_route": {
+   "jev-1.14": [
+    [
+     true,
+     26.32,
+     5,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     26.55,
+     5,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     31.01,
+     5,
+     "pass"
+    ]
+   ]
+  },
+  "notes_create": {
+   "jev-1.14": [
+    [
+     true,
+     12.22,
+     3,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     13.56,
+     3,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     20.93,
+     4,
+     "pass"
+    ]
+   ]
+  },
+  "portal_assignment_score": {
+   "jev-1.14": [
+    [
+     true,
+     10.41,
+     3,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     17.23,
+     4,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     16.51,
+     4,
+     "pass"
+    ]
+   ]
+  },
+  "portal_attendance": {
+   "jev-1.14": [
+    [
+     false,
+     8.12,
+     2,
+     "false_finish"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     false,
+     9.84,
+     2,
+     "false_finish"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     9.12,
+     2,
+     "pass"
+    ]
+   ]
+  },
+  "portal_grade_lookup": {
+   "jev-1.14": [
+    [
+     true,
+     14.08,
+     4,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     false,
+     20.76,
+     5,
+     "false_finish"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     20.99,
+     5,
+     "pass"
+    ]
+   ]
+  },
+  "reddit_community": {
+   "jev-1.14": [
+    [
+     true,
+     17.01,
+     5,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     17.05,
+     5,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     27.97,
+     6,
+     "pass"
+    ]
+   ]
+  },
+  "safari_fact": {
+   "jev-1.14": [
+    [
+     true,
+     12.85,
+     3,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     14.43,
+     3,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     18.88,
+     3,
+     "pass"
+    ]
+   ]
+  },
+  "settings_battery_health": {
+   "jev-1.14": [
+    [
+     true,
+     5.83,
+     1,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     23.13,
+     4,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     17.86,
+     4,
+     "pass"
+    ]
+   ]
+  },
+  "settings_os_version": {
+   "jev-1.14": [
+    [
+     true,
+     11.28,
+     3,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     7.91,
+     2,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     13.35,
+     3,
+     "pass"
+    ]
+   ]
+  },
+  "settings_storage": {
+   "jev-1.14": [
+    [
+     true,
+     11.84,
+     3,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     false,
+     44.76,
+     12,
+     "stuck_loop"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     35.49,
+     7,
+     "pass"
+    ]
+   ]
+  },
+  "stocks_detail": {
+   "jev-1.14": [
+    [
+     true,
+     9.32,
+     2,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     5.75,
+     1,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": [
+    [
+     true,
+     18.53,
+     4,
+     "pass"
+    ]
+   ]
+  },
+  "weather_city": {
+   "jev-1.14": [
+    [
+     true,
+     31.41,
+     6,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [
+    [
+     true,
+     16.17,
+     2,
+     "pass"
+    ]
+   ],
+   "gemini-decision-1": []
+  },
+  "x_profile": {
+   "jev-1.14": [],
+   "jev-1.13": [
+    [
+     false,
+     102.61,
+     13,
+     "stuck_loop"
+    ]
+   ],
+   "gemini-decision-1": []
+  },
+  "yt_creator_video": {
+   "jev-1.14": [
+    [
+     true,
+     24.45,
+     7,
+     "pass"
+    ]
+   ],
+   "jev-1.13": [],
+   "gemini-decision-1": []
+  }
+ },
+ "task_meta": {
+  "amazon_product": {
+   "category": "navigate",
+   "difficulty": "hard",
+   "infeasible": false
+  },
+  "appstore_ratings": {
+   "category": "navigate",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "calc_expression": {
+   "category": "compute",
+   "difficulty": "easy",
+   "infeasible": false
+  },
+  "gmail_open_email": {
+   "category": "navigate",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "gmaps_place": {
+   "category": "navigate",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "maps_route": {
+   "category": "navigate",
+   "difficulty": "hard",
+   "infeasible": false
+  },
+  "notes_create": {
+   "category": "write",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "portal_assignment_score": {
+   "category": "navigate",
+   "difficulty": "hard",
+   "infeasible": false
+  },
+  "portal_attendance": {
+   "category": "navigate",
+   "difficulty": "easy",
+   "infeasible": false
+  },
+  "portal_grade_lookup": {
+   "category": "info",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "reddit_community": {
+   "category": "navigate",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "safari_fact": {
+   "category": "info",
+   "difficulty": "hard",
+   "infeasible": false
+  },
+  "settings_battery_health": {
+   "category": "info",
+   "difficulty": "hard",
+   "infeasible": false
+  },
+  "settings_os_version": {
+   "category": "info",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "settings_storage": {
+   "category": "info",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "stocks_detail": {
+   "category": "info",
+   "difficulty": "easy",
+   "infeasible": false
+  },
+  "weather_city": {
+   "category": "info",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "x_profile": {
+   "category": "navigate",
+   "difficulty": "medium",
+   "infeasible": false
+  },
+  "yt_creator_video": {
+   "category": "navigate",
+   "difficulty": "medium",
+   "infeasible": false
+  }
+ },
+ "excluded": {
+  "running": 1,
+  "gemini: HTTP 429: {\"error\":{\"message\":\"Rate limit exceeded f": 2,
+  "phonedriver timed out; inspect the phone before retrying": 2,
+  "RESET_FAILED: root view of com.google.ios.youtube not verifi": 2
+ },
+ "ablation": {
+  "gemini-decision-1|tree+image": [
+   14,
+   15
+  ],
+  "jev-1.13|tree+image": [
+   12,
+   18
+  ],
+  "jev-1.14|tree+image": [
+   14,
+   18
+  ]
+ },
+ "dates": [
+  "20261114"
+ ]
+}

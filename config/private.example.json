@@ -1,0 +1,11 @@
+{
+  "school_portal": {
+    "class": "<a class name exactly as the portal shows it>",
+    "grade": "<that class's current term grade, e.g. 91.2>",
+    "grade_options": ["<correct grade first>%", "<distractor>%", "<distractor>%", "<distractor>%"],
+    "assignment_class": "<a class with scored assignments>",
+    "lowest_class": "<the class with the lowest term grade>",
+    "class_options": ["<every class name>"]
+  },
+  "pii_denylist": ["<your name>", "<your school>", "<student number>", "<phone number>", "<email>"]
+}

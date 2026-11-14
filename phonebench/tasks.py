@@ -1,0 +1,192 @@
+"""The PhoneBench task suite.
+
+Each task: a natural-language goal, the strings the "user" supplies (decision models choose among
+options; they cannot invent text), the apps whose state is reset first, and a programmatic check on
+the phone's state. Checks read the accessibility tree of the final screen and, for multi-app tasks,
+the trajectory. The model's own claim of success is never trusted.
+
+Tasks that touch the tester's personal data (a school portal) take their names, expected values and
+answer options from config/private.json, which is git-ignored. Without it those tasks are skipped.
+"""
+import json
+from pathlib import Path
+import re
+
+from .device import app_of, elements
+
+APPS = {
+    'Settings': 'com.apple.Preferences', 'Safari': 'com.apple.mobilesafari', 'App Store': 'com.apple.AppStore',
+    'Weather': 'com.apple.weather', 'Maps': 'com.apple.Maps', 'Google Maps': 'com.google.Maps',
+    'YouTube': 'com.google.ios.youtube', 'TikTok': 'com.zhiliaoapp.musically', 'X': 'com.atebits.Tweetie2',
+    'Reddit': 'com.reddit.Reddit', 'Amazon': 'com.amazon.Amazon', 'Gmail': 'com.google.Gmail',
+    'Notes': 'com.apple.mobilenotes', 'Stocks': 'com.apple.stocks', 'Calculator': 'com.apple.calculator',
+    'School portal': 'com.infinitecampus.student.campusportalhybrid', 'Calendar': 'com.apple.mobilecal',
+    'Clock': 'com.apple.mobiletimer', 'Photos': 'com.apple.mobileslideshow', 'Instagram': 'com.burbn.instagram',
+    'Uber Eats': 'com.ubercab.UberEats', 'DoorDash': 'doordash.DoorDashConsumer', 'Netflix': 'com.netflix.Netflix',
+    'ChatGPT': 'com.openai.chat', 'Discord': 'com.hammerandchisel.discord', 'Translate': 'com.apple.Translate',
+}
+PORTAL = APPS['School portal']
+
+
+def text(s):
+    return s.get('text', '')
+
+
+def has(s, *words):
+    t = text(s).lower()
+    return all(w.lower() in t for w in words)
+
+
+def rx(s, pattern):
+    return bool(re.search(pattern, text(s), re.I))
+
+
+def selected(s, label):
+    return any((e.get('label') or '') == label and 'SELECTED' in (e.get('state') or '') for e in elements(s))
+
+
+def in_app(s, name):
+    return app_of(s) == APPS[name]
+
+
+def visited(trace, name, *words):
+    """Did any earlier observation show app `name` with all `words` on screen?"""
+    return any(a == APPS[name] and all(w.lower() in t.lower() for w in words) for a, t in trace)
+
+
+def load_private(path='config/private.json'):
+    p = Path(path)
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+def T(**kw):
+    kw.setdefault('params', [])
+    kw.setdefault('answer', None)
+    kw.setdefault('infeasible', False)
+    kw.setdefault('private', False)
+    return kw
+
+
+def build(private=None):
+    tasks = {
+        # ---------------------------------------------------------------- media & social
+        'yt_creator_video': T(cat='navigate', diff='medium', apps=[APPS['YouTube']],
+            goal='On YouTube, find a video from MrBeast and start watching it.', params=['MrBeast'],
+            check=lambda s, tr, c: in_app(s, 'YouTube') and has(s, 'mrbeast') and rx(s, r'(collapse video|video player|pause|seek)')),
+        'yt_channel_videos_tab': T(cat='navigate', diff='hard', apps=[APPS['YouTube']],
+            goal="On YouTube, open MrBeast's channel page and switch to its Videos tab.", params=['MrBeast'],
+            check=lambda s, tr, c: in_app(s, 'YouTube') and has(s, 'mrbeast', 'subscribers') and selected(s, 'Videos')),
+        'x_profile': T(cat='navigate', diff='medium', apps=[APPS['X']],
+            goal='On X, open the profile page of @OpenAI. Do not follow, like, or post anything.', params=['OpenAI'],
+            check=lambda s, tr, c: in_app(s, 'X') and has(s, '@openai') and rx(s, r'followers')),
+        'reddit_community': T(cat='navigate', diff='medium', apps=[APPS['Reddit']],
+            goal='In the Reddit app, open the r/iphone community. Do not join it or post.', params=['r/iphone'],
+            check=lambda s, tr, c: in_app(s, 'Reddit') and rx(s, r'r/iphone\b') and rx(s, r'(members|weekly visitors|join|joined)')),
+        'reddit_sort_top': T(cat='navigate', diff='hard', apps=[APPS['Reddit']],
+            goal='In the Reddit app, open the r/iphone community and sort its posts by Top.', params=['r/iphone'],
+            check=lambda s, tr, c: in_app(s, 'Reddit') and rx(s, r'r/iphone\b') and rx(s, r'(sort[^"\n]{0,30}\btop\b|\btop posts\b|"top"[^\n]*selected)')),
+        # ---------------------------------------------------------------- everyday utilities
+        'weather_city': T(cat='info', diff='medium', apps=[APPS['Weather']],
+            goal='Check the current weather in Tokyo, Japan using the Weather app.', params=['Tokyo'],
+            check=lambda s, tr, c: in_app(s, 'Weather') and has(s, 'tokyo') and '°' in text(s)),
+        'maps_route': T(cat='navigate', diff='hard', apps=[APPS['Maps']],
+            goal='In Apple Maps, get driving directions from my current location to Raleigh-Durham International Airport. Show the route options; do not start navigation.',
+            params=['Raleigh-Durham International Airport', 'RDU'],
+            check=lambda s, tr, c: in_app(s, 'Maps') and rx(s, r'(raleigh|rdu)') and rx(s, r'\b\d+\s*(min|hr)\b') and rx(s, r'\bgo\b|routes?|drive')),
+        'maps_walking_coffee': T(cat='navigate', diff='hard', apps=[APPS['Maps']],
+            goal='In Apple Maps, find a coffee shop near me and show walking directions to it. Do not start navigation.', params=['coffee'],
+            check=lambda s, tr, c: in_app(s, 'Maps') and rx(s, r'walk') and rx(s, r'\b\d+\s*(min|hr)\b') and rx(s, r'(coffee|cafe|café|starbucks|espresso)')),
+        'gmaps_place': T(cat='navigate', diff='medium', apps=[APPS['Google Maps']],
+            goal='In Google Maps, find a coffee shop near me and open its place details.', params=['coffee'],
+            check=lambda s, tr, c: in_app(s, 'Google Maps') and rx(s, r'directions') and rx(s, r'(coffee|cafe|café|starbucks|espresso)') and rx(s, r'(overview|reviews|open|closed|hours)')),
+        'stocks_detail': T(cat='info', diff='easy', apps=[APPS['Stocks']],
+            goal='In the Stocks app, open the detail page for Apple (AAPL).', params=['AAPL'],
+            check=lambda s, tr, c: in_app(s, 'Stocks') and has(s, 'aapl', 'apple inc')),
+        'stocks_market_cap': T(cat='info', diff='hard', apps=[APPS['Stocks']],
+            goal="In the Stocks app, find Apple's (AAPL) market capitalization.", params=['AAPL'],
+            check=lambda s, tr, c: in_app(s, 'Stocks') and has(s, 'aapl') and rx(s, r'(mkt cap|market cap)')),
+        'calc_expression': T(cat='compute', diff='easy', apps=[APPS['Calculator']],
+            goal='Using Calculator, compute 17 × 23 + 5 and show the result.',
+            check=lambda s, tr, c: in_app(s, 'Calculator') and rx(s, r'\b396\b')),
+        'notes_create': T(cat='write', diff='medium', apps=[APPS['Notes']],
+            goal='Create a new note in Notes whose text is exactly: PhoneBench note.', params=['PhoneBench note'],
+            check=lambda s, tr, c: in_app(s, 'Notes') and 'PhoneBench note' in text(s)),
+        'cross_weather_to_note': T(cat='multi-app', diff='hard', apps=[APPS['Weather'], APPS['Notes']],
+            goal='First look up Tokyo in the Weather app. Then create a new note in Notes whose text is exactly: Tokyo weather checked.',
+            params=['Tokyo', 'Tokyo weather checked'],
+            check=lambda s, tr, c: in_app(s, 'Notes') and 'Tokyo weather checked' in text(s) and visited(tr, 'Weather', 'tokyo')),
+        'cross_appstore_to_web': T(cat='multi-app', diff='hard', apps=[APPS['App Store'], APPS['Safari']],
+            goal="Look up the Duolingo app in the App Store, then open Duolingo's website (duolingo.com) in Safari.",
+            params=['Duolingo', 'duolingo.com'],
+            check=lambda s, tr, c: in_app(s, 'Safari') and has(s, 'duolingo') and visited(tr, 'App Store', 'duolingo')),
+        # ---------------------------------------------------------------- settings (no toggles are ever offered)
+        'settings_os_version': T(cat='info', diff='medium', apps=[APPS['Settings']],
+            goal='Find out which iOS version this iPhone is running, using Settings.', params=['About'],
+            check=lambda s, tr, c: in_app(s, 'Settings') and has(s, 'ios version')),
+        'settings_battery_health': T(cat='info', diff='hard', apps=[APPS['Settings']],
+            goal="Find this iPhone's battery maximum capacity (battery health) in Settings.", params=['Battery Health'],
+            check=lambda s, tr, c: in_app(s, 'Settings') and has(s, 'maximum capacity')),
+        'settings_storage': T(cat='info', diff='medium', apps=[APPS['Settings']],
+            goal='Find out how much storage is used on this iPhone, using Settings.', params=['iPhone Storage'],
+            check=lambda s, tr, c: in_app(s, 'Settings') and rx(s, r'\d+(\.\d+)?\s*(gb|tb) of \d+')),
+        # ---------------------------------------------------------------- web & shopping research
+        'safari_fact': T(cat='info', diff='hard', apps=[APPS['Safari']],
+            goal='Using Safari, find the height of Mount Everest in metres.', params=['Mount Everest height', 'en.wikipedia.org/wiki/Mount_Everest'],
+            check=lambda s, tr, c: in_app(s, 'Safari') and rx(s, r'8,?84[89]'),
+            answer=dict(q='How tall is Mount Everest?', options=['6,190 m', '8,611 m', '8,849 m', '9,120 m'], correct='8,849 m')),
+        'safari_compare': T(cat='info', diff='hard', apps=[APPS['Safari']],
+            goal='Using Safari, find out which mountain is taller: K2 or Kangchenjunga.', params=['K2 height', 'Kangchenjunga height', 'K2 vs Kangchenjunga height'],
+            check=lambda s, tr, c: in_app(s, 'Safari') and rx(s, r'(8,?611|8,?586)'),
+            answer=dict(q='Which is taller?', options=['K2', 'Kangchenjunga', 'They are the same height'], correct='K2')),
+        'amazon_product': T(cat='navigate', diff='hard', apps=[APPS['Amazon']],
+            goal='On Amazon, search for a USB-C cable and open a product page to see its price. Do not add anything to the cart or buy anything.', params=['USB-C cable'],
+            check=lambda s, tr, c: in_app(s, 'Amazon') and rx(s, r'usb.?c') and rx(s, r'add to cart|buy now') and '$' in text(s)),
+        'appstore_ratings': T(cat='navigate', diff='medium', apps=[APPS['App Store']],
+            goal="In the App Store, open the Duolingo app's page and look at its ratings. Do not install it.", params=['Duolingo'],
+            check=lambda s, tr, c: in_app(s, 'App Store') and has(s, 'duolingo') and rx(s, r'ratings?') and rx(s, r"(what.s new|information|version history|preview|age)")),
+        'appstore_developer': T(cat='info', diff='hard', apps=[APPS['App Store']],
+            goal='In the App Store, find out which company develops the Duolingo app. Do not install it.', params=['Duolingo'],
+            check=lambda s, tr, c: in_app(s, 'App Store') and has(s, 'duolingo, inc'),
+            answer=dict(q='Who develops Duolingo?', options=['Duolingo, Inc.', 'Babbel GmbH', 'Google LLC', 'Rosetta Stone LLC'], correct='Duolingo, Inc.')),
+        # ---------------------------------------------------------------- communication (text-only observation)
+        'gmail_open_email': T(cat='navigate', diff='medium', apps=[APPS['Gmail']],
+            goal='In Gmail, find and open an email from GitHub.', params=['GitHub', 'from:github'],
+            check=lambda s, tr, c: in_app(s, 'Gmail') and has(s, 'github') and rx(s, r'\breply\b') and rx(s, r'(forward|reply all|more options)')),
+        # ---------------------------------------------------------------- infeasible (OSWorld-style): the right move is to say so
+        'infeasible_missing_app': T(cat='infeasible', diff='medium', apps=[], infeasible=True,
+            goal='Open Spotify and play my Liked Songs playlist.',
+            check=lambda s, tr, c: False),
+        'infeasible_missing_feature': T(cat='infeasible', diff='hard', apps=[APPS['Settings']], infeasible=True, params=['Display'],
+            goal="In Settings, set the iPhone's display refresh rate to exactly 240 Hz.",
+            check=lambda s, tr, c: False),
+    }
+    if private and private.get('school_portal'):
+        sp = private['school_portal']
+        tasks.update({
+            'portal_grade_lookup': T(cat='info', diff='medium', apps=[PORTAL], private=True,
+                goal=f"In the school portal app, find my current term grade in {sp['class']}.",
+                check=lambda s, tr, c: app_of(s) == PORTAL and has(s, sp['class'], sp['grade']),
+                answer=dict(q=f"What is the current term grade in {sp['class']}?", options=sp['grade_options'], correct=sp['grade_options'][0])),
+            'portal_assignment_score': T(cat='navigate', diff='hard', apps=[PORTAL], private=True,
+                goal=f"In the school portal app, open the {sp['assignment_class']} grade details and open one of its scored assignments so its score is shown.",
+                check=lambda s, tr, c: app_of(s) == PORTAL and has(s, sp['assignment_class']) and rx(s, r'(score|\d+\s*/\s*\d+)') and not has(s, 'cumulative gpa')),
+            'portal_attendance': T(cat='navigate', diff='easy', apps=[PORTAL], private=True,
+                goal='Open my attendance record in the school portal app.',
+                check=lambda s, tr, c: app_of(s) == PORTAL and has(s, 'attendance | infinite campus')),
+            'portal_lowest_class': T(cat='reasoning', diff='hard', apps=[PORTAL], private=True,
+                goal='In the school portal app, figure out which of my classes has the lowest current term grade, and open that class.',
+                check=lambda s, tr, c: app_of(s) == PORTAL and has(s, sp['lowest_class']) and not has(s, 'cumulative gpa') and rx(s, r'(curriculum|assignments|grades)'),
+                answer=dict(q='Which class has the lowest current term grade?', options=sp['class_options'], correct=sp['lowest_class'])),
+        })
+    for k, t in tasks.items():
+        t['id'] = k
+    return tasks
+
+
+# The v6 run used provisional ids; this maps them onto the public ids above.
+LEGACY_IDS = {
+    'yt_mrbeast_video': 'yt_creator_video', 'tiktok_user': 'tiktok_profile', 'x_profile_openai': 'x_profile', 'reddit_iphone_sub': 'reddit_community',
+    'weather_tokyo': 'weather_city', 'maps_rdu_directions': 'maps_route', 'gmaps_coffee': 'gmaps_place', 'stocks_aapl': 'stocks_detail',
+    'settings_ios_version': 'settings_os_version', 'safari_everest': 'safari_fact', 'amazon_usbc': 'amazon_product',
+    'appstore_duolingo': 'appstore_ratings', 'gmail_github_email': 'gmail_open_email',
+}
