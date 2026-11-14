@@ -142,6 +142,13 @@ def run_trial(task, provider, repeat, out, time_limit=240, stuck_n=6, obs_mode='
         r['device_calls'] = sum(1 for _ in open(audit)) if audit.exists() else 0
         r['failed_actions'] = sum(1 for x in steps if x.get('action_ok') is False)
         d.save_json(folder / 'trial.json', r)
+        # A video left playing becomes a picture-in-picture overlay on every later trial: stop it.
+        if any(a == env.APPS['YouTube'] for a, _ in trace):
+            try:
+                env.reset_app(env.APPS['YouTube'])
+                d.driver('press', 'home', timeout=30)
+            except RuntimeError:
+                pass
         try:
             d.driver('release', timeout=10)
         except RuntimeError:
