@@ -320,5 +320,47 @@
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
   "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-162319": {
+  "human_success": true,
+  "task": "sim_calendar_date",
+  "provider": "jev-1.14",
+  "note": "Stuck on Dec 17, 2026 with the Calendar search keyboard open; Dec 25 never shown.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-162418": {
+  "human_success": true,
+  "task": "sim_contact_phone",
+  "provider": "jev-1.13",
+  "note": "Contact card shows (888) 555-5512 (grader regex fixed to accept \"(888) 555\").",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-162531": {
+  "human_success": true,
+  "task": "sim_contact_phone",
+  "provider": "jev-1.14",
+  "note": "Contact card shows (888) 555-5512 (grader regex fixed to accept \"(888) 555\").",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-162742": {
+  "human_success": false,
+  "task": "sim_calendar_date",
+  "provider": "jev-1.13",
+  "note": "Stuck on Dec 17, 2026 with the Calendar search keyboard open; Dec 25 never shown.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-163004": {
+  "human_success": true,
+  "task": "sim_reminder_create",
+  "provider": "jev-1.14",
+  "note": "Finished on the lists overview; the new reminder is not visible.",
+  "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-163504": {
+  "human_success": false,
+  "task": "sim_reminder_create",
+  "provider": "jev-1.13",
+  "note": "Finished on the lists overview; the new reminder is not visible.",
+  "auditor": "manual review of final screenshot and action log"
  }
 }

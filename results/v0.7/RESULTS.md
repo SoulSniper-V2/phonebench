@@ -1,6 +1,6 @@
 # PhoneBench results — v0.7
 
-87 scored trials on a physical iPhone, 30 tasks, 3 decision models. 25 trials excluded for harness reasons (listed at the end), never counted as model failures.
+87 scored trials on a physical iPhone, 30 tasks, 3 decision models. 30 trials excluded for harness reasons (listed at the end), never counted as model failures.
 
 | Rank | Model | Score (task-macro) | Pass / trials | 95% CI | Median time to pass | Median actions to pass | Decision p50 / p90 | Input tokens / task | Model share of time | False finish rate |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -74,13 +74,15 @@
 | Model | Observation | Pass / trials |
 |---|---|---|
 | Gemini Decision 1 | tree+image | 23/27 |
-| Jev 1.13 | tree+image | 27/39 |
-| Jev 1.14 | tree+image | 26/37 |
+| Jev 1.13 | tree+image | 28/39 |
+| Jev 1.14 | tree+image | 28/36 |
 
 ## Excluded trials
 
+- 6 × task not available on sim
 - 2 × running
 - 2 × gemini: HTTP 429: {"error":{"message":"Rate limit exceeded f
 - 2 × phonedriver timed out; inspect the phone before retrying
 - 2 × RESET_FAILED: root view of com.google.ios.youtube not verifi
-- 1 × resetting
+- 1 × error: device ios:<device> disconnected
+hin

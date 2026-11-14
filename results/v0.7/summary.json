@@ -1,6 +1,6 @@
 {
  "release": "v0.7",
- "n_trials": 112,
+ "n_trials": 117,
  "n_scored": 87,
  "n_tasks": 30,
  "models": [
@@ -1148,7 +1148,8 @@
   "gemini: HTTP 429: {\"error\":{\"message\":\"Rate limit exceeded f": 2,
   "phonedriver timed out; inspect the phone before retrying": 2,
   "RESET_FAILED: root view of com.google.ios.youtube not verifi": 2,
-  "resetting": 1
+  "task not available on sim": 6,
+  "error: device ios:<device> disconnected\nhin": 1
  },
  "ablation": {
   "gemini-decision-1|tree+image": [
@@ -1156,12 +1157,12 @@
    27
   ],
   "jev-1.13|tree+image": [
-   27,
+   28,
    39
   ],
   "jev-1.14|tree+image": [
-   26,
-   37
+   28,
+   36
   ]
  },
  "dates": [

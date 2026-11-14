@@ -49,6 +49,9 @@ def regrade(folder, suite, private):
            'repeat': raw.get('repeat', 0), 'version': raw.get('version', 6), 'obs_mode': raw.get('obs_mode', 'tree+image'),
            'device_kind': raw.get('device_kind', 'phone'), 'status': raw.get('status'), 'category': task['cat'] if task else raw.get('category'),
            'difficulty': task['diff'] if task else raw.get('difficulty'), 'infeasible': bool(task and task['infeasible'])}
+    if task is not None and rec['device_kind'] not in task['devices']:
+        rec['excluded_reason'] = f"task not available on {rec['device_kind']}"
+        return rec
     if raw.get('status') != 'finished' or task is None:
         rec['excluded_reason'] = 'not in suite' if task is None else (raw.get('error') or raw.get('status'))[:160]
         return rec
