@@ -70,8 +70,15 @@ class Grading(unittest.TestCase):
 
     def test_multi_app_needs_trajectory(self):
         s = snap(tasks.APPS['Notes'], 'Tokyo weather checked')
-        self.assertFalse(self.check('cross_weather_to_note', s, [(tasks.APPS['Notes'], '')]))
-        self.assertTrue(self.check('cross_weather_to_note', s, [(tasks.APPS['Weather'], 'Tokyo 12°'), (tasks.APPS['Notes'], '')]))
+        self.assertFalse(self.check('cross_weather_to_note', s, [(tasks.APPS['Notes'], '', None)]))
+        self.assertTrue(self.check('cross_weather_to_note', s, [(tasks.APPS['Weather'], 'Tokyo 12°', None), (tasks.APPS['Notes'], '', None)]))
+
+    def test_sort_judged_by_last_choice(self):
+        R = tasks.APPS['Reddit']
+        s = snap(R, 'r/iphone Feed options')
+        self.assertTrue(self.check('reddit_sort_top', s, [(R, '', 'Feed options'), (R, '', 'Top'), (R, '', None)]))
+        self.assertFalse(self.check('reddit_sort_top', s, [(R, '', 'Top'), (R, '', 'New')]))
+        self.assertFalse(self.check('reddit_sort_top', s, [(R, '', None)]))
 
     def test_private_tasks_only_with_config(self):
         self.assertIn('portal_grade_lookup', self.suite)
