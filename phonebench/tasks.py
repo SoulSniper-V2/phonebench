@@ -164,11 +164,11 @@ def build(private=None):
         sp = private['school_portal']
         tasks.update({
             'portal_grade_lookup': T(cat='info', diff='medium', apps=[PORTAL], private=True,
-                goal=f"In the school portal app, find my current term grade in {sp['class']}.",
+                goal=f"In the school portal app, find my current term grade in {sp['class']}.", public_goal='In the school portal app, find my current term grade in <a named class>.',
                 check=lambda s, tr, c: app_of(s) == PORTAL and has(s, sp['class'], sp['grade']),
                 answer=dict(q=f"What is the current term grade in {sp['class']}?", options=sp['grade_options'], correct=sp['grade_options'][0])),
             'portal_assignment_score': T(cat='navigate', diff='hard', apps=[PORTAL], private=True,
-                goal=f"In the school portal app, open the {sp['assignment_class']} grade details and open one of its scored assignments so its score is shown.",
+                goal=f"In the school portal app, open the {sp['assignment_class']} grade details and open one of its scored assignments so its score is shown.", public_goal='In the school portal app, open <a named class>\'s grade details and open one of its scored assignments so its score is shown.',
                 check=lambda s, tr, c: app_of(s) == PORTAL and has(s, sp['assignment_class']) and rx(s, r'(score|\d+\s*/\s*\d+)') and not has(s, 'cumulative gpa')),
             'portal_attendance': T(cat='navigate', diff='easy', apps=[PORTAL], private=True,
                 goal='Open my attendance record in the school portal app.',
