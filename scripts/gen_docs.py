@@ -10,7 +10,7 @@ from phonebench.tasks import build  # noqa: E402
 PLACEHOLDER = {'school_portal': {'class': '<class>', 'grade': '<grade>', 'grade_options': ['<grade>'], 'assignment_class': '<class>',
                                  'lowest_class': '<class>', 'class_options': ['<class>']}}
 suite = build(PLACEHOLDER)
-cats = ['navigate', 'info', 'reasoning', 'multi-app', 'compute', 'write', 'infeasible']
+cats = ['navigate', 'info', 'reasoning', 'multi-app', 'compute', 'write', 'infeasible', 'judged']
 o = ['# Tasks', '',
      f'{len(suite)} tasks across {len({a for t in suite.values() for a in t["apps"]})} apps. Every task starts on the Home screen after its apps are '
      'reset to a verified root view. The model sees only the goal; there are no per-task hints or click recipes.', '',
@@ -28,7 +28,7 @@ for c in cats:
         goal = t.get('public_goal') or t['goal']
         if t['private']:
             goal = goal.replace('<class>', '<a named class>')
-        check = 'says INFEASIBLE' if t['infeasible'] else ('final screen + trajectory' if t['cat'] == 'multi-app' else 'final screen')
+        check = 'reviewer rubric (scored separately)' if t.get('judged') else 'says INFEASIBLE' if t['infeasible'] else ('final screen + trajectory' if t['cat'] == 'multi-app' else 'final screen')
         ask = 'multiple choice' if t['answer'] else ''
         o.append(f"| `{t['id']}` | {t['diff']} | {goal}{' *(private config)*' if t['private'] else ''} | {', '.join(f'`{p}`' for p in t['params']) if not t['private'] else '–'} | {check} | {ask} |")
     o.append('')

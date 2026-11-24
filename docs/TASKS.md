@@ -1,6 +1,6 @@
 # Tasks
 
-35 tasks across 18 apps. Every task starts on the Home screen after its apps are reset to a verified root view. The model sees only the goal; there are no per-task hints or click recipes.
+41 tasks across 20 apps. Every task starts on the Home screen after its apps are reset to a verified root view. The model sees only the goal; there are no per-task hints or click recipes.
 
 **Typeable strings** are the text the user supplies. Decision models choose among options and cannot invent text, so any text a task needs is offered as an option. All other actions are generic and shared by every task.
 
@@ -9,8 +9,8 @@
 | Difficulty | Count |
 |---|---|
 | easy | 3 |
-| medium | 15 |
-| hard | 17 |
+| medium | 17 |
+| hard | 21 |
 
 ## navigate
 
@@ -81,3 +81,14 @@
 |---|---|---|---|---|---|
 | `infeasible_missing_app` | medium | Open Spotify and play my Liked Songs playlist. |  | says INFEASIBLE |  |
 | `infeasible_missing_feature` | hard | In Settings, set the iPhone's display refresh rate to exactly 240 Hz. | `Display` | says INFEASIBLE |  |
+
+## judged
+
+| Task | Difficulty | Goal | Typeable strings | Pass check | Asks |
+|---|---|---|---|---|---|
+| `judged_veg_dinner` | hard | Find a good vegetarian dinner option I could get delivered tonight, and stop on the menu item. | `vegetarian` | reviewer rubric (scored separately) |  |
+| `judged_best_coffee` | hard | Using Google Maps, find the best-reviewed coffee shop near me and open its page. | `coffee` | reviewer rubric (scored separately) |  |
+| `judged_grade_attention` | hard | In the school portal app, figure out which class needs the most attention right now and open the assignment that is hurting that grade the most. *(private config)* | – | reviewer rubric (scored separately) |  |
+| `judged_news_tech` | medium | Using Safari, find a technology news story published today and open the article itself. | `technology news`, `news.ycombinator.com` | reviewer rubric (scored separately) |  |
+| `judged_reddit_useful` | hard | On Reddit, find a post with genuinely useful advice for improving iPhone battery life and open it. | `r/iphone`, `battery tips` | reviewer rubric (scored separately) |  |
+| `judged_youtube_tutorial` | medium | On YouTube, find a short tutorial (under 10 minutes) on how to change a car tire and start playing it. | `how to change a tire` | reviewer rubric (scored separately) |  |

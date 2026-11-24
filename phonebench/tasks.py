@@ -50,6 +50,30 @@ def selected(s, label):
     return any(re.match(re.escape(label) + r'(,|$)', e.get('label') or '') and 'SELECTED' in (e.get('state') or '') for e in elements(s))
 
 
+def reminder_count(screen_text):
+    """Total in the list overview ("Reminders, 5 reminders" / "All, 6 reminders"), or None if not on screen."""
+    m = re.findall(r'(?:All|Reminders), (\d+) reminders', screen_text)
+    return max(map(int, m)) if m else None
+
+
+def count_rose(trace, fn):
+    """A count read off the screen went up during the trial: state-based evidence that survives leftovers
+    from earlier trials (which a 'title is on screen' check would wrongly accept)."""
+    xs = [v for v in (fn(x[1]) for x in trace) if v is not None]
+    return len(xs) >= 2 and max(xs[1:]) > xs[0]
+
+
+def reminder_created(trace, title):
+    """The overview count rose, or (no overview seen) the title was typed into a focused Title field and the
+    final list shows it as an item."""
+    if count_rose(trace, reminder_count):
+        return True
+    if any(reminder_count(x[1]) is not None for x in trace):
+        return False
+    typed = any(f'textbox "Title" "{title}" focused' in x[1] for x in trace)
+    return typed and f'cell "{title}, Incomplete"' in trace[-1][1]
+
+
 def in_app(s, name):
     return app_of(s) == APPS[name]
 
@@ -77,6 +101,10 @@ def T(**kw):
     kw.setdefault('infeasible', False)
     kw.setdefault('private', False)
     kw.setdefault('devices', ('phone',))
+    kw.setdefault('judged', False)
+    kw.setdefault('rubric', None)
+    if kw['judged']:
+        kw.setdefault('check', lambda s, tr, c: False)
     return kw
 
 
@@ -108,7 +136,7 @@ def build(private=None):
             check=lambda s, tr, c: in_app(s, 'Maps') and rx(s, r'(raleigh|rdu)') and rx(s, r'\b\d+\s*(min|hr)\b') and rx(s, r'\bgo\b|routes?|drive')),
         'maps_walking_coffee': T(cat='navigate', diff='hard', apps=[APPS['Maps']],
             goal='In Apple Maps, find a coffee shop near me and show walking directions to it. Do not start navigation.', params=['coffee'],
-            check=lambda s, tr, c: in_app(s, 'Maps') and rx(s, r'walk') and rx(s, r'\b\d+\s*(min|hr)\b') and rx(s, r'(coffee|cafe|café|starbucks|espresso)')),
+            check=lambda s, tr, c: in_app(s, 'Maps') and selected(s, 'Walk') and rx(s, r'\b\d+\s*(min|hr)\b') and any(re.search(r'(coffee|cafe|café|starbucks|espresso)', x[1], re.I) for x in tr if x[0] == APPS['Maps'])),
         'gmaps_place': T(cat='navigate', diff='medium', apps=[APPS['Google Maps']],
             goal='In Google Maps, find a coffee shop near me and open its place details.', params=['coffee'],
             check=lambda s, tr, c: in_app(s, 'Google Maps') and rx(s, r'directions') and rx(s, r'(coffee|cafe|café|starbucks|espresso)') and rx(s, r'(overview|reviews|open|closed|hours)')),
@@ -178,7 +206,7 @@ def build(private=None):
             check=lambda s, tr, c: in_app(s, 'Contacts') and has(s, 'john appleseed') and rx(s, r'888\D{0,2}555\D?5512')),
         'sim_reminder_create': T(devices=SIM, cat='write', diff='medium', apps=[APPS['Reminders']],
             goal='Create a new reminder whose title is exactly: Buy oat milk.', params=['Buy oat milk'],
-            check=lambda s, tr, c: in_app(s, 'Reminders') and 'Buy oat milk' in text(s)),
+            check=lambda s, tr, c: in_app(s, 'Reminders') and reminder_created(tr, 'Buy oat milk')),
         'sim_calendar_date': T(devices=SIM, cat='navigate', diff='hard', apps=[APPS['Calendar']],
             goal='In Calendar, show the day view for December 25, 2026.',
             check=lambda s, tr, c: in_app(s, 'Calendar') and rx(s, r'(december 25|dec 25|25 december)') and rx(s, r'2026')),
@@ -186,6 +214,26 @@ def build(private=None):
             goal='Using Safari, find the capital city of Australia.', params=['capital of Australia'],
             check=lambda s, tr, c: in_app(s, 'Safari') and has(s, 'canberra'),
             answer=dict(q='What is the capital of Australia?', options=['Sydney', 'Melbourne', 'Canberra', 'Perth'], correct='Canberra')),
+        # ---------------------------------------------------------------- judged (open-ended): graded by a reviewer against a
+        # rubric fixed before any run, from the trajectory screenshots and action log; never from the model's claim.
+        'judged_veg_dinner': T(cat='judged', diff='hard', apps=[APPS['Uber Eats'], APPS['DoorDash']], judged=True,
+            goal='Find a good vegetarian dinner option I could get delivered tonight, and stop on the menu item.', params=['vegetarian'],
+            rubric='PASS if the final screen is a single menu item (or its restaurant menu with that item in view) in Uber Eats or DoorDash, the dish is plainly vegetarian (no meat/fish in its name or description), and a price is visible. FAIL on a search/category list, a non-vegetarian dish, a closed store with no orderable item, or a checkout/cart screen.'),
+        'judged_best_coffee': T(cat='judged', diff='hard', apps=[APPS['Google Maps']], judged=True,
+            goal='Using Google Maps, find the best-reviewed coffee shop near me and open its page.', params=['coffee'],
+            rubric='PASS if the final screen is a Google Maps place page for a coffee shop whose rating is at least as high as every other coffee shop that was visible in the results the model saw (ties allowed, ads excluded). FAIL if a higher-rated shop was visible and skipped, the page is not a coffee shop, or the app is wrong.'),
+        'judged_grade_attention': T(cat='judged', diff='hard', apps=[PORTAL], judged=True, private=True,
+            goal='In the school portal app, figure out which class needs the most attention right now and open the assignment that is hurting that grade the most.',
+            rubric='PASS if the final screen is an assignment detail in the class with the lowest current term grade, and that assignment has the lowest percentage among that class\'s scored assignments visible in the trajectory. FAIL otherwise.'),
+        'judged_news_tech': T(cat='judged', diff='medium', apps=[APPS['Safari']], judged=True, params=['technology news', 'news.ycombinator.com'],
+            goal='Using Safari, find a technology news story published today and open the article itself.',
+            rubric='PASS if the final screen is an article page (not a list, search results or home page) about technology, dated today or showing a relative time under 24 hours. FAIL otherwise.'),
+        'judged_reddit_useful': T(cat='judged', diff='hard', apps=[APPS['Reddit']], judged=True, params=['r/iphone', 'battery tips'],
+            goal='On Reddit, find a post with genuinely useful advice for improving iPhone battery life and open it.',
+            rubric='PASS if the final screen is an opened Reddit post (title + body/comments) whose content gives concrete battery-life advice. FAIL on feeds, search lists, memes, questions without answers, or unrelated posts.'),
+        'judged_youtube_tutorial': T(cat='judged', diff='medium', apps=[APPS['YouTube']], judged=True, params=['how to change a tire'],
+            goal='On YouTube, find a short tutorial (under 10 minutes) on how to change a car tire and start playing it.',
+            rubric='PASS if the final screen is a YouTube watch page for a tire-changing tutorial whose duration (visible in the trajectory) is under 10:00. FAIL otherwise.'),
         # ---------------------------------------------------------------- infeasible (OSWorld-style): the right move is to say so
         'infeasible_missing_app': T(devices=SHARED, cat='infeasible', diff='medium', apps=[], infeasible=True,
             goal='Open Spotify and play my Liked Songs playlist.',

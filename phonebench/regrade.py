@@ -9,6 +9,7 @@ ids, outcomes, counts and timings.
 import argparse
 import glob
 import json
+import re
 from pathlib import Path
 
 from .providers import usage_tokens
@@ -40,6 +41,12 @@ def load_trace(folder):
     return snaps
 
 
+def scrub(text):
+    """Published error text never carries device identifiers."""
+    text = re.sub(r'(ios|sim):[0-9A-Fa-f-]{20,}', r'\1:<device>', str(text))
+    return re.sub(r'\b[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4,}[0-9A-Fa-f-]*\b', '<id>', text)
+
+
 def regrade(folder, suite, private):
     raw = json.loads((folder / 'trial.json').read_text())
     tid = LEGACY_IDS.get(raw['task'], raw['task'])
@@ -53,7 +60,7 @@ def regrade(folder, suite, private):
         rec['excluded_reason'] = f"task not available on {rec['device_kind']}"
         return rec
     if raw.get('status') != 'finished' or task is None:
-        rec['excluded_reason'] = 'not in suite' if task is None else (raw.get('error') or raw.get('status'))[:160]
+        rec['excluded_reason'] = 'not in suite' if task is None else scrub(raw.get('error') or raw.get('status'))[:160]
         return rec
     snaps = load_trace(folder)
     trace, reached = [], None
@@ -86,6 +93,8 @@ def regrade(folder, suite, private):
     if task['infeasible']:
         rec['success'] = stop == 'model_infeasible'
     else:
+        if task.get('answer') and stop == 'model_finished' and not raw.get('answer'):
+            rec['excluded_reason'] = 'answer question not asked (trial predates the question)'
         rec['success'] = bool(final_ok and stop == 'model_finished' and rec['answer_correct'] is not False)
     rec['failure_mode'] = failure_mode(rec)
     return rec
@@ -96,6 +105,8 @@ def main():
     ap.add_argument('raw', nargs='+', type=Path)
     ap.add_argument('--release', type=Path, required=True)
     ap.add_argument('--private', default='config/private.json')
+    ap.add_argument('--carry', type=Path, nargs='*', default=[],
+                    help='graded rows (jsonl) whose raw folders no longer exist; kept as-is, marked regradable=false')
     a = ap.parse_args()
     private = load_private(a.private)
     suite = build(private)
@@ -103,6 +114,13 @@ def main():
     for root in a.raw:
         for f in sorted(root.glob('*/trial.json')):
             recs.append(regrade(f.parent, suite, private))
+    have = {(r['trial'], r['task'], r['provider']) for r in recs}
+    for c in a.carry:
+        for line in open(c):
+            r = json.loads(line)
+            if (r['trial'], r['task'], r['provider']) not in have:
+                r['regradable'] = False
+                recs.append(r)
     a.release.mkdir(parents=True, exist_ok=True)
     with open(a.release / 'trials.jsonl', 'w') as f:
         for r in sorted(recs, key=lambda r: r['trial']):

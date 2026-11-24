@@ -353,8 +353,8 @@
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.14",
-  "note": "Finished on the lists overview; the new reminder is not visible.",
-  "auditor": "manual review of final screenshot and action log"
+  "note": "First run: onboarding dismissed, title typed, Done; new item shown in the list.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
  "20261114-163504": {
   "human_success": false,
@@ -362,5 +362,166 @@
   "provider": "jev-1.13",
   "note": "Finished on the lists overview; the new reminder is not visible.",
   "auditor": "manual review of final screenshot and action log"
+ },
+ "20261114-164136": {
+  "human_success": false,
+  "task": "portal_lowest_class",
+  "provider": "gemini-decision-1",
+  "note": "Opened the right class repeatedly via Menu > Grades but never chose FINISH; stuck-loop stop.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-164838": {
+  "human_success": false,
+  "task": "appstore_developer",
+  "provider": "jev-1.14",
+  "note": "Typed text never reached the App Store search box (field stays empty, keyboard hidden); model kept retyping. Environment defect flagged and fixed for later trials; no answer reached.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-164940": {
+  "human_success": false,
+  "task": "cross_appstore_to_web",
+  "provider": "jev-1.14",
+  "note": "Same App Store typing defect; never left the App Store, never opened duolingo.com.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165221": {
+  "human_success": false,
+  "task": "amazon_product",
+  "provider": "jev-1.14",
+  "note": "Searched via Safari, landed on Amazon search results with the Rufus panel open; no product page; FINISH was premature.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165516": {
+  "human_success": true,
+  "task": "maps_walking_coffee",
+  "provider": "jev-1.14",
+  "note": "Walk tab selected, 9 min walking route to a nearby coffee shop from a \"coffee\" search. The old check wanted the word coffee on the final screen; grader fixed.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165605": {
+  "human_success": false,
+  "task": "reddit_sort_top",
+  "provider": "gemini-decision-1",
+  "note": "Finished with the Top time-range picker still open over the feed; r/iphone feed not shown sorted. Ambiguous, judged fail.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165733": {
+  "human_success": false,
+  "task": "gmail_open_email",
+  "provider": "jev-1.14",
+  "note": "Opened Apple Mail instead of Gmail (look-alike app).",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-170151": {
+  "human_success": false,
+  "task": "stocks_market_cap",
+  "provider": "gemini-decision-1",
+  "note": "Opened the Finance folder, did not find Stocks there and said INFEASIBLE although \"Open the Stocks app\" was offered.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-170212": {
+  "human_success": false,
+  "task": "gmaps_place",
+  "provider": "jev-1.14",
+  "note": "Used Apple Maps instead of Google Maps.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-170421": {
+  "human_success": false,
+  "task": "appstore_ratings",
+  "provider": "jev-1.14",
+  "note": "App Store typing defect; never reached the Duolingo page.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-170855": {
+  "human_success": false,
+  "task": "stocks_detail",
+  "provider": "gemini-decision-1",
+  "note": "False INFEASIBLE after the Finance folder, as in its market-cap trial.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-171117": {
+  "human_success": false,
+  "task": "reddit_sort_top",
+  "provider": "jev-1.13",
+  "note": "Tapped Search Reddit six times with no change; stuck.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-164909": {
+  "human_success": false,
+  "task": "sim_calendar_date",
+  "provider": "jev-1.13",
+  "note": "Looped on the Calendar search field; no date navigation.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165804": {
+  "human_success": false,
+  "task": "sim_calendar_date",
+  "provider": "jev-1.13",
+  "note": "Same search-field loop.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165231": {
+  "human_success": true,
+  "task": "sim_reminder_create",
+  "provider": "jev-1.13",
+  "note": "Reminder created: list count went 4 to 5 after typing the title and tapping Done. The old check needed the title on the final screen; grader fixed.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165734": {
+  "human_success": true,
+  "task": "sim_reminder_create",
+  "provider": "jev-1.14",
+  "note": "Reminder created: count 5 to 6. Grader fixed as above.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-164622": {
+  "human_success": true,
+  "task": "sim_reminder_create",
+  "provider": "jev-1.14",
+  "note": "Title typed and committed; item visible in the list.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-161238": {
+  "human_success": true,
+  "task": "cross_appstore_to_web",
+  "provider": "jev-1.14",
+  "note": "Searched Duolingo in the App Store, then opened duolingo.com in Safari.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-171052": {
+  "human_success": true,
+  "task": "stocks_market_cap",
+  "provider": "jev-1.13",
+  "note": "AAPL detail overlay open; answered Over $5 trillion (correct bucket).",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-170333": {
+  "human_success": true,
+  "task": "maps_walking_coffee",
+  "provider": "jev-1.13",
+  "note": "Walk selected, walking route to a coffee shop 3.6 mi away (far, but a coffee shop).",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165141": {
+  "human_success": true,
+  "task": "infeasible_missing_app",
+  "provider": "jev-1.13",
+  "note": "Correct INFEASIBLE: no Spotify on the phone.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165422": {
+  "human_success": true,
+  "task": "infeasible_missing_app",
+  "provider": "jev-1.13",
+  "note": "Correct INFEASIBLE on the simulator.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261114-165806": {
+  "human_success": true,
+  "task": "weather_city",
+  "provider": "jev-1.13",
+  "note": "Tokyo weather card open (55\u00b0, cloudy).",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  }
 }
