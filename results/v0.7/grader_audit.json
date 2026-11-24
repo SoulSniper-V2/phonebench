@@ -321,42 +321,42 @@
   "note": "Final screenshot shows the goal state.",
   "auditor": "manual review of final screenshot and action log"
  },
- "20261114-162319": {
+ "20261114-162319-sim": {
   "human_success": true,
   "task": "sim_calendar_date",
   "provider": "jev-1.14",
   "note": "Stuck on Dec 17, 2026 with the Calendar search keyboard open; Dec 25 never shown.",
   "auditor": "manual review of final screenshot and action log"
  },
- "20261114-162418": {
+ "20261114-162418-sim": {
   "human_success": true,
   "task": "sim_contact_phone",
   "provider": "jev-1.13",
   "note": "Contact card shows (888) 555-5512 (grader regex fixed to accept \"(888) 555\").",
   "auditor": "manual review of final screenshot and action log"
  },
- "20261114-162531": {
+ "20261114-162531-sim": {
   "human_success": true,
   "task": "sim_contact_phone",
   "provider": "jev-1.14",
   "note": "Contact card shows (888) 555-5512 (grader regex fixed to accept \"(888) 555\").",
   "auditor": "manual review of final screenshot and action log"
  },
- "20261114-162742": {
+ "20261114-162742-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "jev-1.13",
   "note": "Stuck on Dec 17, 2026 with the Calendar search keyboard open; Dec 25 never shown.",
   "auditor": "manual review of final screenshot and action log"
  },
- "20261114-163004": {
+ "20261114-163004-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.14",
   "note": "First run: onboarding dismissed, title typed, Done; new item shown in the list.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
- "20261114-163504": {
+ "20261114-163504-sim": {
   "human_success": false,
   "task": "sim_reminder_create",
   "provider": "jev-1.13",
@@ -447,35 +447,35 @@
   "note": "Tapped Search Reddit six times with no change; stuck.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
- "20261114-164909": {
+ "20261114-164909-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "jev-1.13",
   "note": "Looped on the Calendar search field; no date navigation.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
- "20261114-165804": {
+ "20261114-165804-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "jev-1.13",
   "note": "Same search-field loop.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
- "20261114-165231": {
+ "20261114-165231-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.13",
   "note": "Reminder created: list count went 4 to 5 after typing the title and tapping Done. The old check needed the title on the final screen; grader fixed.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
- "20261114-165734": {
+ "20261114-165734-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.14",
   "note": "Reminder created: count 5 to 6. Grader fixed as above.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
- "20261114-164622": {
+ "20261114-164622-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.14",
@@ -510,7 +510,7 @@
   "note": "Correct INFEASIBLE: no Spotify on the phone.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  },
- "20261114-165422": {
+ "20261114-165422-sim": {
   "human_success": true,
   "task": "infeasible_missing_app",
   "provider": "jev-1.13",
@@ -522,6 +522,62 @@
   "task": "weather_city",
   "provider": "jev-1.13",
   "note": "Tokyo weather card open (55\u00b0, cloudy).",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-154844-sim": {
+  "human_success": false,
+  "task": "safari_fact",
+  "provider": "strands-2b",
+  "note": "Opened Safari (example.com) and immediately said INFEASIBLE; the search field was right there.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-154959-sim": {
+  "human_success": false,
+  "task": "sim_calendar_date",
+  "provider": "strands-2b",
+  "note": "Wandered into the Calendars list and tapped \"Other\" until stuck.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-155118-sim": {
+  "human_success": false,
+  "task": "sim_safari_capital",
+  "provider": "strands-2b",
+  "note": "Google results showed Canberra; kept tapping the answer text instead of FINISH (reached, no finish).",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-155212-sim": {
+  "human_success": false,
+  "task": "sim_contact_phone",
+  "provider": "strands-2b",
+  "note": "John Appleseed's card with the mobile number open; tapped the number row repeatedly instead of FINISH.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-155310-sim": {
+  "human_success": false,
+  "task": "settings_os_version",
+  "provider": "strands-2b",
+  "note": "Settings search for \"About\" returned nothing; then tapped General repeatedly without progress.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-155512-sim": {
+  "human_success": false,
+  "task": "sim_contact_company",
+  "provider": "strands-2b",
+  "note": "Typed the company into the wrong app (Maps) repeatedly; never opened Contacts.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-155803-sim": {
+  "human_success": false,
+  "task": "sim_reminder_create",
+  "provider": "strands-2b",
+  "note": "Tapped Done on an empty New Reminder sheet over and over; title never typed into it on the final attempt.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-155945-sim": {
+  "human_success": false,
+  "task": "safari_compare",
+  "provider": "strands-2b",
+  "note": "Search results with both heights on screen; kept tapping \"Kanchenjunga\" instead of FINISH.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  }
 }

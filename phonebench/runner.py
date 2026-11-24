@@ -31,13 +31,33 @@ class RateLimited:
     waited_ms = 0
 
 
+COORDS = re.compile(r' at -?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$')
+
+
+def compact(state, q, level):
+    """Local open-weights deciders have a 4k-token context. Drop tap coordinates from option text (the harness
+    keeps them) and, if still too long, trim the screen listing. Hosted models always get the full request."""
+    q = {k: dict(v, criteria={c: COORDS.sub('', d) for c, d in v['criteria'].items()}) if 'criteria' in v else v for k, v in q.items()}
+    state = dict(state)
+    if level and isinstance(state.get('screen_elements'), str):
+        state['screen_elements'] = state['screen_elements'][:max(600, 4000 >> level)]
+        state['actions_so_far'] = (state.get('actions_so_far') or [])[-4:]
+    return state, q
+
+
 def ask(provider, state, q, image):
     """429 backoff. Waiting is recorded separately and never counted as model latency or task time."""
+    level = 0
     for attempt in range(6):
         try:
+            if PROVIDERS[provider][0] == 'local':
+                return raw_ask(provider, *compact(state, q, level), image)
             return raw_ask(provider, state, q, image)
         except RuntimeError as e:
             msg = str(e)
+            if 'exceeds the context window' in msg and level < 3:
+                level += 1
+                continue
             if 'HTTP 429' not in msg or 'daily free allocation' in msg:
                 raise
             m = re.search(r'retry in (\d+(?:\.\d+)?)s', msg)

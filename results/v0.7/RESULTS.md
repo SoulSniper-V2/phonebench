@@ -1,6 +1,6 @@
 # PhoneBench results — v0.7
 
-125 scored trials on a physical iPhone, 30 tasks, 3 decision models. 78 trials excluded for harness reasons (listed at the end), never counted as model failures.
+125 scored trials on a physical iPhone, 30 tasks, 3 decision models. 89 trials excluded for harness reasons (listed at the end), never counted as model failures.
 
 | Rank | Model | Score (task-macro) | Pass / trials | 95% CI | Median time to pass | Median actions to pass | Decision p50 / p90 | Input tokens / task | Model share of time | False finish rate |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -76,6 +76,7 @@
 | Gemini Decision 1 | tree+image | 31/39 |
 | Jev 1.13 | tree+image | 53/67 |
 | Jev 1.14 | tree+image | 59/73 |
+| Strands Decider 2B (local) | tree+image | 1/9 |
 
 ## Excluded trials
 
@@ -92,3 +93,5 @@ hint: Reconnect the
 - 1 × error: connection error: runner tree: Failed to get matching
 - 1 × RESET_FAILED: root view of com.apple.AppStore not verified
 - 1 × RESET_FAILED: root view of com.apple.Maps not verified
+- 1 × phonedriver timed out
+- 1 × strands-2b: HTTP 422: {"detail":"prompt of 4505 tokens (1527

@@ -9,9 +9,9 @@ from pathlib import Path
 import statistics
 import sys
 
-ORDER = ['jev-1.14', 'jev-1.13', 'gemini-decision-1', 'clef-flash', 'clef', 'clef-omni']
+ORDER = ['jev-1.14', 'jev-1.13', 'gemini-decision-1', 'clef-flash', 'clef', 'clef-omni', 'strands-2b']
 LABEL = {'jev-1.14': 'Jev 1.14', 'jev-1.13': 'Jev 1.13', 'gemini-decision-1': 'Gemini Decision 1',
-         'clef-flash': 'Clef Flash', 'clef': 'Clef', 'clef-omni': 'Clef Omni'}
+         'clef-flash': 'Clef Flash', 'clef': 'Clef', 'clef-omni': 'Clef Omni', 'strands-2b': 'Strands Decider 2B (local)'}
 MODES = ['pass', 'false_finish', 'wrong_answer', 'reached_no_finish', 'stuck_loop', 'timeout', 'false_infeasible',
          'missed_infeasible', 'wandered_infeasible', 'invalid_choice']
 
@@ -37,7 +37,7 @@ def q(xs, f):
 
 def load(release):
     rows = [json.loads(l) for l in open(Path(release) / 'trials.jsonl')]
-    scored = [r for r in rows if r['status'] == 'finished' and 'excluded_reason' not in r and r.get('obs_mode', 'tree+image') == 'tree+image' and r.get('device_kind', 'phone') == 'phone']
+    scored = [r for r in rows if r['status'] == 'finished' and 'excluded_reason' not in r and r.get('obs_mode', 'tree+image') == 'tree+image' and r.get('device_kind', 'phone') == 'phone' and r.get('track') != 'judged']
     return rows, scored
 
 

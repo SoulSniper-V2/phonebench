@@ -124,7 +124,7 @@ def candidates(s, task):
         out['tap_' + e['ref']] = {'kind': 'tap', 'point': d.center(e), 'label': lab[:90], 'description': desc}
         if role in FIELD_ROLES:
             for i, t in enumerate(task['params']):
-                out[f'type_{e["ref"]}_{i}'] = {'kind': 'type', 'target': e['ref'], 'text': t, 'description': f'Type "{t}" into {role} "{lab[:50]}" (replaces its text)'}
+                out[f'type_{e["ref"]}_{i}'] = {'kind': 'type', 'target': e['ref'], 'point': d.center(e), 'text': t, 'description': f'Type "{t}" into {role} "{lab[:50]}" (replaces its text)'}
     if (s.get('header') or {}).get('keyboard'):
         for i, t in enumerate(task['params']):
             out[f'type_focused_{i}'] = {'kind': 'type_focused', 'text': t, 'description': f'Type "{t}" into the focused text field'}
@@ -148,7 +148,17 @@ def execute(a):
     if k == 'tap':
         return d.driver('tap', a['point'], settle=True)
     if k == 'type':
-        return d.driver('type', a['text'], '--into', '@' + a['target'], settle=True)
+        # Some fields (App Store search) drop text typed --into them while unfocused, silently. Verify, retry once
+        # with tap-to-focus, and otherwise report the failure to the model instead of pretending it worked.
+        out = d.driver('type', a['text'], '--into', '@' + a['target'], settle=True)
+        if a['text'].lower() in d.snapshot().get('text', '').lower():
+            return out
+        if a.get('point'):
+            d.driver('tap', a['point'], settle=True)
+            d.driver('type', a['text'], settle=True)
+            if a['text'].lower() in d.snapshot().get('text', '').lower():
+                return 'typed after focusing the field'
+        raise RuntimeError('typed text did not appear in the field')
     if k == 'type_focused':
         return d.driver('type', a['text'], settle=True)
     if k == 'enter':

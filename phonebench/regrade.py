@@ -41,6 +41,9 @@ def load_trace(folder):
     return snaps
 
 
+JUDGMENTS = {}
+
+
 def scrub(text):
     """Published error text never carries device identifiers."""
     text = re.sub(r'(ios|sim):[0-9A-Fa-f-]{20,}', r'\1:<device>', str(text))
@@ -56,6 +59,8 @@ def regrade(folder, suite, private):
            'repeat': raw.get('repeat', 0), 'version': raw.get('version', 6), 'obs_mode': raw.get('obs_mode', 'tree+image'),
            'device_kind': raw.get('device_kind', 'phone'), 'status': raw.get('status'), 'category': task['cat'] if task else raw.get('category'),
            'difficulty': task['diff'] if task else raw.get('difficulty'), 'infeasible': bool(task and task['infeasible'])}
+    if rec['device_kind'] == 'sim':
+        rec['trial'] += '-sim'  # simulator and phone batches run in parallel; keep ids unique
     if task is not None and rec['device_kind'] not in task['devices']:
         rec['excluded_reason'] = f"task not available on {rec['device_kind']}"
         return rec
@@ -93,6 +98,15 @@ def regrade(folder, suite, private):
     if task['infeasible']:
         rec['success'] = stop == 'model_infeasible'
     else:
+        if task.get('judged'):
+            # Open-ended track: a reviewer grades the trajectory against the task rubric (results/vX/judgments.json).
+            rec['track'] = 'judged'
+            j = JUDGMENTS.get(rec['trial'])
+            if j is None:
+                rec['excluded_reason'] = 'awaiting reviewer judgment'
+            rec['success'] = bool(j and j['success'])
+            rec['failure_mode'] = 'pass' if rec['success'] else 'judged_fail'
+            return rec
         if task.get('answer') and stop == 'model_finished' and not raw.get('answer'):
             rec['excluded_reason'] = 'answer question not asked (trial predates the question)'
         rec['success'] = bool(final_ok and stop == 'model_finished' and rec['answer_correct'] is not False)
@@ -110,6 +124,9 @@ def main():
     a = ap.parse_args()
     private = load_private(a.private)
     suite = build(private)
+    jp = a.release / 'judgments.json'
+    if jp.exists():
+        JUDGMENTS.update(json.loads(jp.read_text()))
     recs = []
     for root in a.raw:
         for f in sorted(root.glob('*/trial.json')):

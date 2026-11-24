@@ -20,6 +20,8 @@ PROVIDERS = {
     "clef-flash": ("cloudflare", "clef-flash"),
     "clef": ("cloudflare", "clef"),
     "clef-omni": ("cloudflare", "clef-omni"),
+    # Open weights, served locally with `strands-decider serve` (POST /v1/systemone). URL: $STRANDS_URL.
+    "strands-2b": ("local", "strands-decider-2b"),
 }
 SECRET_KEYS = ("TYPESAFE_API_KEY", "CLOUDFLARE_API_TOKEN", "CLOUDFLARE_ACCOUNT_ID", "GEMINI_API_KEY")
 
@@ -61,6 +63,11 @@ def request_spec(provider, state, questions, image=None, image_format="png"):
         if enc:
             content.append({"type": "image", "data": enc, "mime_type": mime, "resolution": "medium"})
         return "https://generativelanguage.googleapis.com/v1beta/decisions", headers, {"model": model, "input": content, "questions": questions}
+    if family == "local":
+        body = {"model": model, "state": state, "questions": questions}
+        if enc:
+            body["images"] = [enc]
+        return os.environ.get("STRANDS_URL", "http://127.0.0.1:8765").rstrip("/") + "/v1/systemone", headers, body
     if family == "typesafe":
         headers["Authorization"] = "Bearer " + _need("TYPESAFE_API_KEY")
         body = {"model": model, "state": state, "questions": questions}

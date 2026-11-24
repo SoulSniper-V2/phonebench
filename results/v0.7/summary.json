@@ -1,6 +1,6 @@
 {
  "release": "v0.7",
- "n_trials": 203,
+ "n_trials": 214,
  "n_scored": 125,
  "n_tasks": 30,
  "models": [
@@ -1385,7 +1385,9 @@
   "error: connection error: runner tree: Failed to get matching": 1,
   "RESET_FAILED: root view of com.apple.AppStore not verified": 1,
   "RESET_FAILED: root view of com.apple.Maps not verified": 1,
-  "error: no device \"ios:<device>\"; connected: sim:<device> (iP": 4
+  "error: no device \"ios:<device>\"; connected: sim:<device> (iP": 4,
+  "phonedriver timed out": 1,
+  "strands-2b: HTTP 422: {\"detail\":\"prompt of 4505 tokens (1527": 1
  },
  "ablation": {
   "gemini-decision-1|tree+image": [
@@ -1399,9 +1401,14 @@
   "jev-1.14|tree+image": [
    59,
    73
+  ],
+  "strands-2b|tree+image": [
+   1,
+   9
   ]
  },
  "dates": [
-  "20261114"
+  "20261114",
+  "20261124"
  ]
 }
