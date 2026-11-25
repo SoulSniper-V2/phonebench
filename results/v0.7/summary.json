@@ -1,6 +1,6 @@
 {
  "release": "v0.7",
- "n_trials": 250,
+ "n_trials": 259,
  "n_scored": 125,
  "n_tasks": 30,
  "models": [
@@ -1411,8 +1411,8 @@
    18
   ],
   "strands-2b|tree+image": [
-   1,
-   9
+   4,
+   18
   ]
  },
  "ablation_by_device": {
@@ -1445,8 +1445,8 @@
    18
   ],
   "strands-2b|tree+image|sim": [
-   1,
-   9
+   4,
+   18
   ]
  },
  "dates": [

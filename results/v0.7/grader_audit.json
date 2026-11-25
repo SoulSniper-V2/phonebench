@@ -579,5 +579,75 @@
   "provider": "strands-2b",
   "note": "Search results with both heights on screen; kept tapping \"Kanchenjunga\" instead of FINISH.",
   "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-160040-sim": {
+  "human_success": true,
+  "task": "infeasible_missing_app",
+  "provider": "strands-2b",
+  "note": "Correct INFEASIBLE: no Spotify.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200037-sim": {
+  "human_success": false,
+  "task": "safari_fact",
+  "provider": "strands-2b",
+  "note": "Typed the query and pressed Return but the page never left example.com; FINISH premature.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200112-sim": {
+  "human_success": false,
+  "task": "sim_calendar_date",
+  "provider": "strands-2b",
+  "note": "Calendars list, tapped \"Other\" until stuck (same as repeat 0).",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200204-sim": {
+  "human_success": false,
+  "task": "sim_safari_capital",
+  "provider": "strands-2b",
+  "note": "Canberra on screen; kept tapping it, never FINISH.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200257-sim": {
+  "human_success": false,
+  "task": "sim_contact_phone",
+  "provider": "strands-2b",
+  "note": "Empty Contacts search focused; pressed Return repeatedly.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200338-sim": {
+  "human_success": true,
+  "task": "settings_os_version",
+  "provider": "strands-2b",
+  "note": "About > iOS Version 26.5 shown, then FINISH.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200401-sim": {
+  "human_success": true,
+  "task": "infeasible_missing_app",
+  "provider": "strands-2b",
+  "note": "Correct INFEASIBLE.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200410-sim": {
+  "human_success": false,
+  "task": "sim_contact_company",
+  "provider": "strands-2b",
+  "note": "Kate Bell's card showing CREATIVE CONSULTING; tapped it repeatedly, never FINISH.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200439-sim": {
+  "human_success": false,
+  "task": "safari_compare",
+  "provider": "strands-2b",
+  "note": "Both heights on the results page; tapped Kanchenjunga repeatedly, never FINISH.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+ },
+ "20261124-200526-sim": {
+  "human_success": true,
+  "task": "sim_reminder_create",
+  "provider": "strands-2b",
+  "note": "New reminder typed and saved (All count rose), then FINISH.",
+  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
  }
 }
