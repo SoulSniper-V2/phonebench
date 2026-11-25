@@ -84,9 +84,21 @@ def summarize(release):
             key = (r['provider'], r.get('obs_mode', 'tree+image'))
             ablation.setdefault(key, []).append(r['success'])
             abl_dev.setdefault((r['provider'], r.get('obs_mode', 'tree+image'), r.get('device_kind', 'phone')), []).append(r['success'])
-    excluded = collections.Counter((r.get('excluded_reason') or r['status'])[:60] for r in rows if r['status'] != 'finished' or 'excluded_reason' in r)
+    on_phone = [r for r in rows if r.get('device_kind', 'phone') == 'phone' and r.get('obs_mode', 'tree+image') == 'tree+image' and r.get('track') != 'judged']
+    excluded = collections.Counter((r.get('excluded_reason') or r['status']).split('\n')[0][:60] for r in on_phone if r['status'] != 'finished' or 'excluded_reason' in r)
+    sim = collections.defaultdict(list)
+    for r in rows:
+        if r.get('device_kind') == 'sim' and r.get('obs_mode', 'tree+image') == 'tree+image' and r['status'] == 'finished' and 'excluded_reason' not in r:
+            sim[r['provider']].append(r)
+    sim_models = sorted(({'id': p, 'label': LABEL.get(p, p), 'passes': sum(r['success'] for r in v), 'trials': len(v),
+                          'ci95': wilson(sum(r['success'] for r in v), len(v)), 'tasks': len({r['task'] for r in v}),
+                          'median_task_s_pass': q([r['task_s'] for r in v if r['success']], .5),
+                          'decision_ms_p50': q([ms for r in v for ms in r.get('model_ms_per_call', [])], .5),
+                          'failure_modes': dict(collections.Counter(r['failure_mode'] for r in v))} for p, v in sim.items()),
+                        key=lambda m: -m['passes'] / m['trials'])
     return {'release': Path(release).name, 'n_trials': len(rows), 'n_scored': len(scored), 'n_tasks': len(tasks), 'models': models,
-            'matrix': matrix, 'task_meta': meta, 'excluded': dict(excluded),
+            'matrix': matrix, 'task_meta': meta, 'excluded': dict(excluded), 'sim_models': sim_models,
+            'n_phone_attempts': len(on_phone),
             'ablation': {f'{p}|{m}': [sum(v), len(v)] for (p, m), v in sorted(ablation.items())},
             'ablation_by_device': {f'{p}|{m}|{dv}': [sum(v), len(v)] for (p, m, dv), v in sorted(abl_dev.items())},
             'dates': sorted({r['trial'][:8] for r in rows})}
@@ -96,7 +108,8 @@ def markdown(S):
     pct = lambda x: f'{x * 100:.0f}%'
     o = [f"# PhoneBench results — {S['release']}", '',
          f"{S['n_scored']} scored trials on a physical iPhone, {S['n_tasks']} tasks, {len(S['models'])} decision models. "
-         f"{S['n_trials'] - S['n_scored']} trials excluded for harness reasons (listed at the end), never counted as model failures.", '',
+         f"{sum(S['excluded'].values())} phone attempts were excluded for harness reasons (listed at the end) and never counted as model failures. "
+         "Simulator trials and screenshot-free trials are reported in their own sections, never pooled with the phone score.", '',
          '| Rank | Model | Score (task-macro) | Pass / trials | 95% CI | Median time to pass | Median actions to pass | Decision p50 / p90 | Input tokens / task | Model share of time | False finish rate |',
          '|---|---|---|---|---|---|---|---|---|---|---|']
     for i, m in enumerate(S['models'], 1):
@@ -122,6 +135,12 @@ def markdown(S):
             trials = cells.get(m['id'], [])
             row.append(' '.join(('✅' if ok else '❌') + f'{s:.0f}s/{a}' for ok, s, a, _ in trials) or '–')
         o.append(f"| `{t}` | {meta['category']} | {meta['difficulty']} | " + ' | '.join(row) + ' |')
+    if S.get('sim_models'):
+        o += ['', '## Simulator track', '', 'iOS Simulator, the tasks that run there (built-in apps and Safari). Reported separately from the phone.', '',
+              '| Model | Pass / trials | 95% CI | Tasks | Median time to pass | Decision p50 |', '|---|---|---|---|---|---|']
+        for m in S['sim_models']:
+            o.append(f"| {m['label']} | {m['passes']}/{m['trials']} | {pct(m['ci95'][0])}–{pct(m['ci95'][1])} | {m['tasks']} | "
+                     f"{m['median_task_s_pass'] if m['median_task_s_pass'] is not None else '–'} s | {m['decision_ms_p50']:.0f} ms |")
     abl = S.get('ablation_by_device') or {}
     pairs = sorted({(k.split('|')[0], k.split('|')[2]) for k in abl if k.split('|')[1] == 'tree'})
     if pairs:

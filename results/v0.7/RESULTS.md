@@ -1,6 +1,6 @@
 # PhoneBench results — v0.7
 
-125 scored trials on a physical iPhone, 30 tasks, 3 decision models. 134 trials excluded for harness reasons (listed at the end), never counted as model failures.
+125 scored trials on a physical iPhone, 30 tasks, 3 decision models. 18 phone attempts were excluded for harness reasons (listed at the end) and never counted as model failures. Simulator trials and screenshot-free trials are reported in their own sections, never pooled with the phone score.
 
 | Rank | Model | Score (task-macro) | Pass / trials | 95% CI | Median time to pass | Median actions to pass | Decision p50 / p90 | Input tokens / task | Model share of time | False finish rate |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -69,6 +69,16 @@
 | `yt_channel_videos_tab` | navigate | hard | ✅22s/6 | ✅18s/6 | ✅16s/6 ✅16s/6 |
 | `yt_creator_video` | navigate | medium | ✅20s/5 | ✅13s/4 | ✅24s/7 ✅17s/6 |
 
+## Simulator track
+
+iOS Simulator, the tasks that run there (built-in apps and Safari). Reported separately from the phone.
+
+| Model | Pass / trials | 95% CI | Tasks | Median time to pass | Decision p50 |
+|---|---|---|---|---|---|
+| Jev 1.14 | 27/27 | 88%–100% | 9 | 13.18 s | 209 ms |
+| Jev 1.13 | 23/27 | 68%–94% | 9 | 11.49 s | 185 ms |
+| Strands Decider 2B (local) | 4/18 | 9%–45% | 9 | 5.185 s | 696 ms |
+
 ## Observation ablation
 
 Same model, same device, with and without the screenshot (all trials, not only the scored phone set).
@@ -80,7 +90,6 @@ Same model, same device, with and without the screenshot (all trials, not only t
 
 ## Excluded trials
 
-- 6 × task not available on sim
 - 4 × error: no device "ios:<device>"; connected: sim:<device> (iP
 - 2 × gemini: HTTP 429: {"error":{"message":"Rate limit exceeded f
 - 2 × phonedriver timed out; inspect the phone before retrying
@@ -88,10 +97,7 @@ Same model, same device, with and without the screenshot (all trials, not only t
 - 2 × answer question not asked (trial predates the question)
 - 1 × running
 - 1 × error: device ios:<device> disconnected
-hint: Reconnect the 
 - 1 × RESET_FAILED: root view of com.infinitecampus.student.campus
 - 1 × error: connection error: runner tree: Failed to get matching
 - 1 × RESET_FAILED: root view of com.apple.AppStore not verified
 - 1 × RESET_FAILED: root view of com.apple.Maps not verified
-- 1 × phonedriver timed out
-- 1 × strands-2b: HTTP 422: {"detail":"prompt of 4505 tokens (1527
