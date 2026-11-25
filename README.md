@@ -1,49 +1,77 @@
 # PhoneBench
 
-**Can a decision model drive a real iPhone?** PhoneBench gives a model a goal ("find a MrBeast video and
-start watching it", "which of my classes has the lowest grade?") and lets it operate a physical iPhone,
-one action at a time, through the accessibility tree and a screenshot. A programmatic check of the phone's
-final state decides whether it succeeded. The model's word is never trusted.
+**Can a decision model drive a real iPhone?**
 
-Decision models (TypeSafe **Jev**, Google **Gemini Decision**, Cloudflare **Clef**) don't write text. They
-answer typed questions (pick one option, give a probability) in a few hundred milliseconds. PhoneBench asks
-whether that's enough to *use a phone*: navigate real apps, recover from pop-ups, know when it's done, and
-know when a task is impossible.
+PhoneBench gives a model a goal, like *"find a MrBeast video and start watching it"* or *"which of my classes has
+the lowest grade?"*, and lets it operate a physical iPhone one action at a time through the accessibility tree and a
+screenshot. A programmatic check of the phone's final state decides whether it succeeded. The model's word is never
+trusted.
+
+Decision models (TypeSafe **Jev**, Google **Gemini Decision**, Cloudflare **Clef**, open-weights **Strands Decider**)
+don't write text. They answer typed questions (pick one option, give a probability) in a few hundred milliseconds.
+PhoneBench asks whether that is enough to *use a phone*: navigate real apps, get past pop-ups, know when the job is
+done, and know when a job is impossible.
 
 ![Leaderboard](site/assets/leaderboard.png)
 
 ## Results
 
-> Release **v0.6**: 51 graded trials, 19 real-app tasks, 3 models, one physical iPhone (iOS 27).
-> The full table, every trial and the hand audit of the grader are in [`results/v0.6`](results/v0.6/RESULTS.md).
-> Runs continue toward ≥3 repeats per model × task on the full 30-task suite.
+> **v0.7 (preview)** · 125 graded trials on a physical iPhone 17 (iOS 27) · 30 tasks · 3 models.
+> Repeats are still running, so the intervals are wide. Clef and Strands Decider are not yet on the phone.
+> Every trial, the hand audit of the grader and the full tables: [`results/v0.7`](results/v0.7/RESULTS.md).
 
-| Model | Score | Pass / trials | 95% CI | Median time to pass | Decision p50 | False finishes |
-|---|---|---|---|---|---|---|
-| Gemini Decision 1 | **93%** | 14/15 | 70–99% | 21.0 s | 925 ms | 0% |
-| Jev 1.14 | **78%** | 14/18 | 55–91% | 13.5 s | 219 ms | 17% |
-| Jev 1.13 | **67%** | 12/18 | 44–84% | 17.1 s | 211 ms | 17% |
+| # | Model | Score | Pass / trials | 95% CI | Median time to pass | Decision p50 | False finishes |
+|---|---|---|---|---|---|---|---|
+| 1 | Gemini Decision 1 | **82%** | 31 / 39 | 64–89% | 18.5 s | 880 ms | 6% |
+| 2 | Jev 1.13 | **72%** | 30 / 40 | 60–86% | 15.0 s | 215 ms | 14% |
+| 3 | Jev 1.14 | **71%** | 32 / 46 | 55–81% | 15.2 s | 222 ms | 18% |
 
-What the trials show:
+*Score is the mean over tasks of each task's pass rate, so a task with more repeats doesn't count more.
+False finishes: the share of feasible trials where the model said FINISH and the goal wasn't met.*
 
-- **Gemini Decision is the most careful; Jev is the fastest.** Jev's decisions take a quarter of the time
-  (≈220 ms vs ≈925 ms), so Jev finishes a task 35% sooner when it does finish. Gemini never declared
-  success early. Both Jevs did, in 17% of feasible trials.
-- **The model is not the bottleneck.** On Jev, only 6–7% of task time is spent in the model; the rest is the
-  phone (launching apps, settling animations, capturing the screen). Faster models would barely change
-  end-to-end time. Faster devices and fewer observations would.
-- **Wrong-app confusion is the commonest Jev failure.** Asked to use *Gmail*, both Jevs opened Apple Mail. Asked
-  for *Google Maps*, Jev 1.14 opened Apple Maps. Each then reported success.
-- **Nobody gets past an upsell.** Amazon opens on a Prime "$0 trial" sheet whose decline link sits below the
-  fold. All three models swiped *back* over and over instead of scrolling: 0/3.
-- Gemini's free tier rate-limits at 50k input tokens/min. Waits are excluded from its timings, but four of
-  its trials were lost to the limit in this release (listed as excluded, never as failures).
+### What the trials show
+
+- **Gemini is the most careful; Jev is the fastest.** Jev decides in about 220 ms against Gemini's 880 ms and
+  finishes passing tasks about 3 s sooner. Jev declares success too early far more often (14–18% vs 6%).
+- **The model is rarely the bottleneck.** Only 7–9% of Jev's task time is spent in the model. The rest is the
+  phone: launching apps, waiting for animations, capturing the screen.
+- **Look-alike apps trip up Jev.** Asked to use *Gmail*, it opened Apple Mail. Asked for *Google Maps*, it
+  opened Apple Maps. Both times it reported success.
+- **Gemini sometimes gives up too early.** It opened the Finance folder, didn't see Stocks there, and declared
+  the task impossible, even though "open the Stocks app" was one of its options.
+- **Nobody solves the reasoning tasks yet** (0 of 4 trials), and four tasks have never been passed by any model:
+  an X profile, an Amazon product page (a Prime upsell blocks the way), the App Store developer lookup and Gmail.
 
 ![Speed](site/assets/speed.png)
 
 ![How trials end](site/assets/failures.png)
 
-![Every task](site/assets/matrix.png)
+### Simulator track
+
+The same harness on the iOS Simulator, for the tasks that run there (built-in apps and Safari). It is cheaper and
+fully reproducible, so it's the place to try local models. It is reported separately and never pooled with the phone.
+
+| Model | Pass / trials | 95% CI | Median time to pass | Decision p50 |
+|---|---|---|---|---|
+| Jev 1.14 | 27 / 27 | 88–100% | 13.2 s | 209 ms |
+| Jev 1.13 | 23 / 27 | 68–94% | 11.5 s | 185 ms |
+| Strands Decider 2B (local, RTX 3060) | 4 / 18 | 9–45% | 5.2 s | 696 ms |
+
+**Strands Decider 2B** is a 2-billion-parameter open-weights decision model running on a 6 GB laptop GPU. It
+navigates surprisingly well, but in half its failures it reached the right screen (the answer on the page, the
+right contact open) and then kept tapping the answer instead of choosing FINISH. Knowing when you're done is the
+skill a small model lacks.
+
+### Does the screenshot matter?
+
+Same model, same simulator tasks, with and without the screenshot:
+
+| Model | Accessibility tree + screenshot | Accessibility tree only |
+|---|---|---|
+| Jev 1.14 | 27 / 27 (100%) | 15 / 18 (83%) |
+| Strands Decider 2B | 4 / 18 (22%) | 5 / 18 (28%) |
+
+Jev uses the picture. The small local model gains nothing from it.
 
 ## How it works
 
@@ -51,60 +79,94 @@ What the trials show:
 reset the task's apps to a verified root view → Home screen → start the clock
 loop:  observe (accessibility tree + screenshot) → ask the model for ONE action → execute it
 until: FINISH · INFEASIBLE · 240 s · same action on an unchanged screen 6×
-grade: programmatic check on the phone's final state (+ trajectory for multi-app tasks)
+grade: programmatic check of the phone's final state (+ trajectory for multi-app tasks)
 ```
 
-- **One generic action space for every task**: tap any visible element, type a task string, Return, scroll,
-  back, Home, open any of 26 apps (look-alikes included), wait, FINISH, INFEASIBLE. No per-task hints.
-- **No step budget.** A cap measures the cap, not the model. Every stop reason is reported.
-- **Infeasible tasks** (as in OSWorld): the right answer is to say it can't be done. Saying INFEASIBLE on a
+- **One generic action space for every task.** The model can tap any visible element, type a task string, press
+  Return, scroll, go back, go Home, open any of 20+ apps (look-alikes included), wait, FINISH or INFEASIBLE. There
+  are no per-task hints.
+- **No step budget.** A step cap measures the cap, not the model. Every stop reason is reported.
+- **Infeasible tasks** (as in OSWorld). The right answer is to say the task can't be done. Saying INFEASIBLE on a
   feasible task is a failure.
-- **Graded on state, audited by hand.** Checks are pure functions of saved snapshots, so a fixed check can
-  re-score every past trial (`phonebench.regrade`). Each release ships a human review of every failure and a
-  quarter of passes. v0.6: 25/25 agreement.
-- **Safe by construction.** Send, buy, install, follow, like, post, delete, trial, sign-up and confirm controls
-  are never offered, and no switch is ever tappable. phonedriver independently blocks money-spending taps.
+- **Graded on state, audited by hand.** Checks are pure functions of saved snapshots, so a fixed check re-scores
+  every past trial (`phonebench.regrade`). Each release ships a human review of every failure and a quarter of the
+  passes. v0.7: 90+ trials reviewed, and the grader matched the reviewer on all of them once three grader bugs the
+  review found were fixed.
+- **Harness problems are never model failures.** A failed reset, a dropped USB connection or a rate limit excludes
+  the trial and lists it.
+- **Open-ended tasks are judged.** For goals like *"find a good vegetarian dinner nearby"*, a reviewer grades the
+  trajectory against a rubric. These are scored on their own track.
+- **Safe by construction.** Send, buy, install, follow, like, post, delete, trial, sign-up and confirm controls are
+  never offered, and no switch is ever tappable. The driver independently blocks taps that spend money. Mail and
+  Messages are sent to the model as text only, never as screenshots.
 
-Full protocol, metrics and failure taxonomy: [`docs/METHOD.md`](docs/METHOD.md).
+The full protocol, metrics and failure taxonomy are in [`docs/METHOD.md`](docs/METHOD.md).
 
 ## Tasks
 
-30 tasks across 15+ apps: YouTube, X, Reddit, Weather, Apple Maps, Google Maps, Stocks, Calculator, Notes,
-Settings, Safari, Amazon, App Store, Gmail and a school portal. They come in seven kinds: navigate, info
-lookup (with a multiple-choice answer), reasoning, multi-app, compute, write and infeasible. 12 are hard.
-Every task is listed in [`docs/TASKS.md`](docs/TASKS.md).
+41 tasks across 20 apps: YouTube, X, Reddit, Weather, Apple Maps, Google Maps, Stocks, Calculator, Notes,
+Settings, Safari, Amazon, App Store, Gmail, Contacts, Reminders, Calendar, Uber Eats, DoorDash and a school portal.
+
+| Kind | What it asks |
+|---|---|
+| navigate | reach a specific screen (a channel's Videos tab, walking directions, a sorted feed) |
+| info | find a fact and answer a multiple-choice question about it |
+| reasoning | compare things on screen and act on the result (open the class with the lowest grade) |
+| multi-app | carry something from one app to another |
+| compute / write | use Calculator, create a note or a reminder |
+| infeasible | ask for an app or feature the phone doesn't have |
+| judged | open-ended goals graded against a rubric |
+
+21 tasks are hard. Five use personal data (a school portal) and run only when you supply your own values in
+`config/private.json`; their answers are never published. Every task is listed in [`docs/TASKS.md`](docs/TASKS.md).
 
 ## Reproduce
 
-Needs macOS with Xcode, an iPhone in Developer Mode connected over USB, and
-[phonedriver](https://www.npmjs.com/package/phonedriver) (`npx -y phonedriver doctor`). Python 3.10+, no
-dependencies (Playwright only to render charts).
+You need a Mac with Xcode, Python 3.10+ (standard library only) and [phonedriver](https://www.npmjs.com/package/phonedriver).
+For the phone track, add an iPhone in Developer Mode connected over USB. The simulator track needs no phone.
 
 ```sh
-# keys: TYPESAFE_API_KEY, GEMINI_API_KEY, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
-cp config/private.example.json config/private.json    # optional: personal-data tasks
+npx -y phonedriver doctor                      # checks Xcode, the runner and any connected devices
+cp config/private.example.json config/private.json   # optional: your own values for the personal-data tasks
+
+# API keys go in .env or ~/.config/phonebench/env (never committed):
+#   TYPESAFE_API_KEY  GEMINI_API_KEY  CLOUDFLARE_API_TOKEN  CLOUDFLARE_ACCOUNT_ID
+
+# phone track
 python3 -m phonebench.runner --providers jev-1.14 gemini-decision-1 --repeats 3
-python3 -m phonebench.regrade runs --release results/vX
+
+# simulator track: boot one first with `npx phonedriver boot "iPhone 17 Pro"`
+PHONEBENCH_DEVICE=sim:<udid> python3 -m phonebench.runner --device-kind sim --out runs-sim --providers jev-1.14
+
+# a local open-weights model: serve it, then point the runner at it
+pip install "strands-decider[vision]"
+strands-decider serve StrandsAgents/strands-decider-2B-qwen3.5-v1-2610 --vision --port 8765
+STRANDS_URL=http://127.0.0.1:8765 python3 -m phonebench.runner --providers strands-2b
+
+# grade, report, render, audit
+python3 -m phonebench.regrade runs runs-sim --carry results/archive/v6-graded.jsonl --release results/vX
 python3 -m phonebench.report results/vX
-python3 scripts/build_site.py results/vX               # site/ + README images
-python3 scripts/audit.py                                # benchmark-quality audit, must print failing=0
+python3 scripts/build_site.py results/vX       # site/ + the README images (needs Playwright)
+python3 scripts/audit.py                        # benchmark-quality audit
 ```
 
-Raw runs (screenshots, screen text) stay in `runs/`, which is git-ignored. Only ids, outcomes, counts and
+Raw runs (screenshots and screen text) stay in `runs/`, which is git-ignored. Only ids, outcomes, counts and
 timings are published.
 
 ## Limitations
 
-- **One phone, one account, one network.** Absolute times are specific to this setup; the comparisons between
-  models are what transfers.
-- **Live apps change.** Feeds, ads and store sheets differ between runs. That's realistic, and it's why each cell
-  is repeated and reported with an interval.
-- **Small samples so far.** v0.6 has one trial per model × task; intervals are wide. Read the ranking as
-  provisional until the ≥3-repeat release.
-- **Free tiers shape coverage.** Gemini is rate-limited; Cloudflare's daily free allocation caps Clef trials per day.
-- **TikTok is excluded**: its accessibility tree hangs the XCUITest runner.
-- **Decision models can't invent text.** Strings a task needs are offered as options, so this measures operating
-  the phone, not composing messages.
+- **One phone, one account, one network.** Absolute times are specific to this setup. The comparisons between
+  models are what transfer.
+- **Live apps change.** Feeds, ads and store sheets differ from run to run. That's realistic, and it's why each
+  cell is repeated and reported with an interval.
+- **Preview sample sizes.** Most model × task cells have 1–2 trials so far, and the goal is 3 or more.
+- **Free tiers shape coverage.** Gemini is rate-limited (waits are excluded from its timings), and Cloudflare's
+  daily free allocation caps Clef trials per day.
+- **TikTok is excluded.** Its accessibility tree hangs the XCUITest runner.
+- **Decision models can't invent text.** Strings a task needs are offered as options, so PhoneBench measures
+  operating the phone, not composing messages.
+- **58 early trials are archived.** Their raw snapshots no longer exist, so they keep their original grades
+  (`results/archive/`) and can't be re-graded.
 
 ## Layout
 
@@ -113,6 +175,10 @@ phonebench/   runner, environment (resets + action space), tasks, providers, saf
 docs/         METHOD.md, TASKS.md
 results/vX/   trials.jsonl, summary.json, RESULTS.md, grader_audit.json
 site/         index.html (dithered charts), assets/*.png
-scripts/      audit.py, build_site.py, gen_docs.py
+scripts/      audit.py, build_site.py, gen_docs.py, phone_queue.sh
 tests/        unit tests (safety filter, action space, grading, wire formats, stats)
 ```
+
+## License
+
+MIT
