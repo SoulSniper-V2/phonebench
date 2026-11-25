@@ -750,6 +750,13 @@
   "phonedriver timed out; inspect the phone before retrying": 2,
   "RESET_FAILED: root view of com.google.ios.youtube not verifi": 2
  },
+ "sim_models": [],
+ "n_phone_attempts": 58,
+ "provenance": {
+  "devices": {},
+  "versions": {},
+  "unstamped_trials": 58
+ },
  "ablation": {
   "gemini-decision-1|tree+image": [
    14,
@@ -760,6 +767,20 @@
    18
   ],
   "jev-1.14|tree+image": [
+   14,
+   18
+  ]
+ },
+ "ablation_by_device": {
+  "gemini-decision-1|tree+image|phone": [
+   14,
+   15
+  ],
+  "jev-1.13|tree+image|phone": [
+   12,
+   18
+  ],
+  "jev-1.14|tree+image|phone": [
    14,
    18
   ]

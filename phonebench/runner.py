@@ -20,6 +20,7 @@ from . import env
 from .providers import PROVIDERS, ask as raw_ask, load_env, redact, usage_tokens
 from .safety import NO_IMAGE_APPS, sanitize
 from .tasks import build, load_private
+from .version import stamp
 
 INSTRUCTIONS = ('You are operating this iPhone for the user. Choose the single next action that best advances the user goal from '
                 'the current screen. Prefer direct routes (search fields, tabs, menus). Do not repeat an action that produced no '
@@ -67,13 +68,16 @@ def ask(provider, state, q, image):
     raise RuntimeError(f'{provider}: rate limited after 6 attempts')
 
 
+STAMP = {}
+
+
 def run_trial(task, provider, repeat, out, time_limit=240, stuck_n=6, obs_mode='tree+image', private=None):
     folder = Path(out) / f'{time.strftime("%Y%m%d-%H%M%S")}-{provider}-{task["id"]}-r{repeat}-{obs_mode}'
     folder.mkdir(parents=True, mode=0o700)
     os.environ['PHONEBENCH_AUDIT'] = str(folder / 'device-commands.jsonl')
     r = {'bench': 'phonebench', 'version': 7, 'task': task['id'], 'category': task['cat'], 'difficulty': task['diff'],
          'infeasible': task['infeasible'], 'device_kind': os.environ.get('PHONEBENCH_DEVICE_KIND', 'phone'), 'provider': provider, 'repeat': repeat, 'obs_mode': obs_mode,
-         'time_limit_s': time_limit, 'stuck_n': stuck_n, 'steps': [], 'status': 'resetting'}
+         'time_limit_s': time_limit, 'stuck_n': stuck_n, 'steps': [], 'status': 'resetting', 'versions': STAMP}
     d.save_json(folder / 'trial.json', r)
     t0 = time.time()
     trace = []
@@ -85,6 +89,8 @@ def run_trial(task, provider, repeat, out, time_limit=240, stuck_n=6, obs_mode='
         r['status'] = 'running'
         history, seen, last_result, reached_at = [], {}, None, None
         s, image, obs = d.observe(folder, 0)
+        dev = (s.get('header') or {}).get('device') or {}
+        r['device'] = {'model': dev.get('model'), 'os': dev.get('os'), 'screen': dev.get('screen')}  # never the device id
         i = 0
         while True:
             trace.append((d.app_of(s), s.get('text', ''), None))
@@ -195,6 +201,7 @@ def main():
     ap.add_argument('--private', default='config/private.json')
     ap.add_argument('--device-kind', choices=['phone', 'sim'], default='phone')
     a = ap.parse_args()
+    STAMP.update(stamp())
     private = load_private(a.private)
     suite = build(private)
     ids = [t for t in (a.tasks or suite) if t in suite and t not in a.exclude and a.device_kind in suite[t]['devices']]

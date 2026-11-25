@@ -88,6 +88,12 @@ Same model, same device, with and without the screenshot (all trials, not only t
 | Jev 1.14 | sim | 27/27 (100%) | 15/18 (83%) |
 | Strands Decider 2B (local) | sim | 4/18 (22%) | 5/18 (28%) |
 
+## Provenance
+
+Trials from 2026-11-25 on record the device, the OS and hashes of the task suite and the harness (`phonebench/version.py`). Results are comparable only within one suite hash.
+
+- 259 earlier trials predate stamping
+
 ## Excluded trials
 
 - 4 × error: no device "ios:<device>"; connected: sim:<device> (iP

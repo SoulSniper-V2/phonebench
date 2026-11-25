@@ -1,0 +1,23 @@
+name: tests
+on: [push, pull_request]
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -v
+      - name: Re-derive the published summary from the published trials
+        run: |
+          for r in results/v*/; do
+            cp "$r/summary.json" /tmp/published.json
+            python -m phonebench.report "$r" > /dev/null
+            python - "$r" <<'PY'
+          import json, sys
+          a = json.load(open('/tmp/published.json')); b = json.load(open(sys.argv[1] + '/summary.json'))
+          assert a['models'] == b['models'], 'summary.json does not follow from trials.jsonl'
+          print(sys.argv[1], 'reproduces')
+          PY
+          done

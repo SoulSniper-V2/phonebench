@@ -1,5 +1,8 @@
 # PhoneBench
 
+![license](https://img.shields.io/badge/license-MIT-blue)
+![python](https://img.shields.io/badge/python-3.10%2B%20%C2%B7%20stdlib%20only-blue)
+
 **Can a decision model drive a real iPhone?**
 
 PhoneBench gives a model a goal, like *"find a MrBeast video and start watching it"* or *"which of my classes has
@@ -122,6 +125,9 @@ Settings, Safari, Amazon, App Store, Gmail, Contacts, Reminders, Calendar, Uber 
 
 ## Reproduce
 
+Three levels, from checking our numbers without a device to running it on your own phone. They are all in
+[`docs/REPRODUCE.md`](docs/REPRODUCE.md). CI re-derives every published summary from its trials on each push.
+
 You need a Mac with Xcode, Python 3.10+ (standard library only) and [phonedriver](https://www.npmjs.com/package/phonedriver).
 For the phone track, add an iPhone in Developer Mode connected over USB. The simulator track needs no phone.
 
@@ -171,8 +177,8 @@ timings are published.
 ## Layout
 
 ```
-phonebench/   runner, environment (resets + action space), tasks, providers, safety, regrade, report
-docs/         METHOD.md, TASKS.md
+phonebench/   runner, environment (resets + action space), tasks, providers, safety, regrade, report, version stamps
+docs/         METHOD.md, TASKS.md, REPRODUCE.md
 results/vX/   trials.jsonl, summary.json, RESULTS.md, grader_audit.json
 site/         index.html (dithered charts), assets/*.png
 scripts/      audit.py, build_site.py, gen_docs.py, phone_queue.sh

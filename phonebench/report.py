@@ -99,6 +99,9 @@ def summarize(release):
     return {'release': Path(release).name, 'n_trials': len(rows), 'n_scored': len(scored), 'n_tasks': len(tasks), 'models': models,
             'matrix': matrix, 'task_meta': meta, 'excluded': dict(excluded), 'sim_models': sim_models,
             'n_phone_attempts': len(on_phone),
+            'provenance': {'devices': dict(collections.Counter(f"{(r.get('device') or {}).get('model')} · {(r.get('device') or {}).get('os')}" for r in rows if r.get('device'))),
+                           'versions': dict(collections.Counter(f"suite {v.get('suite')} · harness {v.get('harness')} · phonedriver {v.get('phonedriver')}" for r in rows for v in [r.get('versions')] if v)),
+                           'unstamped_trials': sum(1 for r in rows if not r.get('versions'))},
             'ablation': {f'{p}|{m}': [sum(v), len(v)] for (p, m), v in sorted(ablation.items())},
             'ablation_by_device': {f'{p}|{m}|{dv}': [sum(v), len(v)] for (p, m, dv), v in sorted(abl_dev.items())},
             'dates': sorted({r['trial'][:8] for r in rows})}
@@ -149,6 +152,13 @@ def markdown(S):
         for p, dv in pairs:
             cell = lambda m: '{}/{} ({:.0f}%)'.format(*abl[f'{p}|{m}|{dv}'], 100 * abl[f'{p}|{m}|{dv}'][0] / abl[f'{p}|{m}|{dv}'][1]) if f'{p}|{m}|{dv}' in abl else '–'
             o.append(f"| {LABEL.get(p, p)} | {dv} | {cell('tree+image')} | {cell('tree')} |")
+    P = S.get('provenance') or {}
+    if P:
+        o += ['', '## Provenance', '', 'Trials from 2026-11-25 on record the device, the OS and hashes of the task suite and the harness '
+              '(`phonebench/version.py`). Results are comparable only within one suite hash.', '']
+        o += [f'- {n} × {k}' for k, n in sorted(P.get('devices', {}).items(), key=lambda kv: -kv[1])]
+        o += [f'- {n} × {k}' for k, n in sorted(P.get('versions', {}).items(), key=lambda kv: -kv[1])]
+        o += [f"- {P.get('unstamped_trials', 0)} earlier trials predate stamping"]
     o += ['', '## Excluded trials', ''] + [f'- {v} × {k}' for k, v in sorted(S['excluded'].items(), key=lambda kv: -kv[1])]
     return '\n'.join(o) + '\n'
 

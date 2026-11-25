@@ -1443,6 +1443,11 @@
   }
  ],
  "n_phone_attempts": 143,
+ "provenance": {
+  "devices": {},
+  "versions": {},
+  "unstamped_trials": 259
+ },
  "ablation": {
   "gemini-decision-1|tree+image": [
    31,

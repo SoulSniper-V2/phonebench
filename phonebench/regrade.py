@@ -57,7 +57,7 @@ def regrade(folder, suite, private):
     task = suite.get(tid)
     rec = {'trial': folder.name.split('-', 2)[0] + '-' + folder.name.split('-', 2)[1], 'task': tid, 'provider': prov,
            'repeat': raw.get('repeat', 0), 'version': raw.get('version', 6), 'obs_mode': raw.get('obs_mode', 'tree+image'),
-           'device_kind': raw.get('device_kind', 'phone'), 'status': raw.get('status'), 'category': task['cat'] if task else raw.get('category'),
+           'device_kind': raw.get('device_kind', 'phone'), 'device': raw.get('device'), 'versions': raw.get('versions'), 'status': raw.get('status'), 'category': task['cat'] if task else raw.get('category'),
            'difficulty': task['diff'] if task else raw.get('difficulty'), 'infeasible': bool(task and task['infeasible'])}
     if rec['device_kind'] == 'sim':
         rec['trial'] += '-sim'  # simulator and phone batches run in parallel; keep ids unique

@@ -1,0 +1,24 @@
+[project]
+name = "phonebench"
+version = "0.7.0"
+description = "Can a decision model drive a real iPhone? A benchmark graded on the phone's final state."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+charts = ["playwright"]
+local = ["strands-decider[vision]"]
+
+[project.scripts]
+phonebench-run = "phonebench.runner:main"
+phonebench-regrade = "phonebench.regrade:main"
+phonebench-report = "phonebench.report:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["phonebench"]

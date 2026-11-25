@@ -1,6 +1,6 @@
 # PhoneBench results — v0.6
 
-51 scored trials on a physical iPhone, 19 tasks, 3 decision models. 7 trials excluded for harness reasons (listed at the end), never counted as model failures.
+51 scored trials on a physical iPhone, 19 tasks, 3 decision models. 7 phone attempts were excluded for harness reasons (listed at the end) and never counted as model failures. Simulator trials and screenshot-free trials are reported in their own sections, never pooled with the phone score.
 
 | Rank | Model | Score (task-macro) | Pass / trials | 95% CI | Median time to pass | Median actions to pass | Decision p50 / p90 | Input tokens / task | Model share of time | False finish rate |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -58,13 +58,11 @@
 | `x_profile` | navigate | medium | – | – | ❌103s/13 |
 | `yt_creator_video` | navigate | medium | – | ✅24s/7 | – |
 
-## Observation ablation
+## Provenance
 
-| Model | Observation | Pass / trials |
-|---|---|---|
-| Gemini Decision 1 | tree+image | 14/15 |
-| Jev 1.13 | tree+image | 12/18 |
-| Jev 1.14 | tree+image | 14/18 |
+Trials from 2026-11-25 on record the device, the OS and hashes of the task suite and the harness (`phonebench/version.py`). Results are comparable only within one suite hash.
+
+- 58 earlier trials predate stamping
 
 ## Excluded trials
 
