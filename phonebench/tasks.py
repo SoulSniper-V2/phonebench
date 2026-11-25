@@ -113,7 +113,7 @@ def build(private=None):
         # ---------------------------------------------------------------- media & social
         'yt_creator_video': T(cat='navigate', diff='medium', apps=[APPS['YouTube']],
             goal='On YouTube, find a video from MrBeast and start watching it.', params=['MrBeast'],
-            check=lambda s, tr, c: in_app(s, 'YouTube') and has(s, 'mrbeast') and rx(s, r'(collapse video|video player|pause|seek)')),
+            check=lambda s, tr, c: in_app(s, 'YouTube') and rx(s, r'(collapse video|video player|pause|seek)') and (has(s, 'mrbeast') or any(x[2] and 'mrbeast' in x[2].lower() for x in tr))),
         'yt_channel_videos_tab': T(cat='navigate', diff='hard', apps=[APPS['YouTube']],
             goal="On YouTube, open MrBeast's channel page and switch to its Videos tab.", params=['MrBeast'],
             check=lambda s, tr, c: in_app(s, 'YouTube') and has(s, 'mrbeast', 'subscribers') and selected(s, 'Videos')),

@@ -36,6 +36,12 @@ def _tap(s, labels, ymin=0, ymax=900):
     return False
 
 
+def navigating(s):
+    """Apple Maps turn-by-turn guidance is on screen."""
+    t = s.get('text', '').lower()
+    return ('arrival' in t or 'end route' in t) and any(k in t for k in ('recenter', 'overview mode', 'audio control', 'incident reporting'))
+
+
 def _tab_selected(s, labels, ymin=740):
     return any(label_of(e) in labels and (e.get('bounds') or {}).get('y', 0) > ymin and 'SELECTED' in (e.get('state') or '') for e in d.elements(s))
 
@@ -49,7 +55,8 @@ ROOTS = {
     APPS['App Store']: dict(marker=lambda s: any(label_of(e) == 'Today' and 'SELECTED' in (e.get('state') or '') for e in d.elements(s)), steps=[('tap', ['Cancel', 'Back']), ('tab', ['Search']), ('tap', ['Clear text', 'Cancel']), ('tab', ['Today'])]),
     APPS['Google Maps']: dict(marker=lambda s: any(label_of(e) in ('Explore', 'Explore tab') and 'SELECTED' in (e.get('state') or '') for e in d.elements(s)),
                               steps=[('tap', ['Close', 'Back', 'Cancel', 'Clear search']), ('tab', ['Explore', 'Explore tab'])]),
-    APPS['Maps']: dict(marker=lambda s: not any(label_of(e) in ('Close', 'End', 'Clear') and visible(e) for e in d.elements(s)), steps=[('tap', ['Close', 'End', 'Clear', 'Cancel'])]),
+    APPS['Maps']: dict(marker=lambda s: not navigating(s) and not any(label_of(e) in ('Close', 'End', 'Clear') and visible(e) for e in d.elements(s)),
+                       steps=[('tap', ['Card controller']), ('tap', ['End Route', 'End']), ('tap', ['Close', 'End', 'Clear', 'Cancel'])]),
     APPS['Calculator']: dict(marker=lambda s: True, steps=[('tap', ['All Clear', 'Clear'])]),
 }
 GENERIC_BACK = ['Cancel', 'Close', 'Done', 'Back']

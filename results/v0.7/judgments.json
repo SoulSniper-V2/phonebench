@@ -1,0 +1,37 @@
+{
+ "20261124-211424": {
+  "success": false,
+  "task": "judged_grade_attention",
+  "provider": "clef-omni",
+  "reason": "Went straight to Assignments and opened a test in a class that is not the lowest-graded one; never compared classes.",
+  "judge": "Claude Opus 5.5"
+ },
+ "20261124-211745": {
+  "success": true,
+  "task": "judged_youtube_tutorial",
+  "provider": "clef-omni",
+  "reason": "Playing \"How to change a tire in 60 seconds\" (a Short, under a minute): a tire-changing tutorial well under 10:00.",
+  "judge": "Claude Opus 5.5"
+ },
+ "20261124-212324": {
+  "success": false,
+  "task": "judged_reddit_useful",
+  "provider": "clef-omni",
+  "reason": "Tapped Search Reddit six times on the home feed; never opened a post.",
+  "judge": "Claude Opus 5.5"
+ },
+ "20261124-214045": {
+  "success": true,
+  "task": "judged_news_tech",
+  "provider": "clef-omni",
+  "reason": "Article page (Wirecutter, Apple Black Friday deals) dated today. Borderline as \"news\" (a deals roundup), but it meets the rubric: an article about technology, dated today.",
+  "judge": "Claude Opus 5.5"
+ },
+ "20261124-214742": {
+  "success": false,
+  "task": "judged_veg_dinner",
+  "provider": "clef-omni",
+  "reason": "Found an all-vegetarian restaurant but finished on the store header: no menu item selected and no item price in view.",
+  "judge": "Claude Opus 5.5"
+ }
+}

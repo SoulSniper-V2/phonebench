@@ -12,12 +12,17 @@ from .providers import redact
 BLOCKED_PREFIX = re.compile(r"(?i)^(send|call|facetime|buy|pay|order|place order|checkout|delete|remove|subscribe|join|follow|unfollow|like|repost|retweet|post|reply|share|add to cart|buy now|get|install|update|purchase|start (free )?trial|sign out|log out|erase|reset|block|report)\b")
 # Anywhere in the label: trials, sign-ups, memberships, consent. "No thanks" / "Not now" stay allowed.
 BLOCKED_ANY = re.compile(r"(?i)(free trial|\btrial\b|try prime|prime (shipping|membership|video)|sign ?up|start (my |your )?membership|i agree|accept|enroll|upgrade|place your order|proceed to checkout|1-click|one-click|subscribe|confirm)")
+# Starting turn-by-turn navigation is a real-world side effect: bare Go/Start/Resume, and Maps suggestion rows that
+# route "From My Location" in one tap. (Showing directions is allowed; starting them is not.)
+BLOCKED_EXACT = re.compile(r"(?i)^(go|start|resume|start route|resume route|navigate)$")
+BLOCKED_NAV = re.compile(r"(?i)(from my location|start navigation|resume navigation)")
 # Communication apps: screen text only, never screenshots.
 NO_IMAGE_APPS = {"com.apple.mobilemail", "com.apple.MobileSMS", "com.google.Gmail"}
 
 
 def blocked(label):
-    return bool(BLOCKED_PREFIX.search(label) or BLOCKED_ANY.search(label))
+    label = label.strip()
+    return bool(BLOCKED_PREFIX.search(label) or BLOCKED_ANY.search(label) or BLOCKED_EXACT.search(label) or BLOCKED_NAV.search(label))
 
 
 def sanitize(value):

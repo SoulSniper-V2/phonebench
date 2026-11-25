@@ -649,5 +649,159 @@
   "provider": "strands-2b",
   "note": "New reminder typed and saved (All count rose), then FINISH.",
   "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-211210": {
+  "human_success": false,
+  "task": "gmaps_place",
+  "provider": "clef-omni",
+  "note": "Used Apple Maps instead of Google Maps and tapped a suggestion row that started navigation (now blocked by the safety filter).",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-211331": {
+  "human_success": false,
+  "task": "portal_lowest_class",
+  "provider": "clef-omni",
+  "note": "Opened one class and swiped back repeatedly; never compared grades.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-211941": {
+  "human_success": true,
+  "task": "yt_creator_video",
+  "provider": "clef-omni",
+  "note": "Tapped a verified MrBeast video in search results; player open. The old check needed \"MrBeast\" on the player screen; fixed to accept the tapped result.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-212431": {
+  "human_success": false,
+  "task": "stocks_market_cap",
+  "provider": "clef-omni",
+  "note": "Right page, wrong answer bucket ($3-5T).",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-212507": {
+  "human_success": false,
+  "task": "settings_os_version",
+  "provider": "clef-omni",
+  "note": "Settings search typed \"About\" twice into one field (\"AboutyAbout\"); looped.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-212649": {
+  "human_success": false,
+  "task": "portal_grade_lookup",
+  "provider": "clef-omni",
+  "note": "Opened the class, then tapped Grades repeatedly with no change.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-212751": {
+  "human_success": false,
+  "task": "portal_assignment_score",
+  "provider": "clef-omni",
+  "note": "Reached the class page but looped on Grades; never finished.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-212846": {
+  "human_success": false,
+  "task": "appstore_developer",
+  "provider": "clef-omni",
+  "note": "App Store search field would not accept text (typing reported as failed each time). Environment issue under investigation; no answer reached.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-212959": {
+  "human_success": false,
+  "task": "settings_storage",
+  "provider": "clef-omni",
+  "note": "Settings search for \"iPhone Storage\" found nothing; swiped back repeatedly.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-213413": {
+  "human_success": false,
+  "task": "gmail_open_email",
+  "provider": "clef-omni",
+  "note": "GitHub results listed; tapped the subject text repeatedly but never opened the email.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-213715": {
+  "human_success": false,
+  "task": "x_profile",
+  "provider": "clef-omni",
+  "note": "Alternated between opening X and going Home.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-214212": {
+  "human_success": false,
+  "task": "yt_channel_videos_tab",
+  "provider": "clef-omni",
+  "note": "Finished on search results; never opened the channel Videos tab.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-214439": {
+  "human_success": false,
+  "task": "calc_expression",
+  "provider": "clef-omni",
+  "note": "Tapped 1 / Clear / All Clear in a loop.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-214622": {
+  "human_success": false,
+  "task": "reddit_sort_top",
+  "provider": "clef-omni",
+  "note": "Sorted search results for \"r/iphone\" by Top instead of opening the community.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-214707": {
+  "human_success": false,
+  "task": "reddit_community",
+  "provider": "clef-omni",
+  "note": "Finished on search results; community not opened.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-215428": {
+  "human_success": false,
+  "task": "amazon_product",
+  "provider": "gemini-decision-1",
+  "note": "Said INFEASIBLE immediately; Amazon is installed.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-215504": {
+  "human_success": false,
+  "task": "gmaps_place",
+  "provider": "jev-1.13",
+  "note": "Opened Apple Maps instead of Google Maps.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
+ },
+ "20261124-211424": {
+  "human_success": false,
+  "task": "judged_grade_attention",
+  "provider": "clef-omni",
+  "note": "Judged against the task rubric: Went straight to Assignments and opened a test in a class that is not the lowest-graded one; never compared classes.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): rubric judgment from saved screens and action log"
+ },
+ "20261124-211745": {
+  "human_success": true,
+  "task": "judged_youtube_tutorial",
+  "provider": "clef-omni",
+  "note": "Judged against the task rubric: Playing \"How to change a tire in 60 seconds\" (a Short, under a minute): a tire-changing tutorial well under 10:00.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): rubric judgment from saved screens and action log"
+ },
+ "20261124-212324": {
+  "human_success": false,
+  "task": "judged_reddit_useful",
+  "provider": "clef-omni",
+  "note": "Judged against the task rubric: Tapped Search Reddit six times on the home feed; never opened a post.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): rubric judgment from saved screens and action log"
+ },
+ "20261124-214045": {
+  "human_success": true,
+  "task": "judged_news_tech",
+  "provider": "clef-omni",
+  "note": "Judged against the task rubric: Article page (Wirecutter, Apple Black Friday deals) dated today. Borderline as \"news\" (a deals roundup), but it meets the rubric: an article about technology, dated today.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): rubric judgment from saved screens and action log"
+ },
+ "20261124-214742": {
+  "human_success": false,
+  "task": "judged_veg_dinner",
+  "provider": "clef-omni",
+  "note": "Judged against the task rubric: Found an all-vegetarian restaurant but finished on the store header: no menu item selected and no item price in view.",
+  "auditor": "Claude Opus 5.5 (AI reviewer): rubric judgment from saved screens and action log"
  }
 }

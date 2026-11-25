@@ -15,5 +15,6 @@ while [ ! -e STOP ]; do
   connected && run --providers strands-2b --repeats 3
   connected && run --providers jev-1.14 strands-2b --obs-mode tree --repeats 1
   echo "== $(date -u +%FT%TZ) pass complete" >> $log
-  sleep 1800
+  # A locked phone stops every job: retry each minute until it is unlocked; otherwise wait 30 min.
+  if tail -3 $log | grep -q "device is locked"; then sleep 60; else sleep 1800; fi
 done

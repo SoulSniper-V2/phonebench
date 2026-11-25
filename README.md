@@ -19,15 +19,16 @@ done, and know when a job is impossible.
 
 ## Results
 
-> **v0.7 (preview)** · 125 graded trials on a physical iPhone 17 (iOS 27) · 30 tasks · 3 models.
-> Repeats are still running, so the intervals are wide. Clef and Strands Decider are not yet on the phone.
-> Every trial, the hand audit of the grader and the full tables: [`results/v0.7`](results/v0.7/RESULTS.md).
+> **v0.7 (preview)** · 154 graded trials on a physical iPhone 17 (iOS 27) · 31 tasks · 4 models.
+> Repeats are still running, so the intervals are wide. Clef Flash, Clef and Strands Decider are not on the phone yet.
+> Every trial, the grader audit and the full tables: [`results/v0.7`](results/v0.7/RESULTS.md).
 
 | # | Model | Score | Pass / trials | 95% CI | Median time to pass | Decision p50 | False finishes |
 |---|---|---|---|---|---|---|---|
-| 1 | Gemini Decision 1 | **82%** | 31 / 39 | 64–89% | 18.5 s | 880 ms | 6% |
-| 2 | Jev 1.13 | **72%** | 30 / 40 | 60–86% | 15.0 s | 215 ms | 14% |
-| 3 | Jev 1.14 | **71%** | 32 / 46 | 55–81% | 15.2 s | 222 ms | 18% |
+| 1 | Gemini Decision 1 | **82%** | 31 / 40 | 62–88% | 18.5 s | 880 ms | 6% |
+| 2 | Jev 1.14 | **71%** | 33 / 47 | 56–81% | 14.1 s | 222 ms | 18% |
+| 3 | Jev 1.13 | **70%** | 30 / 41 | 58–84% | 15.0 s | 216 ms | 16% |
+| 4 | Clef Omni | **46%** | 12 / 26 | 29–65% | 17.5 s | 471 ms | 17% |
 
 *Score is the mean over tasks of each task's pass rate, so a task with more repeats doesn't count more.
 False finishes: the share of feasible trials where the model said FINISH and the goal wasn't met.*
@@ -42,12 +43,21 @@ False finishes: the share of feasible trials where the model said FINISH and the
   opened Apple Maps. Both times it reported success.
 - **Gemini sometimes gives up too early.** It opened the Finance folder, didn't see Stocks there, and declared
   the task impossible, even though "open the Stocks app" was one of its options.
+- **Clef Omni gets stuck.** Most of its failures are loops: tapping the same control, or swiping back over and over.
+  When it does finish a task, it takes the fewest actions of any model (median 3).
 - **Nobody solves the reasoning tasks yet** (0 of 4 trials), and four tasks have never been passed by any model:
   an X profile, an Amazon product page (a Prime upsell blocks the way), the App Store developer lookup and Gmail.
 
 ![Speed](site/assets/speed.png)
 
 ![How trials end](site/assets/failures.png)
+
+### Judged track
+
+Open-ended goals: the best-rated coffee shop nearby, a Reddit post with genuinely useful battery advice, a tire-change
+tutorial under 10 minutes, a vegetarian dinner to order. Claude Opus 5.5 grades each trajectory against the task's
+written rubric, and every verdict comes with a reason in [`judgments.json`](results/v0.7/judgments.json). So far:
+Clef Omni 2 / 5. Other models are queued.
 
 ### Simulator track
 
@@ -101,8 +111,8 @@ grade: programmatic check of the phone's final state (+ trajectory for multi-app
   the trial and lists it.
 - **Open-ended tasks are judged by Claude Opus 5.5.** For goals like *"find a good vegetarian dinner nearby"*, it grades the
   trajectory against a rubric. These are scored on their own track.
-- **Safe by construction.** Send, buy, install, follow, like, post, delete, trial, sign-up and confirm controls are
-  never offered, and no switch is ever tappable. The driver independently blocks taps that spend money. Mail and
+- **Safe by construction.** Send, buy, install, follow, like, post, delete, trial, sign-up, confirm and start-navigation
+  controls are never offered, and no switch is ever tappable. The driver independently blocks taps that spend money. Mail and
   Messages are sent to the model as text only, never as screenshots.
 
 The full protocol, metrics and failure taxonomy are in [`docs/METHOD.md`](docs/METHOD.md).
@@ -170,6 +180,10 @@ timings are published.
 - **Preview sample sizes.** Most model × task cells have 1–2 trials so far, and the goal is 3 or more.
 - **Free tiers shape coverage.** Gemini is rate-limited (waits are excluded from its timings), and Cloudflare's
   daily free allocation caps Clef trials per day.
+- **One safety gap was found and closed.** A model tapped an Apple Maps suggestion row that starts turn-by-turn
+  navigation in one tap, which the filter didn't yet block. Navigation starts (Go, Start, Resume, "From My Location"
+  rows) are now never offered, the Maps reset ends any active route, and later trials that opened into the leftover
+  navigation are excluded.
 - **TikTok is excluded.** Its accessibility tree hangs the XCUITest runner.
 - **The reviewer is an AI.** Grading is programmatic; the audit of the grader and the open-ended tasks are judged by
   Claude Opus 5.5, not a human. Its verdicts and reasons are published so anyone can check them.

@@ -99,6 +99,8 @@ def summarize(release):
     return {'release': Path(release).name, 'n_trials': len(rows), 'n_scored': len(scored), 'n_tasks': len(tasks), 'models': models,
             'matrix': matrix, 'task_meta': meta, 'excluded': dict(excluded), 'sim_models': sim_models,
             'n_phone_attempts': len(on_phone),
+            'judged': {p: [sum(r['success'] for r in v), len(v)] for p in providers + sorted({r['provider'] for r in rows} - set(providers))
+                       for v in [[r for r in rows if r['provider'] == p and r.get('track') == 'judged' and r['status'] == 'finished' and 'excluded_reason' not in r]] if v},
             'provenance': {'devices': dict(collections.Counter(f"{(r.get('device') or {}).get('model')} · {(r.get('device') or {}).get('os')}" for r in rows if r.get('device'))),
                            'versions': dict(collections.Counter(f"suite {v.get('suite')} · harness {v.get('harness')} · phonedriver {v.get('phonedriver')}" for r in rows for v in [r.get('versions')] if v)),
                            'unstamped_trials': sum(1 for r in rows if not r.get('versions'))},
@@ -138,6 +140,10 @@ def markdown(S):
             trials = cells.get(m['id'], [])
             row.append(' '.join(('✅' if ok else '❌') + f'{s:.0f}s/{a}' for ok, s, a, _ in trials) or '–')
         o.append(f"| `{t}` | {meta['category']} | {meta['difficulty']} | " + ' | '.join(row) + ' |')
+    if S.get('judged'):
+        o += ['', '## Judged track', '', 'Open-ended goals (best coffee nearby, a useful Reddit post, a short tutorial). Claude Opus 5.5 grades each '
+              'trajectory against the task rubric; verdicts and reasons are in `judgments.json`. Not part of the headline score.', '',
+              '| Model | Pass / trials |', '|---|---|'] + [f"| {LABEL.get(p, p)} | {a}/{b} |" for p, (a, b) in S['judged'].items()]
     if S.get('sim_models'):
         o += ['', '## Simulator track', '', 'iOS Simulator, the tasks that run there (built-in apps and Safari). Reported separately from the phone.', '',
               '| Model | Pass / trials | 95% CI | Tasks | Median time to pass | Decision p50 |', '|---|---|---|---|---|---|']

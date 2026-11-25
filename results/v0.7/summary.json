@@ -1,40 +1,40 @@
 {
  "release": "v0.7",
- "n_trials": 259,
- "n_scored": 125,
- "n_tasks": 30,
+ "n_trials": 315,
+ "n_scored": 154,
+ "n_tasks": 31,
  "models": [
   {
    "id": "gemini-decision-1",
    "label": "Gemini Decision 1",
-   "trials": 39,
+   "trials": 40,
    "passes": 31,
-   "pass_rate": 0.7948717948717948,
+   "pass_rate": 0.775,
    "ci95": [
-    0.6446572703687138,
-    0.8922040980208888
+    0.6249660359590695,
+    0.8768404674532148
    ],
    "task_macro_pass_rate": 0.8214285714285714,
    "tasks_covered": 28,
    "median_task_s_pass": 18.53,
-   "median_task_s": 18.53,
+   "median_task_s": 18.195,
    "median_actions_pass": 4.0,
-   "decision_ms_p50": 880.25,
-   "decision_ms_p90": 1274.14,
-   "decision_ms_p99": 1637.939,
-   "median_input_tokens": 14160.0,
+   "decision_ms_p50": 880.5,
+   "decision_ms_p90": 1274.12,
+   "decision_ms_p99": 1637.732,
+   "median_input_tokens": 13835.5,
    "median_output_tokens": 0.0,
    "time_split": {
-    "model": 0.271606,
-    "device": 0.690383
+    "model": 0.272052,
+    "device": 0.688585
    },
-   "false_finish_rate": 0.05714285714285714,
+   "false_finish_rate": 0.05555555555555555,
    "failure_modes": {
     "pass": 31,
     "false_finish": 2,
     "reached_no_finish": 2,
     "stuck_loop": 1,
-    "false_infeasible": 3
+    "false_infeasible": 4
    },
    "by_category": {
     "compute": [
@@ -55,7 +55,7 @@
     ],
     "navigate": [
      10,
-     12
+     13
     ],
     "reasoning": [
      0,
@@ -77,112 +77,37 @@
     ],
     "hard": [
      15,
-     22
-    ]
-   }
-  },
-  {
-   "id": "jev-1.13",
-   "label": "Jev 1.13",
-   "trials": 40,
-   "passes": 30,
-   "pass_rate": 0.75,
-   "ci95": [
-    0.598057409330299,
-    0.8581303210445048
-   ],
-   "task_macro_pass_rate": 0.7166666666666667,
-   "tasks_covered": 30,
-   "median_task_s_pass": 15.035,
-   "median_task_s": 15.86,
-   "median_actions_pass": 4.0,
-   "decision_ms_p50": 214.9,
-   "decision_ms_p90": 376.23,
-   "decision_ms_p99": 864.213,
-   "median_input_tokens": 18710.5,
-   "median_output_tokens": 3038.5,
-   "time_split": {
-    "model": 0.074836,
-    "device": 0.881466
-   },
-   "false_finish_rate": 0.1388888888888889,
-   "failure_modes": {
-    "pass": 30,
-    "false_finish": 5,
-    "stuck_loop": 5
-   },
-   "by_category": {
-    "compute": [
-     1,
-     1
-    ],
-    "infeasible": [
-     4,
-     4
-    ],
-    "info": [
-     12,
-     15
-    ],
-    "multi-app": [
-     2,
-     2
-    ],
-    "navigate": [
-     10,
-     16
-    ],
-    "reasoning": [
-     0,
-     1
-    ],
-    "write": [
-     1,
-     1
-    ]
-   },
-   "by_difficulty": {
-    "easy": [
-     2,
-     3
-    ],
-    "medium": [
-     12,
-     16
-    ],
-    "hard": [
-     16,
-     21
+     23
     ]
    }
   },
   {
    "id": "jev-1.14",
    "label": "Jev 1.14",
-   "trials": 46,
-   "passes": 32,
-   "pass_rate": 0.6956521739130435,
+   "trials": 47,
+   "passes": 33,
+   "pass_rate": 0.7021276595744681,
    "ci95": [
-    0.5519408125976183,
-    0.8092032919255109
+    0.5602205595363459,
+    0.8134891584898374
    ],
    "task_macro_pass_rate": 0.7142857142857143,
    "tasks_covered": 28,
-   "median_task_s_pass": 15.18,
-   "median_task_s": 16.72,
+   "median_task_s_pass": 14.14,
+   "median_task_s": 16.45,
    "median_actions_pass": 4.0,
-   "decision_ms_p50": 221.9,
-   "decision_ms_p90": 430.76,
-   "decision_ms_p99": 785.735,
-   "median_input_tokens": 20815.5,
-   "median_output_tokens": 3508.0,
+   "decision_ms_p50": 221.8,
+   "decision_ms_p90": 430.44,
+   "decision_ms_p99": 785.64,
+   "median_input_tokens": 20724.0,
+   "median_output_tokens": 3480.0,
    "time_split": {
-    "model": 0.087863,
-    "device": 0.871125
+    "model": 0.08795,
+    "device": 0.869817
    },
    "false_finish_rate": 0.18181818181818182,
    "failure_modes": {
-    "pass": 32,
+    "pass": 33,
     "false_finish": 8,
     "stuck_loop": 5,
     "false_infeasible": 1
@@ -193,8 +118,8 @@
      2
     ],
     "infeasible": [
-     2,
-     2
+     3,
+     3
     ],
     "info": [
      14,
@@ -223,12 +148,164 @@
      4
     ],
     "medium": [
-     12,
-     18
+     13,
+     19
     ],
     "hard": [
      17,
      24
+    ]
+   }
+  },
+  {
+   "id": "jev-1.13",
+   "label": "Jev 1.13",
+   "trials": 41,
+   "passes": 30,
+   "pass_rate": 0.7317073170731707,
+   "ci95": [
+    0.5806617472399707,
+    0.8430519471866331
+   ],
+   "task_macro_pass_rate": 0.7,
+   "tasks_covered": 30,
+   "median_task_s_pass": 15.035,
+   "median_task_s": 15.64,
+   "median_actions_pass": 4.0,
+   "decision_ms_p50": 215.55,
+   "decision_ms_p90": 374.97,
+   "decision_ms_p99": 860.407,
+   "median_input_tokens": 18037.0,
+   "median_output_tokens": 3009.0,
+   "time_split": {
+    "model": 0.074895,
+    "device": 0.880152
+   },
+   "false_finish_rate": 0.16216216216216217,
+   "failure_modes": {
+    "pass": 30,
+    "false_finish": 6,
+    "stuck_loop": 5
+   },
+   "by_category": {
+    "compute": [
+     1,
+     1
+    ],
+    "infeasible": [
+     4,
+     4
+    ],
+    "info": [
+     12,
+     15
+    ],
+    "multi-app": [
+     2,
+     2
+    ],
+    "navigate": [
+     10,
+     17
+    ],
+    "reasoning": [
+     0,
+     1
+    ],
+    "write": [
+     1,
+     1
+    ]
+   },
+   "by_difficulty": {
+    "easy": [
+     2,
+     3
+    ],
+    "medium": [
+     12,
+     17
+    ],
+    "hard": [
+     16,
+     21
+    ]
+   }
+  },
+  {
+   "id": "clef-omni",
+   "label": "Clef Omni",
+   "trials": 26,
+   "passes": 12,
+   "pass_rate": 0.46153846153846156,
+   "ci95": [
+    0.28755582695234905,
+    0.6454236379556988
+   ],
+   "task_macro_pass_rate": 0.46153846153846156,
+   "tasks_covered": 26,
+   "median_task_s_pass": 17.51,
+   "median_task_s": 25.47,
+   "median_actions_pass": 3.0,
+   "decision_ms_p50": 470.9,
+   "decision_ms_p90": 952.6,
+   "decision_ms_p99": 2996.8,
+   "median_input_tokens": 15992.5,
+   "median_output_tokens": 0.0,
+   "time_split": {
+    "model": 0.129339,
+    "device": 0.834759
+   },
+   "false_finish_rate": 0.16666666666666666,
+   "failure_modes": {
+    "pass": 12,
+    "false_finish": 4,
+    "wrong_answer": 1,
+    "reached_no_finish": 2,
+    "stuck_loop": 7
+   },
+   "by_category": {
+    "compute": [
+     0,
+     1
+    ],
+    "infeasible": [
+     2,
+     2
+    ],
+    "info": [
+     6,
+     11
+    ],
+    "multi-app": [
+     1,
+     1
+    ],
+    "navigate": [
+     2,
+     9
+    ],
+    "reasoning": [
+     0,
+     1
+    ],
+    "write": [
+     1,
+     1
+    ]
+   },
+   "by_difficulty": {
+    "easy": [
+     2,
+     3
+    ],
+    "medium": [
+     5,
+     12
+    ],
+    "hard": [
+     5,
+     11
     ]
    }
   }
@@ -263,8 +340,15 @@
      23.51,
      7,
      "stuck_loop"
+    ],
+    [
+     false,
+     2.03,
+     0,
+     "false_infeasible"
     ]
-   ]
+   ],
+   "clef-omni": []
   },
   "appstore_developer": {
    "jev-1.14": [
@@ -295,6 +379,14 @@
      7.91,
      2,
      "false_finish"
+    ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     47.09,
+     8,
+     "stuck_loop"
     ]
    ]
   },
@@ -328,7 +420,8 @@
      5,
      "pass"
     ]
-   ]
+   ],
+   "clef-omni": []
   },
   "calc_expression": {
    "jev-1.14": [
@@ -359,6 +452,14 @@
      53.29,
      16,
      "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     43.66,
+     16,
+     "stuck_loop"
     ]
    ]
   },
@@ -392,7 +493,8 @@
      6,
      "pass"
     ]
-   ]
+   ],
+   "clef-omni": []
   },
   "cross_weather_to_note": {
    "jev-1.14": [
@@ -424,6 +526,14 @@
      8,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     48.54,
+     8,
+     "pass"
+    ]
    ]
   },
   "gmail_open_email": {
@@ -449,7 +559,15 @@
      "false_finish"
     ]
    ],
-   "gemini-decision-1": []
+   "gemini-decision-1": [],
+   "clef-omni": [
+    [
+     false,
+     57.68,
+     11,
+     "stuck_loop"
+    ]
+   ]
   },
   "gmaps_place": {
    "jev-1.14": [
@@ -472,6 +590,12 @@
      46.29,
      9,
      "pass"
+    ],
+    [
+     false,
+     5.77,
+     1,
+     "false_finish"
     ]
    ],
    "gemini-decision-1": [
@@ -481,6 +605,14 @@
      4,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     18.92,
+     2,
+     "false_finish"
+    ]
    ]
   },
   "infeasible_missing_app": {
@@ -489,6 +621,12 @@
      true,
      4.57,
      1,
+     "pass"
+    ],
+    [
+     true,
+     1.44,
+     0,
      "pass"
     ]
    ],
@@ -517,6 +655,14 @@
      true,
      2.72,
      0,
+     "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     5.41,
+     1,
      "pass"
     ]
    ]
@@ -557,6 +703,14 @@
      0,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     18.12,
+     4,
+     "pass"
+    ]
    ]
   },
   "maps_route": {
@@ -583,7 +737,8 @@
      5,
      "pass"
     ]
-   ]
+   ],
+   "clef-omni": []
   },
   "maps_walking_coffee": {
    "jev-1.14": [
@@ -621,7 +776,8 @@
      6,
      "pass"
     ]
-   ]
+   ],
+   "clef-omni": []
   },
   "notes_create": {
    "jev-1.14": [
@@ -651,6 +807,14 @@
      true,
      13.94,
      4,
+     "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     13.24,
+     3,
      "pass"
     ]
    ]
@@ -685,6 +849,14 @@
      4,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     30.62,
+     8,
+     "reached_no_finish"
+    ]
    ]
   },
   "portal_attendance": {
@@ -709,6 +881,14 @@
      true,
      9.12,
      2,
+     "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     16.81,
+     3,
      "pass"
     ]
    ]
@@ -743,6 +923,14 @@
      5,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     32.32,
+     8,
+     "stuck_loop"
+    ]
    ]
   },
   "portal_lowest_class": {
@@ -775,6 +963,14 @@
      20,
      "reached_no_finish"
     ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     29.6,
+     9,
+     "stuck_loop"
+    ]
    ]
   },
   "reddit_community": {
@@ -806,6 +1002,14 @@
      27.97,
      6,
      "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     14.05,
+     4,
+     "false_finish"
     ]
    ]
   },
@@ -842,6 +1046,14 @@
     [
      false,
      27.71,
+     7,
+     "false_finish"
+    ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     25.46,
      7,
      "false_finish"
     ]
@@ -889,6 +1101,14 @@
      3,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     18.25,
+     3,
+     "pass"
+    ]
    ]
   },
   "safari_fact": {
@@ -919,6 +1139,14 @@
      true,
      16.98,
      4,
+     "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     16.9,
+     3,
      "pass"
     ]
    ]
@@ -977,6 +1205,14 @@
      2,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     14.48,
+     4,
+     "pass"
+    ]
    ]
   },
   "settings_os_version": {
@@ -1014,6 +1250,14 @@
      11.4,
      3,
      "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     83.49,
+     24,
+     "reached_no_finish"
     ]
    ]
   },
@@ -1053,6 +1297,27 @@
      7,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     35.92,
+     11,
+     "stuck_loop"
+    ]
+   ]
+  },
+  "sim_safari_capital": {
+   "jev-1.14": [],
+   "jev-1.13": [],
+   "gemini-decision-1": [],
+   "clef-omni": [
+    [
+     true,
+     20.21,
+     3,
+     "pass"
+    ]
    ]
   },
   "stocks_detail": {
@@ -1085,6 +1350,14 @@
      1,
      "false_infeasible"
     ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     11.08,
+     2,
+     "pass"
+    ]
    ]
   },
   "stocks_market_cap": {
@@ -1109,6 +1382,14 @@
      5.85,
      1,
      "false_infeasible"
+    ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     12.0,
+     2,
+     "wrong_answer"
     ]
    ]
   },
@@ -1142,6 +1423,14 @@
      3,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     25.48,
+     5,
+     "pass"
+    ]
    ]
   },
   "x_profile": {
@@ -1154,7 +1443,15 @@
      "stuck_loop"
     ]
    ],
-   "gemini-decision-1": []
+   "gemini-decision-1": [],
+   "clef-omni": [
+    [
+     false,
+     166.51,
+     25,
+     "stuck_loop"
+    ]
+   ]
   },
   "yt_channel_videos_tab": {
    "jev-1.14": [
@@ -1186,6 +1483,14 @@
      6,
      "pass"
     ]
+   ],
+   "clef-omni": [
+    [
+     false,
+     78.18,
+     5,
+     "false_finish"
+    ]
    ]
   },
   "yt_creator_video": {
@@ -1215,6 +1520,14 @@
     [
      true,
      20.38,
+     5,
+     "pass"
+    ]
+   ],
+   "clef-omni": [
+    [
+     true,
+     77.97,
      5,
      "pass"
     ]
@@ -1342,6 +1655,11 @@
    "difficulty": "medium",
    "infeasible": false
   },
+  "sim_safari_capital": {
+   "category": "info",
+   "difficulty": "medium",
+   "infeasible": false
+  },
   "stocks_detail": {
    "category": "info",
    "difficulty": "easy",
@@ -1380,11 +1698,19 @@
   "RESET_FAILED: root view of com.google.ios.youtube not verifi": 2,
   "answer question not asked (trial predates the question)": 2,
   "error: device ios:<device> disconnected": 1,
-  "RESET_FAILED: root view of com.infinitecampus.student.campus": 1,
+  "RESET_FAILED: root view of com.infinitecampus.student.campus": 2,
   "error: connection error: runner tree: Failed to get matching": 1,
-  "RESET_FAILED: root view of com.apple.AppStore not verified": 1,
+  "RESET_FAILED: root view of com.apple.AppStore not verified": 2,
   "RESET_FAILED: root view of com.apple.Maps not verified": 1,
-  "error: no device \"ios:<device>\"; connected: sim:<device> (iP": 4
+  "error: no device \"ios:<device>\"; connected: sim:<device> (iP": 4,
+  "clef-omni: <urlopen error [Errno 60] Operation timed out>": 1,
+  "opened into navigation left running by an earlier trial": 4,
+  "clef-omni: HTTP 429: {\"errors\":[{\"message\":\"AiError: AiError": 2,
+  "clef-flash: HTTP 429: {\"errors\":[{\"message\":\"AiError: AiErro": 1,
+  "clef: HTTP 429: {\"errors\":[{\"message\":\"AiError: AiError: you": 1,
+  "phone locked during the trial": 1,
+  "error: The device is locked. Unlock it by hand; phonedriver ": 7,
+  "resetting": 1
  },
  "sim_models": [
   {
@@ -1442,28 +1768,43 @@
    }
   }
  ],
- "n_phone_attempts": 143,
+ "n_phone_attempts": 192,
+ "judged": {
+  "clef-omni": [
+   2,
+   5
+  ]
+ },
  "provenance": {
-  "devices": {},
-  "versions": {},
-  "unstamped_trials": 259
+  "devices": {
+   "iPhone18,3 \u00b7 iOS 27.0": 8
+  },
+  "versions": {
+   "suite 7c2156328bd2 \u00b7 harness a93e95f0c490 \u00b7 phonedriver 0.1.7": 17,
+   "suite 6e837d5fb40e \u00b7 harness f0ea2138e6c6 \u00b7 phonedriver 0.1.7": 2
+  },
+  "unstamped_trials": 296
  },
  "ablation": {
+  "clef-omni|tree+image": [
+   14,
+   31
+  ],
   "gemini-decision-1|tree+image": [
    31,
-   39
+   40
   ],
   "jev-1.13|tree+image": [
    53,
-   67
+   68
   ],
   "jev-1.14|tree": [
    15,
    18
   ],
   "jev-1.14|tree+image": [
-   59,
-   73
+   60,
+   74
   ],
   "strands-2b|tree": [
    5,
@@ -1475,13 +1816,17 @@
   ]
  },
  "ablation_by_device": {
+  "clef-omni|tree+image|phone": [
+   14,
+   31
+  ],
   "gemini-decision-1|tree+image|phone": [
    31,
-   39
+   40
   ],
   "jev-1.13|tree+image|phone": [
    30,
-   40
+   41
   ],
   "jev-1.13|tree+image|sim": [
    23,
@@ -1492,8 +1837,8 @@
    18
   ],
   "jev-1.14|tree+image|phone": [
-   32,
-   46
+   33,
+   47
   ],
   "jev-1.14|tree+image|sim": [
    27,

@@ -13,6 +13,7 @@ import re
 from pathlib import Path
 
 from .providers import usage_tokens
+from .env import navigating
 from .tasks import LEGACY_IDS, build, load_private
 
 LEGACY_PROVIDERS = {'jev': 'jev-1.14', 'jev-1.13.0': 'jev-1.13', 'gemini': 'gemini-decision-1'}
@@ -68,6 +69,15 @@ def regrade(folder, suite, private):
         rec['excluded_reason'] = 'not in suite' if task is None else scrub(raw.get('error') or raw.get('status'))[:160]
         return rec
     snaps = load_trace(folder)
+    # Navigation the model did not start (its previous action was not a tap) was left running by an earlier trial.
+    acts0 = {x['index']: (x.get('action') or {}).get('kind') for x in raw.get('steps', [])}
+    for i, x in enumerate(snaps):
+        if i and navigating(x) and acts0.get(i - 1) != 'tap':
+            rec['excluded_reason'] = 'opened into navigation left running by an earlier trial'
+            return rec
+        if ((x.get('header') or {}).get('app') or {}).get('id') == 'com.apple.SleepLockScreen':
+            rec['excluded_reason'] = 'phone locked during the trial'
+            return rec
     trace, reached = [], None
     acts = {x['index']: x.get('action') or {} for x in raw.get('steps', [])}
     for i, s in enumerate(snaps):
