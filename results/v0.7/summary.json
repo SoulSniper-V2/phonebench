@@ -1,6 +1,6 @@
 {
  "release": "v0.7",
- "n_trials": 214,
+ "n_trials": 250,
  "n_scored": 125,
  "n_tasks": 30,
  "models": [
@@ -1398,11 +1398,53 @@
    53,
    67
   ],
+  "jev-1.14|tree": [
+   15,
+   18
+  ],
   "jev-1.14|tree+image": [
    59,
    73
   ],
+  "strands-2b|tree": [
+   5,
+   18
+  ],
   "strands-2b|tree+image": [
+   1,
+   9
+  ]
+ },
+ "ablation_by_device": {
+  "gemini-decision-1|tree+image|phone": [
+   31,
+   39
+  ],
+  "jev-1.13|tree+image|phone": [
+   30,
+   40
+  ],
+  "jev-1.13|tree+image|sim": [
+   23,
+   27
+  ],
+  "jev-1.14|tree|sim": [
+   15,
+   18
+  ],
+  "jev-1.14|tree+image|phone": [
+   32,
+   46
+  ],
+  "jev-1.14|tree+image|sim": [
+   27,
+   27
+  ],
+  "strands-2b|tree|sim": [
+   5,
+   18
+  ],
+  "strands-2b|tree+image|sim": [
    1,
    9
   ]

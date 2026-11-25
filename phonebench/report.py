@@ -78,15 +78,17 @@ def summarize(release):
     models.sort(key=lambda m: -m['task_macro_pass_rate'])
     matrix = {t: {p: [[r['success'], r['task_s'], r['n_actions'], r['failure_mode']] for r in by[p] if r['task'] == t] for p in providers} for t in tasks}
     meta = {t: next({'category': r['category'], 'difficulty': r['difficulty'], 'infeasible': r['infeasible']} for r in scored if r['task'] == t) for t in tasks}
-    ablation = {}
+    ablation, abl_dev = {}, {}
     for r in rows:
         if r['status'] == 'finished' and 'excluded_reason' not in r:
             key = (r['provider'], r.get('obs_mode', 'tree+image'))
             ablation.setdefault(key, []).append(r['success'])
+            abl_dev.setdefault((r['provider'], r.get('obs_mode', 'tree+image'), r.get('device_kind', 'phone')), []).append(r['success'])
     excluded = collections.Counter((r.get('excluded_reason') or r['status'])[:60] for r in rows if r['status'] != 'finished' or 'excluded_reason' in r)
     return {'release': Path(release).name, 'n_trials': len(rows), 'n_scored': len(scored), 'n_tasks': len(tasks), 'models': models,
             'matrix': matrix, 'task_meta': meta, 'excluded': dict(excluded),
             'ablation': {f'{p}|{m}': [sum(v), len(v)] for (p, m), v in sorted(ablation.items())},
+            'ablation_by_device': {f'{p}|{m}|{dv}': [sum(v), len(v)] for (p, m, dv), v in sorted(abl_dev.items())},
             'dates': sorted({r['trial'][:8] for r in rows})}
 
 
@@ -120,11 +122,14 @@ def markdown(S):
             trials = cells.get(m['id'], [])
             row.append(' '.join(('✅' if ok else '❌') + f'{s:.0f}s/{a}' for ok, s, a, _ in trials) or '–')
         o.append(f"| `{t}` | {meta['category']} | {meta['difficulty']} | " + ' | '.join(row) + ' |')
-    if S['ablation']:
-        o += ['', '## Observation ablation', '', '| Model | Observation | Pass / trials |', '|---|---|---|']
-        for k, (a, b) in S['ablation'].items():
-            p, mode = k.split('|')
-            o.append(f"| {LABEL.get(p, p)} | {mode} | {a}/{b} |")
+    abl = S.get('ablation_by_device') or {}
+    pairs = sorted({(k.split('|')[0], k.split('|')[2]) for k in abl if k.split('|')[1] == 'tree'})
+    if pairs:
+        o += ['', '## Observation ablation', '', 'Same model, same device, with and without the screenshot (all trials, not only the scored phone set).', '',
+              '| Model | Device | Tree + screenshot | Tree only |', '|---|---|---|---|']
+        for p, dv in pairs:
+            cell = lambda m: '{}/{} ({:.0f}%)'.format(*abl[f'{p}|{m}|{dv}'], 100 * abl[f'{p}|{m}|{dv}'][0] / abl[f'{p}|{m}|{dv}'][1]) if f'{p}|{m}|{dv}' in abl else '–'
+            o.append(f"| {LABEL.get(p, p)} | {dv} | {cell('tree+image')} | {cell('tree')} |")
     o += ['', '## Excluded trials', ''] + [f'- {v} × {k}' for k, v in sorted(S['excluded'].items(), key=lambda kv: -kv[1])]
     return '\n'.join(o) + '\n'
 

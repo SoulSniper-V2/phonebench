@@ -1,6 +1,6 @@
 # PhoneBench results — v0.7
 
-125 scored trials on a physical iPhone, 30 tasks, 3 decision models. 89 trials excluded for harness reasons (listed at the end), never counted as model failures.
+125 scored trials on a physical iPhone, 30 tasks, 3 decision models. 125 trials excluded for harness reasons (listed at the end), never counted as model failures.
 
 | Rank | Model | Score (task-macro) | Pass / trials | 95% CI | Median time to pass | Median actions to pass | Decision p50 / p90 | Input tokens / task | Model share of time | False finish rate |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -71,12 +71,12 @@
 
 ## Observation ablation
 
-| Model | Observation | Pass / trials |
-|---|---|---|
-| Gemini Decision 1 | tree+image | 31/39 |
-| Jev 1.13 | tree+image | 53/67 |
-| Jev 1.14 | tree+image | 59/73 |
-| Strands Decider 2B (local) | tree+image | 1/9 |
+Same model, same device, with and without the screenshot (all trials, not only the scored phone set).
+
+| Model | Device | Tree + screenshot | Tree only |
+|---|---|---|---|
+| Jev 1.14 | sim | 27/27 (100%) | 15/18 (83%) |
+| Strands Decider 2B (local) | sim | 1/9 (11%) | 5/18 (28%) |
 
 ## Excluded trials
 
