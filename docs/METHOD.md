@@ -49,8 +49,10 @@ the stuck detector only stop runaway loops, and every stop reason is reported.
 - **Infeasible tasks** (OSWorld-style) pass only when the model chooses INFEASIBLE; choosing
   INFEASIBLE on a feasible task is a failure (`false_infeasible`).
 - Checks are pure functions of saved snapshots, so `phonebench.regrade` re-scores every past trial
-  when a check is fixed. Every release ships `grader_audit.json`: a human review of every failing
-  trial and at least a quarter of passes, against the final screenshot.
+  when a check is fixed. Every release ships `grader_audit.json`: a review by Claude Opus 5.5 (an AI
+  reviewer, not a human) of every failing trial and at least a quarter of passes. It reads the saved screens and
+  action log, gives its own verdict and a one-line reason. The release must agree with it on at least 95% of reviewed
+  trials. Open-ended (judged) tasks are graded by the same reviewer against each task's rubric, on a separate track.
 
 ## Failure taxonomy
 

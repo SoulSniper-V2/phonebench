@@ -4,650 +4,650 @@
   "task": "amazon_product",
   "provider": "gemini-decision-1",
   "note": "Prime upsell interstitial; decline link below the fold; model swiped back repeatedly or stayed on the Amazon home sheet.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-134636": {
   "human_success": false,
   "task": "amazon_product",
   "provider": "jev-1.14",
   "note": "Prime upsell interstitial; decline link below the fold; model swiped back repeatedly or stayed on the Amazon home sheet.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-135612": {
   "human_success": false,
   "task": "portal_grade_lookup",
   "provider": "jev-1.13",
   "note": "Target class heading visible at the bottom edge but its grade rows are below the fold when FINISH was chosen.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-135736": {
   "human_success": false,
   "task": "gmail_open_email",
   "provider": "jev-1.14",
   "note": "Opened Apple Mail instead of Gmail (wrong app); a GitHub email is visible there.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-140105": {
   "human_success": false,
   "task": "gmail_open_email",
   "provider": "jev-1.13",
   "note": "Opened Apple Mail instead of Gmail (wrong app); a GitHub email is visible there.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-140130": {
   "human_success": false,
   "task": "portal_attendance",
   "provider": "jev-1.14",
   "note": "Tapped the home-page \"Attendance\" filter of the Recent Updates widget; the attendance page was never opened.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-140412": {
   "human_success": false,
   "task": "x_profile",
   "provider": "jev-1.13",
   "note": "Ended on the Timelines side panel; profile never reached.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-140733": {
   "human_success": false,
   "task": "amazon_product",
   "provider": "jev-1.13",
   "note": "Prime upsell interstitial; decline link below the fold; model swiped back repeatedly or stayed on the Amazon home sheet.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-141648": {
   "human_success": false,
   "task": "portal_attendance",
   "provider": "jev-1.13",
   "note": "Tapped the home-page \"Attendance\" filter of the Recent Updates widget; the attendance page was never opened.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-141714": {
   "human_success": false,
   "task": "gmaps_place",
   "provider": "jev-1.14",
   "note": "Opened Apple Maps instead of Google Maps (wrong app).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-141906": {
   "human_success": false,
   "task": "settings_storage",
   "provider": "jev-1.13",
   "note": "Looped inside Battery settings; storage page never reached.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-141427": {
   "human_success": true,
   "task": "safari_fact",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-134524": {
   "human_success": true,
   "task": "portal_assignment_score",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-135133": {
   "human_success": true,
   "task": "maps_route",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-134439": {
   "human_success": true,
   "task": "appstore_ratings",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142429": {
   "human_success": true,
   "task": "calc_expression",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142153": {
   "human_success": true,
   "task": "settings_battery_health",
   "provider": "jev-1.14",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-134818": {
   "human_success": true,
   "task": "portal_grade_lookup",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-135035": {
   "human_success": true,
   "task": "settings_os_version",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-140350": {
   "human_success": true,
   "task": "stocks_detail",
   "provider": "jev-1.14",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142003": {
   "human_success": true,
   "task": "weather_city",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142243": {
   "human_success": true,
   "task": "portal_assignment_score",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-141139": {
   "human_success": true,
   "task": "portal_attendance",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142535": {
   "human_success": true,
   "task": "stocks_detail",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-141326": {
   "human_success": true,
   "task": "portal_assignment_score",
   "provider": "jev-1.14",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-161540": {
   "human_success": false,
   "task": "appstore_developer",
   "provider": "gemini-decision-1",
   "note": "Stopped on App Store search results; the developer is not shown there (model answered from prior knowledge).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-161708": {
   "human_success": false,
   "task": "cross_weather_to_note",
   "provider": "jev-1.14",
   "note": "Declared the feasible task INFEASIBLE from the Home screen without trying.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-161744": {
   "human_success": false,
   "task": "appstore_developer",
   "provider": "jev-1.13",
   "note": "Stopped on App Store search results; the developer is not shown there (model answered from prior knowledge).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-161805": {
   "human_success": false,
   "task": "portal_lowest_class",
   "provider": "jev-1.13",
   "note": "Did not finish on the lowest-grade class page (opened a different class, or reached it and kept going).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162147": {
   "human_success": false,
   "task": "appstore_developer",
   "provider": "jev-1.14",
   "note": "Stopped on App Store search results; the developer is not shown there (model answered from prior knowledge).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162211": {
   "human_success": false,
   "task": "portal_lowest_class",
   "provider": "gemini-decision-1",
   "note": "Did not finish on the lowest-grade class page (opened a different class, or reached it and kept going).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162453": {
   "human_success": false,
   "task": "portal_lowest_class",
   "provider": "jev-1.14",
   "note": "Did not finish on the lowest-grade class page (opened a different class, or reached it and kept going).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162809": {
   "human_success": false,
   "task": "stocks_market_cap",
   "provider": "gemini-decision-1",
   "note": "Declared INFEASIBLE; market cap is on the AAPL detail page (image only, not in the accessibility tree).",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162957": {
   "human_success": false,
   "task": "reddit_sort_top",
   "provider": "jev-1.13",
   "note": "Sorted the search results by Top instead of the community feed.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-141455": {
   "human_success": true,
   "task": "maps_route",
   "provider": "jev-1.14",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-161349": {
   "human_success": true,
   "task": "reddit_sort_top",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-140036": {
   "human_success": true,
   "task": "notes_create",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142114": {
   "human_success": false,
   "task": "appstore_ratings",
   "provider": "jev-1.14",
   "note": "Stopped on search results; the app page was never opened. Grader fixed: the earlier regex matched \"age\" inside \"Languages\".",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-134921": {
   "human_success": true,
   "task": "yt_creator_video",
   "provider": "jev-1.14",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-135054": {
   "human_success": true,
   "task": "calc_expression",
   "provider": "jev-1.14",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-163230": {
   "human_success": true,
   "task": "safari_compare",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-161206": {
   "human_success": true,
   "task": "infeasible_missing_feature",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142210": {
   "human_success": true,
   "task": "settings_battery_health",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-142344": {
   "human_success": true,
   "task": "settings_storage",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-135953": {
   "human_success": true,
   "task": "gmaps_place",
   "provider": "gemini-decision-1",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-161735": {
   "human_success": true,
   "task": "infeasible_missing_app",
   "provider": "jev-1.13",
   "note": "Final screenshot shows the goal state.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162319-sim": {
   "human_success": true,
   "task": "sim_calendar_date",
   "provider": "jev-1.14",
   "note": "Stuck on Dec 17, 2026 with the Calendar search keyboard open; Dec 25 never shown.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162418-sim": {
   "human_success": true,
   "task": "sim_contact_phone",
   "provider": "jev-1.13",
   "note": "Contact card shows (888) 555-5512 (grader regex fixed to accept \"(888) 555\").",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162531-sim": {
   "human_success": true,
   "task": "sim_contact_phone",
   "provider": "jev-1.14",
   "note": "Contact card shows (888) 555-5512 (grader regex fixed to accept \"(888) 555\").",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-162742-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "jev-1.13",
   "note": "Stuck on Dec 17, 2026 with the Calendar search keyboard open; Dec 25 never shown.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-163004-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.14",
   "note": "First run: onboarding dismissed, title typed, Done; new item shown in the list.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-163504-sim": {
   "human_success": false,
   "task": "sim_reminder_create",
   "provider": "jev-1.13",
   "note": "Finished on the lists overview; the new reminder is not visible.",
-  "auditor": "manual review of final screenshot and action log"
+  "auditor": "Claude Opus 5.5 (AI reviewer): final screenshot and action log"
  },
  "20261114-164136": {
   "human_success": false,
   "task": "portal_lowest_class",
   "provider": "gemini-decision-1",
   "note": "Opened the right class repeatedly via Menu > Grades but never chose FINISH; stuck-loop stop.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-164838": {
   "human_success": false,
   "task": "appstore_developer",
   "provider": "jev-1.14",
   "note": "Typed text never reached the App Store search box (field stays empty, keyboard hidden); model kept retyping. Environment defect flagged and fixed for later trials; no answer reached.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-164940": {
   "human_success": false,
   "task": "cross_appstore_to_web",
   "provider": "jev-1.14",
   "note": "Same App Store typing defect; never left the App Store, never opened duolingo.com.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165221": {
   "human_success": false,
   "task": "amazon_product",
   "provider": "jev-1.14",
   "note": "Searched via Safari, landed on Amazon search results with the Rufus panel open; no product page; FINISH was premature.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165516": {
   "human_success": true,
   "task": "maps_walking_coffee",
   "provider": "jev-1.14",
   "note": "Walk tab selected, 9 min walking route to a nearby coffee shop from a \"coffee\" search. The old check wanted the word coffee on the final screen; grader fixed.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165605": {
   "human_success": false,
   "task": "reddit_sort_top",
   "provider": "gemini-decision-1",
   "note": "Finished with the Top time-range picker still open over the feed; r/iphone feed not shown sorted. Ambiguous, judged fail.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165733": {
   "human_success": false,
   "task": "gmail_open_email",
   "provider": "jev-1.14",
   "note": "Opened Apple Mail instead of Gmail (look-alike app).",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-170151": {
   "human_success": false,
   "task": "stocks_market_cap",
   "provider": "gemini-decision-1",
   "note": "Opened the Finance folder, did not find Stocks there and said INFEASIBLE although \"Open the Stocks app\" was offered.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-170212": {
   "human_success": false,
   "task": "gmaps_place",
   "provider": "jev-1.14",
   "note": "Used Apple Maps instead of Google Maps.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-170421": {
   "human_success": false,
   "task": "appstore_ratings",
   "provider": "jev-1.14",
   "note": "App Store typing defect; never reached the Duolingo page.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-170855": {
   "human_success": false,
   "task": "stocks_detail",
   "provider": "gemini-decision-1",
   "note": "False INFEASIBLE after the Finance folder, as in its market-cap trial.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-171117": {
   "human_success": false,
   "task": "reddit_sort_top",
   "provider": "jev-1.13",
   "note": "Tapped Search Reddit six times with no change; stuck.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-164909-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "jev-1.13",
   "note": "Looped on the Calendar search field; no date navigation.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165804-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "jev-1.13",
   "note": "Same search-field loop.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165231-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.13",
   "note": "Reminder created: list count went 4 to 5 after typing the title and tapping Done. The old check needed the title on the final screen; grader fixed.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165734-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.14",
   "note": "Reminder created: count 5 to 6. Grader fixed as above.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-164622-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "jev-1.14",
   "note": "Title typed and committed; item visible in the list.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-161238": {
   "human_success": true,
   "task": "cross_appstore_to_web",
   "provider": "jev-1.14",
   "note": "Searched Duolingo in the App Store, then opened duolingo.com in Safari.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-171052": {
   "human_success": true,
   "task": "stocks_market_cap",
   "provider": "jev-1.13",
   "note": "AAPL detail overlay open; answered Over $5 trillion (correct bucket).",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-170333": {
   "human_success": true,
   "task": "maps_walking_coffee",
   "provider": "jev-1.13",
   "note": "Walk selected, walking route to a coffee shop 3.6 mi away (far, but a coffee shop).",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165141": {
   "human_success": true,
   "task": "infeasible_missing_app",
   "provider": "jev-1.13",
   "note": "Correct INFEASIBLE: no Spotify on the phone.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165422-sim": {
   "human_success": true,
   "task": "infeasible_missing_app",
   "provider": "jev-1.13",
   "note": "Correct INFEASIBLE on the simulator.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261114-165806": {
   "human_success": true,
   "task": "weather_city",
   "provider": "jev-1.13",
   "note": "Tokyo weather card open (55\u00b0, cloudy).",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-154844-sim": {
   "human_success": false,
   "task": "safari_fact",
   "provider": "strands-2b",
   "note": "Opened Safari (example.com) and immediately said INFEASIBLE; the search field was right there.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-154959-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "strands-2b",
   "note": "Wandered into the Calendars list and tapped \"Other\" until stuck.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-155118-sim": {
   "human_success": false,
   "task": "sim_safari_capital",
   "provider": "strands-2b",
   "note": "Google results showed Canberra; kept tapping the answer text instead of FINISH (reached, no finish).",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-155212-sim": {
   "human_success": false,
   "task": "sim_contact_phone",
   "provider": "strands-2b",
   "note": "John Appleseed's card with the mobile number open; tapped the number row repeatedly instead of FINISH.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-155310-sim": {
   "human_success": false,
   "task": "settings_os_version",
   "provider": "strands-2b",
   "note": "Settings search for \"About\" returned nothing; then tapped General repeatedly without progress.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-155512-sim": {
   "human_success": false,
   "task": "sim_contact_company",
   "provider": "strands-2b",
   "note": "Typed the company into the wrong app (Maps) repeatedly; never opened Contacts.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-155803-sim": {
   "human_success": false,
   "task": "sim_reminder_create",
   "provider": "strands-2b",
   "note": "Tapped Done on an empty New Reminder sheet over and over; title never typed into it on the final attempt.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-155945-sim": {
   "human_success": false,
   "task": "safari_compare",
   "provider": "strands-2b",
   "note": "Search results with both heights on screen; kept tapping \"Kanchenjunga\" instead of FINISH.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-160040-sim": {
   "human_success": true,
   "task": "infeasible_missing_app",
   "provider": "strands-2b",
   "note": "Correct INFEASIBLE: no Spotify.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200037-sim": {
   "human_success": false,
   "task": "safari_fact",
   "provider": "strands-2b",
   "note": "Typed the query and pressed Return but the page never left example.com; FINISH premature.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200112-sim": {
   "human_success": false,
   "task": "sim_calendar_date",
   "provider": "strands-2b",
   "note": "Calendars list, tapped \"Other\" until stuck (same as repeat 0).",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200204-sim": {
   "human_success": false,
   "task": "sim_safari_capital",
   "provider": "strands-2b",
   "note": "Canberra on screen; kept tapping it, never FINISH.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200257-sim": {
   "human_success": false,
   "task": "sim_contact_phone",
   "provider": "strands-2b",
   "note": "Empty Contacts search focused; pressed Return repeatedly.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200338-sim": {
   "human_success": true,
   "task": "settings_os_version",
   "provider": "strands-2b",
   "note": "About > iOS Version 26.5 shown, then FINISH.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200401-sim": {
   "human_success": true,
   "task": "infeasible_missing_app",
   "provider": "strands-2b",
   "note": "Correct INFEASIBLE.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200410-sim": {
   "human_success": false,
   "task": "sim_contact_company",
   "provider": "strands-2b",
   "note": "Kate Bell's card showing CREATIVE CONSULTING; tapped it repeatedly, never FINISH.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200439-sim": {
   "human_success": false,
   "task": "safari_compare",
   "provider": "strands-2b",
   "note": "Both heights on the results page; tapped Kanchenjunga repeatedly, never FINISH.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  },
  "20261124-200526-sim": {
   "human_success": true,
   "task": "sim_reminder_create",
   "provider": "strands-2b",
   "note": "New reminder typed and saved (All count rose), then FINISH.",
-  "auditor": "manual review of saved final screen text, action log and trajectory (Claude, reviewer)"
+  "auditor": "Claude Opus 5.5 (AI reviewer): saved final screen text, action log and trajectory"
  }
 }

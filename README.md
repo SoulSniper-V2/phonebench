@@ -91,13 +91,15 @@ grade: programmatic check of the phone's final state (+ trajectory for multi-app
 - **No step budget.** A step cap measures the cap, not the model. Every stop reason is reported.
 - **Infeasible tasks** (as in OSWorld). The right answer is to say the task can't be done. Saying INFEASIBLE on a
   feasible task is a failure.
-- **Graded on state, audited by hand.** Checks are pure functions of saved snapshots, so a fixed check re-scores
-  every past trial (`phonebench.regrade`). Each release ships a human review of every failure and a quarter of the
-  passes. v0.7: 90+ trials reviewed, and the grader matched the reviewer on all of them once three grader bugs the
-  review found were fixed.
+- **Graded on state, then audited by Claude Opus 5.5.** Checks are pure functions of saved snapshots, so a fixed
+  check re-scores every past trial (`phonebench.regrade`). Every release also ships a review by Claude Opus 5.5 of
+  every failure and at least a quarter of the passes. The reviewer reads the saved screens and action log, gives its own
+  verdict and writes a one-line reason. v0.7: 93 trials reviewed. The review found three grader bugs (two wrong
+  failures, one check that could have passed a trial that did nothing). After those fixes the grader agrees with the
+  reviewer on every reviewed trial.
 - **Harness problems are never model failures.** A failed reset, a dropped USB connection or a rate limit excludes
   the trial and lists it.
-- **Open-ended tasks are judged.** For goals like *"find a good vegetarian dinner nearby"*, a reviewer grades the
+- **Open-ended tasks are judged by Claude Opus 5.5.** For goals like *"find a good vegetarian dinner nearby"*, it grades the
   trajectory against a rubric. These are scored on their own track.
 - **Safe by construction.** Send, buy, install, follow, like, post, delete, trial, sign-up and confirm controls are
   never offered, and no switch is ever tappable. The driver independently blocks taps that spend money. Mail and
@@ -169,6 +171,8 @@ timings are published.
 - **Free tiers shape coverage.** Gemini is rate-limited (waits are excluded from its timings), and Cloudflare's
   daily free allocation caps Clef trials per day.
 - **TikTok is excluded.** Its accessibility tree hangs the XCUITest runner.
+- **The reviewer is an AI.** Grading is programmatic; the audit of the grader and the open-ended tasks are judged by
+  Claude Opus 5.5, not a human. Its verdicts and reasons are published so anyone can check them.
 - **Decision models can't invent text.** Strings a task needs are offered as options, so PhoneBench measures
   operating the phone, not composing messages.
 - **58 early trials are archived.** Their raw snapshots no longer exist, so they keep their original grades

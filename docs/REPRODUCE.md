@@ -12,8 +12,9 @@ python3 -m phonebench.report results/v0.7    # rewrites summary.json + RESULTS.m
 git diff --stat results/                      # empty: the published numbers reproduce
 ```
 
-`grader_audit.json` lists every trial a human reviewed, with the verdict and a one-line reason, so you can see
-where the automatic grader was checked and where it was corrected.
+`grader_audit.json` lists every trial Claude Opus 5.5 reviewed, with its verdict and a one-line reason, so you can see
+where the automatic grader was checked and where it was corrected. Spot-check it yourself: the reasons say what
+should have been on screen.
 
 ## 2. Re-run the simulator track (no phone)
 
