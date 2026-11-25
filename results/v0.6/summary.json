@@ -25,8 +25,8 @@
    "median_input_tokens": 14221.0,
    "median_output_tokens": 0.0,
    "time_split": {
-    "model": 0.25705799943961893,
-    "device": 0.7053516391145979
+    "model": 0.257058,
+    "device": 0.705352
    },
    "false_finish_rate": 0.0,
    "failure_modes": {
@@ -87,8 +87,8 @@
    "median_input_tokens": 17847.0,
    "median_output_tokens": 3281.5,
    "time_split": {
-    "model": 0.07427371368568428,
-    "device": 0.8807517298941869
+    "model": 0.074274,
+    "device": 0.880752
    },
    "false_finish_rate": 0.16666666666666666,
    "failure_modes": {
@@ -150,8 +150,8 @@
    "median_input_tokens": 20279.0,
    "median_output_tokens": 3285.0,
    "time_split": {
-    "model": 0.06447884291141039,
-    "device": 0.8974952769821438
+    "model": 0.064479,
+    "device": 0.897495
    },
    "false_finish_rate": 0.16666666666666666,
    "failure_modes": {

@@ -61,7 +61,7 @@ def summarize(release):
         calls = [ms for r in rs for ms in r.get('model_ms_per_call', [])]
         feas = [r for r in rs if not r['infeasible']]
         modes = collections.Counter(r['failure_mode'] for r in rs)
-        tot = sum(r['task_s'] for r in rs) or 1
+        tot = math.fsum(r['task_s'] for r in rs) or 1  # fsum: exact, identical on every Python version
         models.append({
             'id': p, 'label': LABEL.get(p, p), 'trials': n, 'passes': k, 'pass_rate': k / n, 'ci95': wilson(k, n),
             'task_macro_pass_rate': task_rate, 'tasks_covered': len(per_task),
@@ -69,7 +69,7 @@ def summarize(release):
             'median_actions_pass': q([r['n_actions'] for r in passes], .5),
             'decision_ms_p50': q(calls, .5), 'decision_ms_p90': q(calls, .9), 'decision_ms_p99': q(calls, .99),
             'median_input_tokens': q([r['input_tokens'] for r in rs], .5), 'median_output_tokens': q([r['output_tokens'] for r in rs], .5),
-            'time_split': {'model': sum(r['model_s'] for r in rs) / tot, 'device': sum(r['action_s'] + r['observe_s'] for r in rs) / tot},
+            'time_split': {'model': round(math.fsum(r['model_s'] for r in rs) / tot, 6), 'device': round(math.fsum(r['action_s'] + r['observe_s'] for r in rs) / tot, 6)},
             'false_finish_rate': modes['false_finish'] / max(1, len(feas)),
             'failure_modes': {m: modes[m] for m in MODES if modes[m]},
             'by_category': {c: [sum(r['success'] for r in rs if r['category'] == c), sum(1 for r in rs if r['category'] == c)] for c in sorted({r['category'] for r in rs})},
