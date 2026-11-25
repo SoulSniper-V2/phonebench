@@ -119,7 +119,7 @@ readme = (ROOT / 'README.md').read_text() if (ROOT / 'README.md').exists() else 
 for sec in ('## Results', '## How it works', '## Tasks', '## Reproduce', '## Limitations'):
     check(f'docs.readme{sec[2:].lower().replace(" ", "_")}', sec in readme)
 check('docs.method', (ROOT / 'docs/METHOD.md').exists())
-for img in ('leaderboard.png', 'speed.png', 'failures.png', 'matrix.png'):
+for img in ('leaderboard.png', 'speed.png', 'failures.png'):  # matrix dropped: owner found it unreadable
     p = ROOT / 'site/assets' / img
     ok = p.exists() and rels and p.stat().st_mtime >= (rels[-1] / 'summary.json').stat().st_mtime - 1 if (rels and (rels[-1] / 'summary.json').exists()) else False
     check(f'visuals.{img}_fresh', bool(ok))
